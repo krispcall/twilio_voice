@@ -15,11 +15,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _eventMessage;
+
+  TextEditingController _toController, _fromController;
 
   @override
   void initState() {
     super.initState();
+
     initPlatformState();
+    _toController = TextEditingController();
+    _fromController = TextEditingController(text: "alice");
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -42,16 +48,71 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _onEvent(Object event) {
+    setState(() {
+      _eventMessage =
+      "Battery status: ${event == 'charging' ? '' : 'dis'}charging.";
+    });
+  }
+
+  void _onError(Object error) {
+    setState(() {
+      _eventMessage = 'Battery status: unknown.';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Twilio Voice Example'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+        body: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text('Running on: $_platformVersion\n'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text('Running on: $_eventMessage\n'),
+                    ),
+                    TextFormField(
+                      controller: _fromController,
+                      decoration: InputDecoration(
+                          labelText: 'Sender Identifier or Phone Number'),
+                    ),
+                    Divider(),
+                    TextFormField(
+                      controller: _toController,
+                      decoration: InputDecoration(
+                          labelText: 'Receiver Identifier or Phone Number'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                      child: Text("Make Call"),
+                      onPressed: () async {
+                        Voice.phoneCallEventSubscription
+                            .listen(_onEvent, onError: _onError);
+                        Voice.receiveCalls(_fromController.text);
+                        Voice.makeCall(
+                            from: _fromController.text,
+                            to: _toController.text,
+                            accessTokenUrl: "https://{SERVER_URL}/accesstoken",
+                            toDisplayName: "James Bond");
+                      },
+                    )
+                  ],
+                ),
+              ),
+            )),
       ),
     );
   }
