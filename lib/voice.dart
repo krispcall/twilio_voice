@@ -23,7 +23,12 @@ class Voice {
     assert(accessTokenUrl != null);
     assert(from != null && from.trim() != "");
     assert(to != null && to.trim() != "");
-    final Map<String, Object> args = <String, dynamic>{"accessTokenUrl" : accessTokenUrl, "from" : from, "to" : to, "toDisplayName" : toDisplayName};
+    final args = {
+      "accessTokenUrl" : accessTokenUrl,
+      "from" : from,
+      "to" : to,
+      "toDisplayName" : toDisplayName
+    };
     await _channel.invokeMethod('makeCall', args);
   }
 
