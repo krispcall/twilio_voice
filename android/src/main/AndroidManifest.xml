@@ -2,9 +2,7 @@
   package="com.flutter.twilio.voice">
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <application
-        android:allowBackup="true">
-
+    <application>
         <service
             android:enabled="true"
             android:name=".IncomingCallNotificationService">

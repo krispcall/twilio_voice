@@ -18,16 +18,18 @@ class Voice {
     return _eventChannel.receiveBroadcastStream();
   }
 
-  static Future<void> makeCall({ @required String accessTokenUrl, String from, @required String to, String toDisplayName}) async
+  static Future<void> makeCall({ @required String accessTokenUrl, String from, @required String to, String toDisplayName,@required String fcmToken}) async
   {
     assert(accessTokenUrl != null);
     assert(from != null && from.trim() != "");
     assert(to != null && to.trim() != "");
+    assert(fcmToken != null);
     final args = {
       "accessTokenUrl" : accessTokenUrl,
       "from" : from,
       "to" : to,
-      "toDisplayName" : toDisplayName
+      "toDisplayName" : toDisplayName,
+      "fcmToken" : fcmToken,
     };
     await _channel.invokeMethod('makeCall', args);
   }

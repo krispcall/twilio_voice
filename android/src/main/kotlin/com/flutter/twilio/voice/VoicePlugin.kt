@@ -13,10 +13,7 @@ import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.koushikdutta.ion.Ion
-import com.twilio.voice.Call
-import com.twilio.voice.CallException
-import com.twilio.voice.ConnectOptions
-import com.twilio.voice.Voice
+import com.twilio.voice.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -37,7 +34,7 @@ class VoicePlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private var activity: Activity? = null
   private lateinit var channel : MethodChannel
   private var activeCall: Call? = null
-  var registrationListener: com.twilio.voice.RegistrationListener? = null
+  var registrationListener = registrationListener()
   var callListenerFlutter = callListener()
     private val TAG = "VoicePlugin"
     private var savedAudioMode = AudioManager.MODE_INVALID
@@ -90,49 +87,51 @@ class VoicePlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun handleMakeCall(call: MethodCall, result: MethodChannel.Result)
     {
 
+        val accessTokenUrl = call.argument("accessTokenUrl") as? String
+        val from = call.argument("from") as? String
+        val to = call.argument("to") as? String
+        val toDisplayName = call.argument("toDisplayName") as? String
+        val fcmToken = call.argument("fcmToken") as? String
+
         if (!checkPermissionForMicrophone())
         {
             requestPermissionForMicrophone()
         }
         else
         {
-            retrieveAccessToken()
+            retrieveAccessToken(fcmToken!!)
         }
-        val accessTokenUrl = call.argument("accessTokenUrl") as? String
-        val from = call.argument("from") as? String
-        val to = call.argument("to") as? String
-        val toDisplayName = call.argument("toDisplayName") as? String
 
         val params: HashMap<String, String?> = hashMapOf(
                 "accessTokenUrl" to accessTokenUrl,
                 "from" to from,
                 "to" to to,
-                "toDisplayName" to toDisplayName
+                "toDisplayName" to toDisplayName,
+                "fcmToken" to fcmToken
         )
-
 
         //TODO main calling code
 
-        val connectOptions: ConnectOptions = ConnectOptions.Builder("")
+        val connectOptions: ConnectOptions = ConnectOptions.Builder("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6InNjb3BlOmNsaWVudDpvdXRnb2luZz9hcHBTaWQ9Tm9uZSZjbGllbnROYW1lPXN1cHBvcnRfYWdlbnRfTm9uZSBzY29wZTpjbGllbnQ6aW5jb21pbmc_Y2xpZW50TmFtZT1zdXBwb3J0X2FnZW50X05vbmUiLCJpc3MiOiJBQzMyZDQ2ZjU5ZWE2MTk5YzA0ZTUyZWExODAwZTc5NzQ3IiwiZXhwIjoxNjA5OTE2NzU3LCJuYmYiOjE2MDk5MTMxNTd9.f6LPGk7p327iJccEySmVOr4gyqJwL3KMRMewEZXcVL0")
                 .params(params)
                 .build()
-        activeCall = com.twilio.voice.Voice.connect(this@VoicePlugin.activity!!, connectOptions, callListenerFlutter)
+        activeCall = Voice.connect(this@VoicePlugin.activity!!, connectOptions, callListenerFlutter)
     }
 
-    private fun retrieveAccessToken() {
+    private fun retrieveAccessToken(fcmToken: String) {
         Ion.with(this@VoicePlugin.activity!!).load("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6InNjb3BlOmNsaWVudDpvdXRnb2luZz9hcHBTaWQ9Tm9uZSZjbGllbnROYW1lPXN1cHBvcnRfYWdlbnRfTm9uZSBzY29wZTpjbGllbnQ6aW5jb21pbmc_Y2xpZW50TmFtZT1zdXBwb3J0X2FnZW50X05vbmUiLCJpc3MiOiJBQzMyZDQ2ZjU5ZWE2MTk5YzA0ZTUyZWExODAwZTc5NzQ3IiwiZXhwIjoxNjA5OTE2NzU3LCJuYmYiOjE2MDk5MTMxNTd9.f6LPGk7p327iJccEySmVOr4gyqJwL3KMRMewEZXcVL0")
                 .asString()
                 .setCallback { e, accessToken ->
                     if (e == null) {
                         this@VoicePlugin.accessToken = accessToken
-                        registerForCallInvites()
+                        registerForCallInvites(fcmToken)
                     }
                 }
     }
 
-    private fun registerForCallInvites()
+    private fun registerForCallInvites(fcmToken:String)
     {
-        Voice.register(accessToken, Voice.RegistrationChannel.FCM, "Joshan Tandukar", registrationListener!!)
+        Voice.register(accessToken, Voice.RegistrationChannel.FCM, fcmToken, registrationListener!!)
     }
 
     private fun checkPermissionForMicrophone(): Boolean {
@@ -208,6 +207,26 @@ class VoicePlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           }
       }
   }
+
+
+    private fun registrationListener(): RegistrationListener? {
+        return object : RegistrationListener {
+            override fun onRegistered(accessToken: String, fcmToken: String) {
+                Log.d(TAG, "Successfully registered FCM $fcmToken")
+            }
+
+            override fun onError(error: RegistrationException,
+                                 accessToken: String,
+                                 fcmToken: String) {
+                val message = String.format(
+                        Locale.US,
+                        "Registration Error: %d, %s",
+                        error.errorCode,
+                        error.message)
+                Log.e(TAG, message)
+            }
+        }
+    }
 
     private fun setAudioFocus(setFocus: Boolean) {
         if (audioManager != null) {
