@@ -1,4 +1,4 @@
-#import "VoicePlugin.h"
+#import "TwilioVoice.h"
 #if __has_include(<voice/voice-Swift.h>)
 #import <voice/voice-Swift.h>
 #else
@@ -8,8 +8,8 @@
 #import "voice-Swift.h"
 #endif
 
-@implementation VoicePlugin
+@implementation TwilioVoice
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftVoicePlugin registerWithRegistrar:registrar];
+  [SwiftTwilioVoice registerWithRegistrar:registrar];
 }
 @end

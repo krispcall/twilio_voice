@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftVoicePlugin: NSObject, FlutterPlugin {
+public class SwiftTwilioVoice: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "voice", binaryMessenger: registrar.messenger())
-    let instance = SwiftVoicePlugin()
+    let instance = SwiftTwilioVoice()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

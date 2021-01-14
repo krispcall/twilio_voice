@@ -1,7 +1,7 @@
 name: voice
 description: flutter twilio voice
 version: 0.0.1
-author:
+author: Joshan Tandukar
 homepage:
 
 environment:
@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  enum_to_string: ^1.0.13
 
 dev_dependencies:
   flutter_test:
@@ -29,9 +30,9 @@ flutter:
     platforms:
       android:
         package: com.flutter.twilio.voice
-        pluginClass: VoicePlugin
+        pluginClass: TwilioVoice
       ios:
-        pluginClass: VoicePlugin
+        pluginClass: TwilioVoice
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -1,15 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.flutter.twilio.voice">
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <application>
-        <service
-            android:enabled="true"
-            android:name=".IncomingCallNotificationService">
-            <intent-filter>
-                <action android:name="ACTION_ACCEPT" />
-                <action android:name="ACTION_REJECT" />
-            </intent-filter>
-        </service>
-    </application>
 </manifest>

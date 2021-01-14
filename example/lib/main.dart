@@ -1,14 +1,168 @@
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:voice/voice.dart';
+import 'package:voice/twiliovoice.dart';
+
+const String accessToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzdjNTI3ZGNmNTY3ZjM1NTUyYWZjNWI1YWFmYzk2YTYzLTE2MTA2MTI1OTMiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGYwNDcwOTg4OGI2NThkMzVjZWVmNjQ0MWQ0ODQ5MGU2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoiam9zaGFuIn0sImlzcyI6IlNLN2M1MjdkY2Y1NjdmMzU1NTJhZmM1YjVhYWZjOTZhNjMiLCJleHAiOjE2MTA2MTYxOTMsIm5iZiI6MTYxMDYxMjU5Mywic3ViIjoiQUMzMmQ0NmY1OWVhNjE5OWMwNGU1MmVhMTgwMGU3OTc0NyJ9.c6gEiFuIx64JMeDvQUbNyOacPPKf_hxpRy3IrWCoBww";
+final VoiceClient voiceClient=VoiceClient(accessToken);
+
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  registerForNotifications();
+  _configureNotifications();
   runApp(MyApp());
 }
+
+Future registerForNotifications() async {
+  var token;
+  if (Platform.isAndroid) {
+    token = await FirebaseMessaging().getToken();
+  }
+  await voiceClient.registerForNotification(accessToken,token);
+}
+
+void _configureNotifications()
+{
+  if (Platform.isAndroid) {
+    FirebaseMessaging().configure(
+      onMessage: onMessage,
+      onBackgroundMessage: onBackgroundMessage,
+      onLaunch: onLaunch,
+      onResume: onResume,
+    );
+    FlutterLocalNotificationsPlugin()
+      ..initialize(
+        InitializationSettings(
+          android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        ),
+      )
+      ..resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>().createNotificationChannel(
+        AndroidNotificationChannel(
+          '0',
+          'Chat',
+          'Twilio Chat Channel 0',
+        ),
+      );
+  }
+}
+
+// For example purposes, we only setup display of notifications when
+// receiving a message while the app is in the background. This behaviour
+// appears consistent with the behaviour demonstrated by the iOS SDK
+Future<dynamic> onMessage(Map<String, dynamic> message) async {
+  print('Main::onMessage => $message');
+  await FlutterLocalNotificationsPlugin().show(
+    0,
+    message['data']['channel_title'],
+    message['data']['twi_from']+" is calling.",
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        '0',
+        'Chat',
+        'Twilio Chat Channel 0',
+        importance: Importance.high,
+        priority: Priority.defaultPriority,
+        showWhen: true,
+        fullScreenIntent: true,
+        channelShowBadge: true,
+        enableLights: true,
+        enableVibration: true,
+        indeterminate: true,
+        ongoing: true,
+        playSound: true,
+      ),
+    ),
+    payload: jsonEncode(message),
+  );
+}
+
+Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) async {
+  print('Main::onBackgroundMessage => $message');
+  await FlutterLocalNotificationsPlugin().show(
+    0,
+    message['data']['channel_title'],
+    message['data']['twi_from']+" is calling.",
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        '0',
+        'Chat',
+        'Twilio Chat Channel 0',
+        importance: Importance.high,
+        priority: Priority.defaultPriority,
+        showWhen: true,
+        fullScreenIntent: true,
+        channelShowBadge: true,
+        enableLights: true,
+        enableVibration: true,
+        indeterminate: true,
+        ongoing: true,
+        playSound: true,
+      ),
+    ),
+    payload: jsonEncode(message),
+  );
+}
+
+Future<dynamic> onLaunch(Map<String, dynamic> message) async {
+  print('Main::onLaunch => $message');
+  await FlutterLocalNotificationsPlugin().show(
+    0,
+    message['data']['channel_title'],
+    message['data']['twi_from']+" is calling.",
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        '0',
+        'Chat',
+        'Twilio Chat Channel 0',
+        importance: Importance.high,
+        priority: Priority.defaultPriority,
+        showWhen: true,
+        fullScreenIntent: true,
+        channelShowBadge: true,
+        enableLights: true,
+        enableVibration: true,
+        indeterminate: true,
+        ongoing: true,
+        playSound: true,
+      ),
+    ),
+    payload: jsonEncode(message),
+  );
+}
+
+Future<dynamic> onResume(Map<String, dynamic> message) async {
+  print('Main::onResume => $message');
+  await FlutterLocalNotificationsPlugin().show(
+    0,
+    message['data']['channel_title'],
+    message['data']['twi_from']+" is calling.",
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        '0',
+        'Chat',
+        'Twilio Chat Channel 0',
+        importance: Importance.high,
+        priority: Priority.defaultPriority,
+        showWhen: true,
+        fullScreenIntent: true,
+        channelShowBadge: true,
+        enableLights: true,
+        enableVibration: true,
+        indeterminate: true,
+        ongoing: true,
+        playSound: true,
+      ),
+    ),
+    payload: jsonEncode(message),
+  );
+}
+//#endregion
 
 class MyApp extends StatefulWidget {
   @override
@@ -17,58 +171,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  String _eventMessage;
+  String _eventMessage="Event Unknow";
   String fcmToken="";
   TextEditingController _toController, _fromController;
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
   @override
   void initState() {
     super.initState();
     _toController = TextEditingController();
     _fromController = TextEditingController(text: "support_agent_+61480031300");
-    initPlatformState();
-    setUpNotification();
-    Voice.phoneCallEventSubscription
-        .listen(_onEvent, onError: _onError);
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await Voice.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  void _onEvent(Object event) {
-    setState(() {
-      _eventMessage =
-      "Battery status: ${event == 'charging' ? '' : 'dis'}charging.";
-    });
-  }
-
-  void _onError(Object error) {
-    setState(() {
-      _eventMessage = 'Battery status: unknown.';
-    });
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -104,20 +220,21 @@ class _MyAppState extends State<MyApp> {
                     ),
                     RaisedButton(
                       child: Text("Make Call"),
-                      onPressed: () async {
-                        Voice.makeCall(
-                            from: _fromController.text,
-                            to: _toController.text,
-                            accessTokenUrl: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2RhNjUxZDliNjEyNDA0NGJjNjVmMDU3NGEwZjMzMDdhLTE2MTAwOTgzODQiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUDA3MzhlN2IxOTA1M2NjODNjMmNhZjNkODgzNzY1YWFiIn0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoic3VwcG9ydF9hZ2VudF8rNjE0ODAwMzEzMDAifSwiaXNzIjoiU0tkYTY1MWQ5YjYxMjQwNDRiYzY1ZjA1NzRhMGYzMzA3YSIsImV4cCI6MTYxMDEwMTk4NCwibmJmIjoxNjEwMDk4Mzg0LCJzdWIiOiJBQzMyZDQ2ZjU5ZWE2MTk5YzA0ZTUyZWExODAwZTc5NzQ3In0.fecbI5FxMxQhVb6NjxCDzMKDToUT4g0lrH50CCfUBH8",
-                            toDisplayName: "Joshan Tandukar",
-                            fcmToken:"fWVX4TNjTCSARUwVHqdRdP:APA91bFGp76cEzucyEQeiUnLnPdptQo1XuiZMTG7uYgm0y9so49Em4dVgXftgNMxMsnhwTepFIJ2P2j2HsCBUNuFCum0PKnHUv3Q-oM-5QBjfNVQsiv2Z24I6cBUQQPm4G-6Josw61dU");
+                      onPressed: () async
+                      {
+                        await voiceClient.makeCall(
+                          accessToken,
+                          _fromController.text,
+                          _toController.text,
+                          "joshan",
+                        );
                       },
                     ),
                     RaisedButton(
                       child: Text("Make Call"),
                       onPressed: () async {
-                        Voice.receiveCalls(_fromController.text);
-                        },
+                        // TwilioVoice.receiveCalls(_fromController.text);
+                      },
                     )
                   ],
                 ),
@@ -125,26 +242,5 @@ class _MyAppState extends State<MyApp> {
             )),
       ),
     );
-  }
-
-  void setUpNotification() {
-    _firebaseMessaging.setAutoInitEnabled(true);
-    _firebaseMessaging.subscribeToTopic("PhoneCallEvent");
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {});
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      setState(() {
-        fcmToken=token;
-        print("FCM Token "+token);
-      });
-    });
-  }
-
-  Future onSelectNotification(String payload) async {
-
   }
 }
