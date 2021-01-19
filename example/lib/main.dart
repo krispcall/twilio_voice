@@ -1,245 +1,105 @@
-
-import 'dart:convert';
 import 'dart:io';
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:voice_example/routes.dart';
+import 'package:voice_example/utils/media_player_central.dart';
 import 'dart:async';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:voice/twiliovoice.dart';
-
-const String accessToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzdjNTI3ZGNmNTY3ZjM1NTUyYWZjNWI1YWFmYzk2YTYzLTE2MTA2MTI1OTMiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGYwNDcwOTg4OGI2NThkMzVjZWVmNjQ0MWQ0ODQ5MGU2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoiam9zaGFuIn0sImlzcyI6IlNLN2M1MjdkY2Y1NjdmMzU1NTJhZmM1YjVhYWZjOTZhNjMiLCJleHAiOjE2MTA2MTYxOTMsIm5iZiI6MTYxMDYxMjU5Mywic3ViIjoiQUMzMmQ0NmY1OWVhNjE5OWMwNGU1MmVhMTgwMGU3OTc0NyJ9.c6gEiFuIx64JMeDvQUbNyOacPPKf_hxpRy3IrWCoBww";
-final VoiceClient voiceClient=VoiceClient(accessToken);
+import 'models/media_model.dart';
 
 
+String payload="";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  registerForNotifications();
-  _configureNotifications();
-  runApp(MyApp());
-}
-
-Future registerForNotifications() async {
-  var token;
-  if (Platform.isAndroid) {
-    token = await FirebaseMessaging().getToken();
-  }
-  await voiceClient.registerForNotification(accessToken,token);
-}
-
-void _configureNotifications()
-{
-  if (Platform.isAndroid) {
-    FirebaseMessaging().configure(
-      onMessage: onMessage,
-      onBackgroundMessage: onBackgroundMessage,
-      onLaunch: onLaunch,
-      onResume: onResume,
-    );
-    FlutterLocalNotificationsPlugin()
-      ..initialize(
-        InitializationSettings(
-          android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-        ),
-      )
-      ..resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>().createNotificationChannel(
-        AndroidNotificationChannel(
-          '0',
-          'Chat',
-          'Twilio Chat Channel 0',
-        ),
-      );
-  }
+  runApp(App());
 }
 
 // For example purposes, we only setup display of notifications when
 // receiving a message while the app is in the background. This behaviour
 // appears consistent with the behaviour demonstrated by the iOS SDK
-Future<dynamic> onMessage(Map<String, dynamic> message) async {
-  print('Main::onMessage => $message');
-  await FlutterLocalNotificationsPlugin().show(
-    0,
-    message['data']['channel_title'],
-    message['data']['twi_from']+" is calling.",
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        '0',
-        'Chat',
-        'Twilio Chat Channel 0',
-        importance: Importance.high,
-        priority: Priority.defaultPriority,
-        showWhen: true,
-        fullScreenIntent: true,
-        channelShowBadge: true,
-        enableLights: true,
-        enableVibration: true,
-        indeterminate: true,
-        ongoing: true,
-        playSound: true,
-      ),
-    ),
-    payload: jsonEncode(message),
-  );
-}
-
-Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) async {
-  print('Main::onBackgroundMessage => $message');
-  await FlutterLocalNotificationsPlugin().show(
-    0,
-    message['data']['channel_title'],
-    message['data']['twi_from']+" is calling.",
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        '0',
-        'Chat',
-        'Twilio Chat Channel 0',
-        importance: Importance.high,
-        priority: Priority.defaultPriority,
-        showWhen: true,
-        fullScreenIntent: true,
-        channelShowBadge: true,
-        enableLights: true,
-        enableVibration: true,
-        indeterminate: true,
-        ongoing: true,
-        playSound: true,
-      ),
-    ),
-    payload: jsonEncode(message),
-  );
-}
-
-Future<dynamic> onLaunch(Map<String, dynamic> message) async {
-  print('Main::onLaunch => $message');
-  await FlutterLocalNotificationsPlugin().show(
-    0,
-    message['data']['channel_title'],
-    message['data']['twi_from']+" is calling.",
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        '0',
-        'Chat',
-        'Twilio Chat Channel 0',
-        importance: Importance.high,
-        priority: Priority.defaultPriority,
-        showWhen: true,
-        fullScreenIntent: true,
-        channelShowBadge: true,
-        enableLights: true,
-        enableVibration: true,
-        indeterminate: true,
-        ongoing: true,
-        playSound: true,
-      ),
-    ),
-    payload: jsonEncode(message),
-  );
-}
-
-Future<dynamic> onResume(Map<String, dynamic> message) async {
-  print('Main::onResume => $message');
-  await FlutterLocalNotificationsPlugin().show(
-    0,
-    message['data']['channel_title'],
-    message['data']['twi_from']+" is calling.",
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        '0',
-        'Chat',
-        'Twilio Chat Channel 0',
-        importance: Importance.high,
-        priority: Priority.defaultPriority,
-        showWhen: true,
-        fullScreenIntent: true,
-        channelShowBadge: true,
-        enableLights: true,
-        enableVibration: true,
-        indeterminate: true,
-        ongoing: true,
-        playSound: true,
-      ),
-    ),
-    payload: jsonEncode(message),
-  );
-}
 //#endregion
+class App extends StatefulWidget {
 
-class MyApp extends StatefulWidget {
+  static final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
+
+  static String name = 'Push Notifications - Example App';
+  static Color mainColor = Color(0xFF9D50DD);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppState createState() => _AppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  String _eventMessage="Event Unknow";
-  String fcmToken="";
-  TextEditingController _toController, _fromController;
+class _AppState extends State<App> {
+
   @override
   void initState() {
     super.initState();
-    _toController = TextEditingController();
-    _fromController = TextEditingController(text: "support_agent_+61480031300");
   }
 
-
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
+
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Twilio Voice Example'),
+      navigatorKey: App.navKey,
+      title: App.name,
+      color: App.mainColor,
+      initialRoute: PAGE_HOME,
+      //onGenerateRoute: generateRoute,
+      routes: materialRoutes,
+      builder: (context, child) =>
+          MediaQuery(data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true), child: child),
+      theme: ThemeData(
+
+        brightness: Brightness.light,
+
+        primaryColor:   App.mainColor,
+        accentColor:    Colors.blueGrey,
+        primarySwatch:  Colors.blueGrey,
+        canvasColor:    Colors.white,
+        focusColor:     Colors.blueAccent,
+        disabledColor:  Colors.grey,
+
+        backgroundColor: Colors.blueGrey.shade400,
+
+        appBarTheme: AppBarTheme(
+            brightness: Brightness.dark,
+            color: Colors.white,
+            elevation: 0,
+            iconTheme: IconThemeData(
+              color: App.mainColor,
+            ),
+            textTheme: TextTheme(
+              headline6: TextStyle(color: App.mainColor, fontSize: 18),
+            )
         ),
-        body: SafeArea(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Running on: $_platformVersion\n'),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Running on: $_eventMessage\n'),
-                    ),
-                    TextFormField(
-                      controller: _fromController,
-                      decoration: InputDecoration(
-                          labelText: 'Sender Identifier or Phone Number'),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _toController,
-                      decoration: InputDecoration(
-                          labelText: 'Receiver Identifier or Phone Number'),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    RaisedButton(
-                      child: Text("Make Call"),
-                      onPressed: () async
-                      {
-                        await voiceClient.makeCall(
-                          accessToken,
-                          _fromController.text,
-                          _toController.text,
-                          "joshan",
-                        );
-                      },
-                    ),
-                    RaisedButton(
-                      child: Text("Make Call"),
-                      onPressed: () async {
-                        // TwilioVoice.receiveCalls(_fromController.text);
-                      },
-                    )
-                  ],
-                ),
-              ),
-            )),
+
+        fontFamily: 'Robot',
+
+        // Define the default TextTheme. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: TextTheme(
+          headline1: TextStyle(fontSize: 64.0, height: 1.5, fontWeight: FontWeight.w500),
+          headline2: TextStyle(fontSize: 52.0, height: 1.5, fontWeight: FontWeight.w500),
+          headline3: TextStyle(fontSize: 48.0, height: 1.5, fontWeight: FontWeight.w500),
+          headline4: TextStyle(fontSize: 32.0, height: 1.5, fontWeight: FontWeight.w500),
+          headline5: TextStyle(fontSize: 28.0, height: 1.5, fontWeight: FontWeight.w500),
+          headline6: TextStyle(fontSize: 22.0, height: 1.5, fontWeight: FontWeight.w500),
+          subtitle1: TextStyle(fontSize: 18.0, height: 1.5, color: Colors.black54),
+          subtitle2: TextStyle(fontSize: 12.0, height: 1.5, color: Colors.black54),
+          button:    TextStyle(fontSize: 16.0, height: 1.5, color: Colors.black54),
+          bodyText1: TextStyle(fontSize: 16.0, height: 1.5),
+          bodyText2: TextStyle(fontSize: 16.0, height: 1.5),
+        ),
+
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.grey.shade200,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5))
+          ),
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          textTheme: ButtonTextTheme.accent,
+        ),
       ),
     );
   }

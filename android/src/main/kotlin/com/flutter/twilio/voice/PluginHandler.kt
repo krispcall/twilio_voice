@@ -2,9 +2,7 @@ package com.flutter.twilio.voice
 
 import android.content.Context
 import androidx.annotation.NonNull
-import com.twilio.chat.CallbackListener
 import com.twilio.chat.ChatClient
-import com.twilio.chat.ErrorInfo
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -19,6 +17,12 @@ class PluginHandler(private val applicationContext: Context) : MethodCallHandler
             "unregisterForNotification" -> TwilioVoice.instance.unregisterForNotification(call, result)
 
             "makeCall"->TwilioVoice.instance.makeCall(call,result)
+
+            "rejectCall"->TwilioVoice.instance.rejectCall(call,result)
+
+            "acceptCall"->TwilioVoice.instance.acceptCall(call,result)
+
+            "handleMessage"->TwilioVoice.instance.handleMessage(call,result)
 
             "ChatClient#updateToken" -> ChatClientMethods.updateToken(call, result)
             "ChatClient#shutdown" -> ChatClientMethods.shutdown(call, result)

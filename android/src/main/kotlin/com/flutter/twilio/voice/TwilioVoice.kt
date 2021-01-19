@@ -1,12 +1,16 @@
 package com.flutter.twilio.voice
+
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.flutter.twilio.voice.`object`.callListener
@@ -23,9 +27,11 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
 import java.util.*
 
+
 /** TwilioVoice */
 
 const val TAG="TwilioVoice"
+@Suppress("UNCHECKED_CAST")
 class TwilioVoice: FlutterPlugin, ActivityAware{
     private lateinit var methodChannel: MethodChannel
 
@@ -76,6 +82,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         var chatClient: ChatClient? = null
 
         private var activeCall: Call? = null
+
+        private var activeCallInvite: CallInvite? = null
+
+        private var cancelledCallIvites: CancelledCallInvite? = null
 
         var callListener: Listener = callListener()
 
@@ -192,6 +202,74 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         }
     }
 
+    fun rejectCall(call: MethodCall, result: MethodChannel.Result)
+    {
+        activeCallInvite?.reject(activity)
+    }
+
+    fun handleMessage(call: MethodCall, result: MethodChannel.Result)
+    {
+        Log.d(TAG, "handleMessage kt: "+call.argument("notification"))
+        val notification = call.argument("notification") as? Map<String, Any>
+
+        val bundle=createBundleFromMap(notification)
+        Voice.handleMessage(activity, bundle!!, object : MessageListener
+        {
+            override fun onCallInvite(callInvite: CallInvite)
+            {
+                Log.d(TAG, "onCallInvite: ")
+                activeCallInvite = callInvite
+            }
+
+            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?)
+            {
+                Log.d(TAG, "onCancelledCallInvite: ")
+                cancelledCallIvites = cancelledCallInvite
+            }
+        })
+    }
+
+    private fun createBundleFromMap(parameterMap: Map<String, Any>?): Bundle? {
+        if (parameterMap == null) {
+            return null
+        }
+
+        val bundle = Bundle()
+        for (jsonParam in parameterMap.entries) {
+            val value = jsonParam.value
+            val key = jsonParam.key
+            when (value) {
+                is String -> bundle.putString(key, value)
+                is Int -> bundle.putInt(key, value)
+                is Long -> bundle.putLong(key, value)
+                is Double -> bundle.putDouble(key, value)
+                is Boolean -> bundle.putBoolean(key, value)
+                is Map<*, *> -> {
+                    val nestedBundle = createBundleFromMap(value as Map<String, Any>)
+                    bundle.putBundle(key, nestedBundle as Bundle)
+                }
+                else -> throw IllegalArgumentException(
+                        "Unsupported value type: $value")
+            }
+        }
+        return bundle
+    }
+
+    fun acceptCall(call: MethodCall, result: MethodChannel.Result)
+    {
+        try
+        {
+            Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
+            Log.d(TAG, "acceptCall: " + activeCallInvite!!.callerInfo)
+            Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
+            activeCallInvite?.accept(activity, callListener)
+        }
+        catch (error: Exception)
+        {
+            Log.d(TAG, "acceptCall: " + error.message)
+        }
+    }
+
     fun registerForNotification(call: MethodCall, result: MethodChannel.Result)
     {
         if (!checkPermissionForMicrophone())
@@ -223,7 +301,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         })
     }
 
-    private fun sendNotificationEvent(name: String, data: Any?, e: ErrorInfo? = null) {
+    private fun sendNotificationEvent(name: String, data: Any?, e: ErrorInfo? = null)
+    {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
     }

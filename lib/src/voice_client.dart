@@ -218,6 +218,39 @@ class VoiceClient {
     }
   }
 
+  Future<void> rejectCall() async {
+    try {
+      await TwilioVoice._methodChannel.invokeMethod('rejectCall');
+    } on PlatformException catch (err) {
+      throw TwilioVoice._convertException(err);
+    }
+  }
+
+  Future<void> acceptCall() async {
+    try {
+      await TwilioVoice._methodChannel.invokeMethod('acceptCall');
+    } on PlatformException catch (err) {
+      throw TwilioVoice._convertException(err);
+    }
+  }
+
+  Future<void> handleMessage(Map<String, dynamic> message) async
+  {
+    print("handleMessage: ");
+    try
+    {
+      final args = {
+        'notification': message['data'],
+      };
+      await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
+    }
+    on PlatformException catch (err)
+    {
+      print("handleMessage: "+err.toString());
+    }
+  }
+
+
   /// Registers for push notifications. Uses APNs on iOS and FCM on Android.
   ///
   /// Token is only used on Android. iOS implementation retrieves APNs token itself.
