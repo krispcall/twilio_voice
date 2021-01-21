@@ -18,5 +18,7 @@ public class Application extends FlutterApplication implements PluginRegistry.Pl
     @Override
     public void registerWith(PluginRegistry registry) {
         FirebaseCloudMessagingPluginRegistrant.registerWith(registry);
+        AwesomePluginRegistrant.registerWith(registry);
+        TwilioVoicePluginRegistrant.registerWith(registry);
     }
 }

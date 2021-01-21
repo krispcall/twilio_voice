@@ -3,7 +3,6 @@ package com.flutter.twilio.voice
 import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +13,7 @@ import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.flutter.twilio.voice.`object`.callListener
-import com.flutter.twilio.voice.events.registrationListener
+import com.flutter.twilio.voice.`object`.registrationListener
 import com.twilio.chat.ChannelListener
 import com.twilio.chat.ChatClient
 import com.twilio.chat.ErrorInfo

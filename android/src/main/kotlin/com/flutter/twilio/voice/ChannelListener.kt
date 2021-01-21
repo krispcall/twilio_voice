@@ -4,6 +4,7 @@ import com.twilio.chat.Channel
 import com.twilio.chat.ErrorInfo
 import com.twilio.chat.Member
 import com.twilio.chat.Message
+import com.twilio.voice.RegistrationListener
 import com.twilio.chat.ChannelListener as TwilioChannelListener
 import io.flutter.plugin.common.EventChannel
 

@@ -2,7 +2,6 @@ package com.flutter.twilio.voice
 
 import android.content.Context
 import androidx.annotation.NonNull
-import com.twilio.chat.ChatClient
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -80,8 +79,6 @@ class PluginHandler(private val applicationContext: Context) : MethodCallHandler
             "Messages#setAllMessagesConsumedWithResult" -> MessagesMethods.setAllMessagesConsumedWithResult(call, result)
             "Messages#setNoMessagesConsumedWithResult" -> MessagesMethods.setNoMessagesConsumedWithResult(call, result)
 
-            "Paginator#requestNextPage" -> PaginatorMethods.requestNextPage(call, result)
-
             else -> result.notImplemented()
         }
     }
@@ -97,30 +94,11 @@ class PluginHandler(private val applicationContext: Context) : MethodCallHandler
         if (propertiesObj == null) {
             return result.error("ERROR", "Missing properties", null)
         }
-
-        try {
-            val propertiesBuilder = ChatClient.Properties.Builder()
-            if (propertiesObj["region"] != null) {
-                TwilioVoice.debug("TwilioVoice.create => setting Properties.region to '${propertiesObj["region"]}'")
-                propertiesBuilder.setRegion(propertiesObj["region"] as String)
-            }
-
-            if (propertiesObj["deferCA"] != null) {
-                TwilioVoice.debug("TwilioVoice.create => setting Properties.setDeferCertificateTrustToPlatform to '${propertiesObj["deferCA"]}'")
-                propertiesBuilder.setDeferCertificateTrustToPlatform(propertiesObj["deferCA"] as Boolean)
-            }
-        } catch (e: Exception) {
-            result.error("ERROR", e.toString(), e)
-        }
     }
 
     private fun debug(call: MethodCall, result: MethodChannel.Result) {
         val enableNative = call.argument<Boolean>("native")
         val enableSdk = call.argument<Boolean>("sdk")
-
-        if (enableSdk != null && enableSdk) {
-            ChatClient.setLogLevel(android.util.Log.DEBUG)
-        }
 
         if (enableNative != null) {
             TwilioVoice.nativeDebug = enableNative

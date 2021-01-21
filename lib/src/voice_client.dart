@@ -27,8 +27,6 @@ class NotificationRegistrationEvent {
 /// Chat client - main entry point for the Chat SDK.
 class VoiceClient {
   /// Stream for the native chat events.
-  StreamSubscription<dynamic> _chatStream;
-
   /// Stream for the notification events.
   StreamSubscription<dynamic> _notificationStream;
 
@@ -176,7 +174,6 @@ class VoiceClient {
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
     onNotificationFailed = _onNotificationFailedCtrl.stream;
 
-    _chatStream = TwilioVoice._chatChannel.receiveBroadcastStream(0).listen(_parseEvents);
     _notificationStream = TwilioVoice._notificationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
   }
 
@@ -201,7 +198,6 @@ class VoiceClient {
   /// It will dispose() the client after shutdown, so it could not be reused.
   Future<void> shutdown() async {
     try {
-      await _chatStream.cancel();
       await _notificationStream.cancel();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);

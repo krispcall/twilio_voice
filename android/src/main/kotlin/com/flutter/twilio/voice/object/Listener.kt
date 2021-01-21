@@ -4,9 +4,11 @@ import android.util.Log
 import com.twilio.voice.Call
 import com.twilio.voice.Call.CallQualityWarning
 import com.twilio.voice.CallException
+import com.twilio.voice.RegistrationException
+import com.twilio.voice.RegistrationListener
 import java.util.*
 
-const val TAG = "CallListener";
+const val TAG = "Listener";
 fun callListener(): Call.Listener {
     return object : Call.Listener {
         /*
@@ -99,6 +101,28 @@ fun callListener(): Call.Listener {
                     Locale.US,
                     "Newly raised warnings: $currentWarnings Clear warnings $previousWarnings")
             Log.e(TAG, message)
+        }
+    }
+}
+
+fun registrationListener() : RegistrationListener {
+    return object : RegistrationListener {
+        override fun onRegistered(accessToken: String, fcmToken: String) {
+            Log.d(TAG, "Successfully registered accessToken $accessToken")
+            Log.d(TAG, "Successfully registered fcmToken $fcmToken")
+        }
+
+        override fun onError(error: RegistrationException,
+                             accessToken: String,
+                             fcmToken: String) {
+            val message = String.format(
+                    Locale.US,
+                    "Registration Error: %d, %s",
+                    error.errorCode,
+                    error.message)
+            Log.e(TAG, message)
+            Log.e(TAG, "FCM accessToken $accessToken")
+            Log.e(TAG, "FCM token $fcmToken")
         }
     }
 }

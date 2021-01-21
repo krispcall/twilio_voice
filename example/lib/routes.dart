@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:voice_example/pages/firebase_test_page.dart';
-import 'package:voice_example/pages/media_details_page.dart';
-import 'package:voice_example/pages/notification_details_page.dart';
+import 'package:voice_example/pages/call_accept_page.dart';
 import 'package:voice_example/pages/notification_examples_page.dart';
 
 const String PAGE_HOME = '/';
-const String PAGE_MEDIA_DETAILS = '/media-details';
-const String PAGE_NOTIFICATION_DETAILS = '/notification-details';
-const String PAGE_FIREBASE_TESTS = '/firebase-tests';
+const String PAGE_INCOMING_CALL='/incoming_call';
 
 Map<String, WidgetBuilder> materialRoutes = {
   PAGE_HOME: (context) => NotificationExamplesPage(),
-  PAGE_MEDIA_DETAILS: (context) => MediaDetailsPage(),
-  PAGE_NOTIFICATION_DETAILS: (context) => NotificationDetailsPage(ModalRoute.of(context).settings.arguments),
-  PAGE_FIREBASE_TESTS: (context) => FirebaseTestPage(ModalRoute.of(context).settings.arguments)
+  PAGE_INCOMING_CALL: (context) => CallAcceptPage(ModalRoute.of(context).settings.arguments,true),
 };

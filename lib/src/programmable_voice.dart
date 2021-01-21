@@ -4,8 +4,6 @@ part of flutter_twilio_voice;
 class TwilioVoice {
   static const MethodChannel _methodChannel = MethodChannel('TwilioVoice');
 
-  static const EventChannel _chatChannel = EventChannel('TwilioVoice/room');
-
   static const EventChannel _loggingChannel = EventChannel('TwilioVoice/logging');
 
   static const EventChannel _notificationChannel = EventChannel('TwilioVoice/notification');
