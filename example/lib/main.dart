@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:voice/twiliovoice.dart';
 import 'package:voice_example/routes.dart';
 
+import 'Constants/Constants.dart';
+
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-String accessToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzdjNTI3ZGNmNTY3ZjM1NTUyYWZjNWI1YWFmYzk2YTYzLTE2MTEyMTg5OTYiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGYwNDcwOTg4OGI2NThkMzVjZWVmNjQ0MWQ0ODQ5MGU2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoiam9zaGFuIn0sImlzcyI6IlNLN2M1MjdkY2Y1NjdmMzU1NTJhZmM1YjVhYWZjOTZhNjMiLCJleHAiOjE2MTEyMzMzOTYsIm5iZiI6MTYxMTIxODk5Niwic3ViIjoiQUMzMmQ0NmY1OWVhNjE5OWMwNGU1MmVhMTgwMGU3OTc0NyJ9.4CwkYMnrdrwPuNkvu7X1WehWlZ3SMt07XTB_7h5b0-I";
+String accessToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzdjNTI3ZGNmNTY3ZjM1NTUyYWZjNWI1YWFmYzk2YTYzLTE2MTEyMzQ0MzIiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGYwNDcwOTg4OGI2NThkMzVjZWVmNjQ0MWQ0ODQ5MGU2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoiam9zaGFuIn0sImlzcyI6IlNLN2M1MjdkY2Y1NjdmMzU1NTJhZmM1YjVhYWZjOTZhNjMiLCJleHAiOjE2MTEyNDg4MzIsIm5iZiI6MTYxMTIzNDQzMiwic3ViIjoiQUMzMmQ0NmY1OWVhNjE5OWMwNGU1MmVhMTgwMGU3OTc0NyJ9.6fel3ETJCd3pGbSjXgjSvyndfVfiDxcajzs2C8477Ts";
 VoiceClient voiceClient=VoiceClient(accessToken);
 
 
@@ -209,7 +211,7 @@ class _AppState extends State<App> {
       navigatorKey: App.navKey,
       title: App.name,
       color: App.mainColor,
-      initialRoute: PAGE_HOME,
+      initialRoute: Constants.PAGE_HOME,
       //onGenerateRoute: generateRoute,
       routes: materialRoutes,
       builder: (context, child) =>
@@ -286,13 +288,13 @@ Future<dynamic> onMessage(Map<String, dynamic> message) async
 {
   print('Main::onMessage => $message');
   voiceClient.handleMessage(message);
-  showIncomingCallNotification(3,NotificationImportance.Max,message);
+  showIncomingCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
 }
 
 Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) async {
   print('Main::onBackgroundMessage => $message');
   voiceClient.handleMessage(message);
-  showBackgroundCallNotification(3,NotificationImportance.Max,message);
+  showBackgroundCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
 }
 
 Future<dynamic> onLaunch(Map<String, dynamic> message) async {

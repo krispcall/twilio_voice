@@ -7,19 +7,19 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:voice_example/main.dart';
 
-class CallAcceptPage extends StatefulWidget
+class CallIncoming extends StatefulWidget
 {
 
   String get results => receivedNotification.toString();
   final ReceivedNotification receivedNotification;
   bool isConnected=true;
-  CallAcceptPage(this.receivedNotification,this.isConnected);
+  CallIncoming(this.receivedNotification,this.isConnected);
 
   @override
-  _CallAcceptPage createState() => _CallAcceptPage();
+  _CallIncoming createState() => _CallIncoming();
 }
 
-class _CallAcceptPage extends State<CallAcceptPage> {
+class _CallIncoming extends State<CallIncoming> {
 
   @override
   void initState()
@@ -38,12 +38,6 @@ class _CallAcceptPage extends State<CallAcceptPage> {
   Widget build(BuildContext context)
   {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-
-    ImageProvider largeIcon = widget.receivedNotification.largeIconImage;
-    ImageProvider bigPicture = widget.receivedNotification.bigPictureImage;
-
-    if(largeIcon == bigPicture) largeIcon = null;
-
 
     return Scaffold(
       appBar: AppBar(

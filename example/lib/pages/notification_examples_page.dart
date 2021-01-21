@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:voice_example/Constants/Constants.dart';
 import '../main.dart';
 import '../routes.dart';
 
@@ -24,7 +25,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
   TimeOfDay _pickedTime;
 
   bool delayLEDTests = false;
-
+  String targetPage="";
   String packageName = 'me.carda.awesome_notifications_example';
   @override
   void initState()
@@ -189,25 +190,19 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
                     child: Text("Make Call"),
                     onPressed: () async
                     {
+                      targetPage = Constants.PAGE_CALL_OUTGOING;
+                      Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          targetPage,
+                              (route) => (route.settings.name != targetPage) || route.isFirst,
+                        arguments:_toController.text
+                      );
                       await voiceClient.makeCall(
                         accessToken,
                         _fromController.text,
                         _toController.text,
                         "joshan",
                       );
-                      Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          PAGE_INCOMING_CALL,
-                              (route) => (route.settings.name != PAGE_INCOMING_CALL) || route.isFirst,
-                          arguments: null
-                      );
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Receive Call"),
-                    onPressed: () async
-                    {
-                      voiceClient.acceptCall();
                     },
                   ),
                 ]),
@@ -256,16 +251,15 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
     );
   }
 
-  void processDefaultActionReceived(ReceivedAction receivedNotification) {
-
+  void processDefaultActionReceived(ReceivedAction receivedNotification) async
+  {
+    await AwesomeNotifications().cancel(Constants.NOTIFICATION_CALL_INCOMING);
     Fluttertoast.showToast(msg: 'Action received');
-
-    String targetPage;
 
     // Avoid to reopen the media page if is already opened
     if(receivedNotification.buttonKeyPressed=='accept')
     {
-      targetPage = PAGE_INCOMING_CALL;
+      targetPage = Constants.PAGE_CALL_INCOMING;
       Navigator.pushNamedAndRemoveUntil(
           context,
           targetPage,
@@ -276,7 +270,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
     }
     else if(receivedNotification.buttonKeyPressed=='decline')
     {
-      targetPage = PAGE_INCOMING_CALL;
+      targetPage = Constants.PAGE_CALL_INCOMING;
       Navigator.pushNamedAndRemoveUntil(
           context,
           targetPage,
@@ -287,7 +281,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
     }
     else
     {
-      targetPage = PAGE_INCOMING_CALL;
+      targetPage = Constants.PAGE_CALL_INCOMING;
       Navigator.pushNamedAndRemoveUntil(
           context,
           targetPage,
