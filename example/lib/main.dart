@@ -1,21 +1,16 @@
 
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:voice/twiliovoice.dart';
-import 'package:voice_example/routes.dart';
+import 'package:voice_example/string/Strings.dart';
+import 'package:voice_example/view/splash/SplashView.dart';
+import 'AppInjector.dart';
+import 'colors/colors.dart';
 
-import 'Constants/Constants.dart';
-
-final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-String accessToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzdjNTI3ZGNmNTY3ZjM1NTUyYWZjNWI1YWFmYzk2YTYzLTE2MTEyMzQ0MzIiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGYwNDcwOTg4OGI2NThkMzVjZWVmNjQ0MWQ0ODQ5MGU2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmQ0MTdjYWM0MGUyYjlmNTczNTg3MmQxMjQ4YWMyYTliIn0sImlkZW50aXR5Ijoiam9zaGFuIn0sImlzcyI6IlNLN2M1MjdkY2Y1NjdmMzU1NTJhZmM1YjVhYWZjOTZhNjMiLCJleHAiOjE2MTEyNDg4MzIsIm5iZiI6MTYxMTIzNDQzMiwic3ViIjoiQUMzMmQ0NmY1OWVhNjE5OWMwNGU1MmVhMTgwMGU3OTc0NyJ9.6fel3ETJCd3pGbSjXgjSvyndfVfiDxcajzs2C8477Ts";
-VoiceClient voiceClient=VoiceClient(accessToken);
-
-
-Future<void> main() async {
+Future<void> main() async
+{
   WidgetsFlutterBinding.ensureInitialized();
-  _configureNotifications();
+  AppInjector.inject();
   AwesomeNotifications().initialize(
       null,
       [
@@ -170,8 +165,6 @@ Future<void> main() async {
         )
       ]
   );
-  voiceClient.registerForNotification(accessToken, await FirebaseMessaging().getToken());
-  print("FCM "+await FirebaseMessaging().getToken());
   runApp(App());
 }
 
@@ -181,12 +174,6 @@ Future<void> main() async {
 //#endregion
 class App extends StatefulWidget
 {
-
-  static final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
-
-  static String name = 'Push Notifications - Example App';
-  static Color mainColor = Color(0xFF9D50DD);
-
   @override
   _AppState createState() => _AppState();
 }
@@ -199,184 +186,25 @@ class _AppState extends State<App> {
   }
 
   @override
-  void dispose() {
+  void dispose()
+  {
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context)
   {
     return MaterialApp(
-      navigatorKey: App.navKey,
-      title: App.name,
-      color: App.mainColor,
-      initialRoute: Constants.PAGE_HOME,
-      //onGenerateRoute: generateRoute,
-      routes: materialRoutes,
-      builder: (context, child) =>
-          MediaQuery(data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true), child: child),
-      theme: ThemeData(
-
-        brightness: Brightness.light,
-
-        primaryColor:   App.mainColor,
-        accentColor:    Colors.blueGrey,
-        primarySwatch:  Colors.blueGrey,
-        canvasColor:    Colors.white,
-        focusColor:     Colors.blueAccent,
-        disabledColor:  Colors.grey,
-
-        backgroundColor: Colors.blueGrey.shade400,
-
-        appBarTheme: AppBarTheme(
-            brightness: Brightness.dark,
-            color: Colors.white,
-            elevation: 0,
-            iconTheme: IconThemeData(
-              color: App.mainColor,
-            ),
-            textTheme: TextTheme(
-              headline6: TextStyle(color: App.mainColor, fontSize: 18),
-            )
-        ),
-
-        fontFamily: 'Robot',
-
-        // Define the default TextTheme. Use this to specify the default
-        // text styling for headlines, titles, bodies of text, and more.
-        textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 64.0, height: 1.5, fontWeight: FontWeight.w500),
-          headline2: TextStyle(fontSize: 52.0, height: 1.5, fontWeight: FontWeight.w500),
-          headline3: TextStyle(fontSize: 48.0, height: 1.5, fontWeight: FontWeight.w500),
-          headline4: TextStyle(fontSize: 32.0, height: 1.5, fontWeight: FontWeight.w500),
-          headline5: TextStyle(fontSize: 28.0, height: 1.5, fontWeight: FontWeight.w500),
-          headline6: TextStyle(fontSize: 22.0, height: 1.5, fontWeight: FontWeight.w500),
-          subtitle1: TextStyle(fontSize: 18.0, height: 1.5, color: Colors.black54),
-          subtitle2: TextStyle(fontSize: 12.0, height: 1.5, color: Colors.black54),
-          button:    TextStyle(fontSize: 16.0, height: 1.5, color: Colors.black54),
-          bodyText1: TextStyle(fontSize: 16.0, height: 1.5),
-          bodyText2: TextStyle(fontSize: 16.0, height: 1.5),
-        ),
-
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.grey.shade200,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5))
-          ),
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-          textTheme: ButtonTextTheme.accent,
-        ),
-      ),
+      title: Strings.appName,
+      home: SplashView(),
+      color: CustomColor.themeRed,
+      debugShowCheckedModeBanner: false,
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1,),
+          child: child,
+        );
+      },
     );
   }
-}
-
-void _configureNotifications() async
-{
-  _firebaseMessaging.setAutoInitEnabled(true);
-  _firebaseMessaging.subscribeToTopic("com.flutter.twilio.voice_example");
-  _firebaseMessaging.configure(
-    onMessage: onMessage,
-    onBackgroundMessage: onBackgroundMessage,
-    onLaunch: onLaunch,
-    onResume: onResume,
-  );
-}
-
-Future<dynamic> onMessage(Map<String, dynamic> message) async
-{
-  print('Main::onMessage => $message');
-  voiceClient.handleMessage(message);
-  showIncomingCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
-}
-
-Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) async {
-  print('Main::onBackgroundMessage => $message');
-  voiceClient.handleMessage(message);
-  showBackgroundCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
-}
-
-Future<dynamic> onLaunch(Map<String, dynamic> message) async {
-  print('Main::onLaunch => $message');
-}
-
-Future<dynamic> onResume(Map<String, dynamic> message) async {
-  print('Main::onResume => $message');
-}
-
-Future<void> showIncomingCallNotification(int id,NotificationImportance importance,Map<String,dynamic> message) async
-{
-  String importanceKey = importance.toString().toLowerCase().split('.').last;
-  String channelKey = 'importance_'+importanceKey+'_channel';
-  String title = 'KrispCall';
-  String body=message['data']['twi_from']+" is calling.";
-
-  await AwesomeNotifications().setChannel(
-    NotificationChannel(
-      channelKey: channelKey,
-      channelName: title,
-      channelDescription: body,
-      importance: importance,
-      defaultColor: Colors.red,
-      ledColor: Colors.green,
-      playSound: true,
-      vibrationPattern: highVibrationPattern,
-      enableVibration: true,
-    ),
-  );
-
-  await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: id,
-        channelKey: channelKey,
-        title: title,
-        body: body,
-      ),
-      actionButtons: [
-        NotificationActionButton(
-          key: 'decline',
-          label: 'Decline',
-          buttonType: ActionButtonType.DisabledAction,
-          autoCancel: true,
-          enabled: true,
-        ),
-        NotificationActionButton(
-          key: 'accept',
-          label: 'Accept',
-          buttonType: ActionButtonType.Default,
-          autoCancel: true,
-          enabled: true,
-        ),
-      ]);
-}
-
-Future<dynamic> showBackgroundCallNotification(int id,NotificationImportance importance,Map<String,dynamic> message) async
-{
-  String importanceKey = importance.toString().toLowerCase().split('.').last;
-  String channelKey = 'importance_'+importanceKey+'_channel';
-  String title = 'KrispCall';
-  String body=message['data']['twi_from']+" is calling.";
-  await AwesomeNotifications().setChannel(
-    NotificationChannel(
-      channelKey: channelKey,
-      channelName: title,
-      channelDescription: body,
-      importance: importance,
-      defaultColor: Colors.red,
-      ledColor: Colors.green,
-      playSound: true,
-      vibrationPattern: highVibrationPattern,
-      enableVibration: true,
-    ),
-  );
-
-  await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: id,
-        channelKey: channelKey,
-        title: title,
-        body: body,
-      ),
-  );
 }

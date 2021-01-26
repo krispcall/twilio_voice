@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:voice_example/main.dart';
 
 class CallOutgoing extends StatefulWidget
 {
@@ -80,7 +79,7 @@ class _CallOutgoing extends State<CallOutgoing> {
                   color: Colors.red,
                   onPressed:()
                   {
-                    voiceClient.rejectCall();
+                    // voiceClient.rejectCall();
                     Navigator.of(context).pop();
                   },
                   child: Icon(

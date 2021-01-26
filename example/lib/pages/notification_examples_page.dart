@@ -5,17 +5,16 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:voice_example/Constants/Constants.dart';
-import '../main.dart';
-import '../routes.dart';
 
-class NotificationExamplesPage extends StatefulWidget {
+class NotificationExamplesPage extends StatefulWidget
+{
 
   @override
   _NotificationExamplesPageState createState() => _NotificationExamplesPageState();
 }
 
-class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
-
+class _NotificationExamplesPageState extends State<NotificationExamplesPage>
+{
   String _platformVersion = 'Unknown';
   TextEditingController _toController, _fromController;
   bool notificationsAllowed = false;
@@ -26,7 +25,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
 
   bool delayLEDTests = false;
   String targetPage="";
-  String packageName = 'me.carda.awesome_notifications_example';
+
   @override
   void initState()
   {
@@ -197,12 +196,12 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
                               (route) => (route.settings.name != targetPage) || route.isFirst,
                         arguments:_toController.text
                       );
-                      await voiceClient.makeCall(
-                        accessToken,
-                        _fromController.text,
-                        _toController.text,
-                        "joshan",
-                      );
+                      // await voiceClient.makeCall(
+                      //   accessToken,
+                      //   _fromController.text,
+                      //   _toController.text,
+                      //   "joshan",
+                      // );
                     },
                   ),
                 ]),
@@ -266,7 +265,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
               (route) => (route.settings.name != targetPage) || route.isFirst,
           arguments: receivedNotification
       );
-      voiceClient.acceptCall();
+      // voiceClient.acceptCall();
     }
     else if(receivedNotification.buttonKeyPressed=='decline')
     {
@@ -277,7 +276,7 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
               (route) => (route.settings.name != targetPage) || route.isFirst,
           arguments: receivedNotification
       );
-      voiceClient.rejectCall();
+      // voiceClient.rejectCall();
     }
     else
     {
@@ -294,7 +293,8 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage> {
 
   }
 
-  void processInputTextReceived(ReceivedAction receivedNotification) {
-    Fluttertoast.showToast(msg: 'Msg: '+receivedNotification.buttonKeyInput, backgroundColor: App.mainColor, textColor: Colors.white);
+  void processInputTextReceived(ReceivedAction receivedNotification)
+  {
+    Fluttertoast.showToast(msg: 'Msg: '+receivedNotification.buttonKeyInput,textColor: Colors.white);
   }
 }
