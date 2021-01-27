@@ -54,7 +54,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     companion object {
         @Suppress("unused")
         @JvmStatic
-        fun registerWith(registrar: PluginRegistry.Registrar) {
+        fun registerWith(registrar: PluginRegistry.Registrar) 
+        {
             instance = TwilioVoice()
             instance.onAttachedToEngine(registrar.context(), registrar.messenger())
             //TODO not need to here
@@ -69,8 +70,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         @JvmStatic
         lateinit var instance: TwilioVoice
 
-        @JvmStatic
-        lateinit var applicationContext: Context
 
         @JvmStatic
         lateinit var activity: Activity
@@ -119,7 +118,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         instance = this
-        applicationContext=binding.applicationContext
         onAttachedToEngine(binding.applicationContext, binding.binaryMessenger)
     }
 
@@ -194,7 +192,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, callListener)
+            activeCall = Voice.connect(activity, connectOptions, callListener)
 
         } catch (e: Exception) {
             result.error("ERROR", e.toString(), e)
@@ -308,7 +306,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     private fun checkPermissionForMicrophone(): Boolean
     {
-        val resultMic = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
+        val resultMic = ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO)
         return resultMic == PackageManager.PERMISSION_GRANTED
     }
 
