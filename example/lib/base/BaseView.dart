@@ -24,25 +24,29 @@ abstract class BaseState<P extends BasePresenter, V extends BaseView>
   bool _contentVisible = true;
   bool _isLoading = false;
 
-  BaseState() {
+  BaseState()
+  {
     presenter = Injector.getInjector().get();
     presenter.view = this;
   }
 
   @override
-  void initState() {
+  void initState()
+  {
     super.initState();
     presenter.init();
   }
 
   @override
-  dispose() {
+  dispose()
+  {
     presenter.dispose();
     super.dispose();
   }
 
   @override
-  showProgress({bool contentVisible = false}) {
+  showProgress({bool contentVisible = false})
+  {
     setState(() {
       _contentVisible = true;
       _isLoading = true;
