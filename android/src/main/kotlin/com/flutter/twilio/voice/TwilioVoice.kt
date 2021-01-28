@@ -306,7 +306,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     private fun checkPermissionForMicrophone(): Boolean
     {
-        val resultMic = ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO)
+        val resultMic = ContextCompat.checkSelfPermission(activity.applicationContext, Manifest.permission.RECORD_AUDIO)
         return resultMic == PackageManager.PERMISSION_GRANTED
     }
 
