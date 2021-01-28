@@ -269,10 +269,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     fun registerForNotification(call: MethodCall, result: MethodChannel.Result)
     {
-        if (!checkPermissionForMicrophone())
-        {
-            requestPermissionForMicrophone()
-        }
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
@@ -302,17 +298,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
-    }
-
-    private fun checkPermissionForMicrophone(): Boolean
-    {
-        val resultMic = ContextCompat.checkSelfPermission(activity.applicationContext, Manifest.permission.RECORD_AUDIO)
-        return resultMic == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun requestPermissionForMicrophone()
-    {
-        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.RECORD_AUDIO), MIC_PERMISSION_REQUEST_CODE)
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
