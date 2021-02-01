@@ -191,6 +191,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         activeCallInvite?.reject(activity)
     }
 
+    fun disConnect(call: MethodCall, result: MethodChannel.Result)
+    {
+        activeCall?.disconnect()
+    }
+
     fun handleMessage(call: MethodCall, result: MethodChannel.Result)
     {
         Log.d(TAG, "handleMessage kt: "+call.argument("notification"))
@@ -336,12 +341,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             {
 //            audioSwitch.deactivate()
 //            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
-                Log.d(TAG, "Connect failure")
                 val message = String.format(
                         Locale.US,
                         "Call Error: %d, %s",
                         error.errorCode,
                         error.message)
+                Log.d(TAG, "Connect failure $message")
             }
 
             override fun onConnected(call: Call)
@@ -356,7 +361,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "onReconnecting")
             }
 
-            override fun onReconnected(call: Call) {
+            override fun onReconnected(call: Call)
+            {
                 Log.d(TAG, "onReconnected")
             }
 

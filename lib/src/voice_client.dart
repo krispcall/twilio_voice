@@ -36,7 +36,7 @@ class VoiceClient {
 
   final String accessToken;
 
-  bool _isReachabilityEnabled;
+  bool _isReachAbilityEnabled;
   //#endregion
 
   //#region Public API properties
@@ -53,8 +53,8 @@ class VoiceClient {
 
   /// Get [Users] interface.
   /// Get reachability service status.
-  bool get isReachabilityEnabled {
-    return _isReachabilityEnabled;
+  bool get isReachAbilityEnabled{
+    return _isReachAbilityEnabled;
   }
   //#endregion
 
@@ -217,6 +217,14 @@ class VoiceClient {
   Future<void> rejectCall() async {
     try {
       await TwilioVoice._methodChannel.invokeMethod('rejectCall');
+    } on PlatformException catch (err) {
+      throw TwilioVoice._convertException(err);
+    }
+  }
+
+  Future<void> disConnect() async {
+    try {
+      await TwilioVoice._methodChannel.invokeMethod('disConnect');
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
