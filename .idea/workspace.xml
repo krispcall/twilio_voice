@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4b13636b-fd2e-4f53-b255-2664280a3fd2" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[7265daf6]" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="e5b7af66-7198-428a-b674-a105c6b54ae0" />
+  </component>
+  <component name="ProjectId" id="1mdqdotTlQozOosojt4usqglOCr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/android" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\flutter.twilio\voice\example\lib\response" />
+      <recent name="E:\flutter.twilio\voice\example\lib\view\incoming" />
+      <recent name="E:\flutter.twilio\voice\example\lib" />
+      <recent name="E:\flutter.twilio\voice\example\lib\Constants" />
+      <recent name="E:\flutter.twilio\voice\example\lib\pages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\flutter.twilio\voice\android\src\main\res\raw" />
+      <recent name="E:\flutter.twilio\voice\android\src\main" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4b13636b-fd2e-4f53-b255-2664280a3fd2" name="Default Changelist" comment="" />
+      <created>1609833906283</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609833906283</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Changes">
+      <created>1609840993211</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1609840993211</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Changes">
+      <created>1609955935180</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1609955935181</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Final Working">
+      <created>1610615948951</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610615948951</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Incoming call received fixes">
+      <created>1611041976740</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611041976740</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Incoming All Done">
+      <created>1611223756629</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611223756630</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Notification Cancellation">
+      <created>1611235688227</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1611235688227</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Incoming Received">
+      <created>1611645867287</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1611645867288</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Incoming Received">
+      <created>1611739725121</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1611739725122</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Permissions Removed">
+      <created>1611807306084</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1611807306084</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Permission removing test">
+      <created>1611807712964</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611807712965</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Disconnecting">
+      <created>1612149085928</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1612149085928</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changes" />
+    <MESSAGE value="Final Working" />
+    <MESSAGE value="Incoming call received fixes" />
+    <MESSAGE value="Incoming All Done" />
+    <MESSAGE value="Notification Cancellation" />
+    <MESSAGE value="Incoming Received" />
+    <MESSAGE value="Permissions Removed" />
+    <MESSAGE value="Permission removing test" />
+    <MESSAGE value="Disconnecting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disconnecting" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611628951888">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1611628951888" />
+    <state x="92" y="92" width="1182" height="544" key="AVDManager" timestamp="1611644806220">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1611644806220" />
+    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1612149084769">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1612149084769" />
+    <state x="102" y="55" key="DiffContextDialog" timestamp="1611807710426">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="102" y="55" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1611807710426" />
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1612144169490">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1612144169490" />
+    <state x="543" y="276" key="Github.Dialog.Accounts.Choose" timestamp="1610615968288">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="543" y="276" key="Github.Dialog.Accounts.Choose/0.0.1366.728@0.0.1366.728" timestamp="1610615968288" />
+    <state x="482" y="244" key="Github.ShareDialog" timestamp="1609838585944">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="482" y="244" key="Github.ShareDialog/0.0.1366.728@0.0.1366.728" timestamp="1609838585944" />
+    <state x="432" y="69" key="Github.UntrackedFilesDialog" timestamp="1609838597968">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="432" y="69" key="Github.UntrackedFilesDialog/0.0.1366.728@0.0.1366.728" timestamp="1609838597967" />
+    <state width="1323" height="325" key="GridCell.Tab.0.bottom" timestamp="1611818538660">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="325" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1611818538660" />
+    <state width="1323" height="325" key="GridCell.Tab.0.center" timestamp="1611818538660">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="325" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1611818538660" />
+    <state width="1323" height="325" key="GridCell.Tab.0.left" timestamp="1611818538660">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="325" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1611818538660" />
+    <state width="1323" height="325" key="GridCell.Tab.0.right" timestamp="1611818538660">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="325" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1611818538660" />
+    <state x="184" y="0" key="SettingsEditor" timestamp="1609904222148">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1609904222148" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1612149130555">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1612149130555" />
+    <state x="390" y="97" width="589" height="596" key="find.popup" timestamp="1612149285754">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="390" y="97" width="589" height="596" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1612149285754" />
+    <state x="488" y="225" key="git4idea.rebase.GitRebaseDialog" timestamp="1609841000651">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="488" y="225" key="git4idea.rebase.GitRebaseDialog/0.0.1366.728@0.0.1366.728" timestamp="1609841000651" />
+  </component>
+</project>
