@@ -38,8 +38,7 @@ class SignUpState extends BaseState<SignUpPresenter, SignUpView> implements Sign
   {
     controllerTo = TextEditingController();
     controllerFrom = TextEditingController(text: "support_agent_+61480031300");
-    AwesomeNotifications().createdStream.listen(
-            (receivedNotification) {
+    AwesomeNotifications().createdStream.listen((receivedNotification) {
           String createdSourceText = AssertUtils.toSimpleEnumString(
               receivedNotification.createdSource);
           Fluttertoast.showToast(

@@ -1,25 +1,18 @@
 package com.flutter.twilio.voice
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.flutter.twilio.voice.`object`.callListener
-import com.flutter.twilio.voice.`object`.registrationListener
 import com.twilio.chat.ChannelListener
 import com.twilio.chat.ChatClient
 import com.twilio.chat.ErrorInfo
 import com.twilio.chat.StatusListener
 import com.twilio.voice.*
-import com.twilio.voice.Call.Listener
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -74,8 +67,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         @JvmStatic
         lateinit var activity: Activity
 
-        private const val MIC_PERMISSION_REQUEST_CODE = 1
-
         @JvmStatic
         var chatClient: ChatClient? = null
 
@@ -84,12 +75,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         private var activeCallInvite: CallInvite? = null
 
         private var cancelledCallIvites: CancelledCallInvite? = null
-
-        var callListener: Listener = callListener()
-
-        var registrationListener: RegistrationListener = registrationListener()
-
-        val LOG_TAG = "TwilioVoice"
 
         var mediaProgressSink: EventChannel.EventSink? = null
 
@@ -108,7 +93,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         fun debug(msg: String)
         {
             if (nativeDebug) {
-                Log.d(LOG_TAG, msg)
+                Log.d(TAG, msg)
                 handler.post(Runnable {
                     loggingSink?.success(msg)
                 })
@@ -192,9 +177,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(activity, connectOptions, callListener)
+            activeCall = Voice.connect(activity, connectOptions, callListener())
 
-        } catch (e: Exception) {
+        }
+        catch (e: Exception)
+        {
             result.error("ERROR", e.toString(), e)
         }
     }
@@ -245,8 +232,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     val nestedBundle = createBundleFromMap(value as Map<String, Any>)
                     bundle.putBundle(key, nestedBundle as Bundle)
                 }
-                else -> throw IllegalArgumentException(
-                        "Unsupported value type: $value")
+                else -> throw IllegalArgumentException("Unsupported value type: $value")
             }
         }
         return bundle
@@ -259,7 +245,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.callerInfo)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
-            activeCallInvite?.accept(activity, callListener)
+            activeCallInvite?.accept(activity, callListener())
         }
         catch (error: Exception)
         {
@@ -272,10 +258,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
-        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, registrationListener)
+        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, registrationListener())
     }
 
-    fun unregisterForNotification(call: MethodCall, result: MethodChannel.Result) {
+    fun unregisterForNotification(call: MethodCall, result: MethodChannel.Result)
+    {
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
 
         chatClient?.unregisterFCMToken(ChatClient.FCMToken(token), object : StatusListener() {
@@ -314,5 +301,128 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     override fun onDetachedFromActivity() {
         TODO("Not yet implemented")
+    }
+
+    private fun callListener(): Call.Listener
+    {
+        return object : Call.Listener
+        {
+            /*
+                 * This callback is emitted once before the Call.Listener.onConnected() callback when
+                 * the callee is being alerted of a Call. The behavior of this callback is determined by
+                 * the answerOnBridge flag provided in the Dial verb of your TwiML application
+                 * associated with this client. If the answerOnBridge flag is false, which is the
+                 * default, the Call.Listener.onConnected() callback will be emitted immediately after
+                 * Call.Listener.onRinging(). If the answerOnBridge flag is true, this will cause the
+                 * call to emit the onConnected callback only after the call is answered.
+                 * See answeronbridge for more details on how to use it with the Dial TwiML verb. If the
+                 * twiML response contains a Say verb, then the call will emit the
+                 * Call.Listener.onConnected callback immediately after Call.Listener.onRinging() is
+                 * raised, irrespective of the value of answerOnBridge being set to true or false
+                 */
+            override fun onRinging(call: Call)
+            {
+                Log.d(TAG, "Ringing")
+                /*
+                     * When [answerOnBridge](https://www.twilio.com/docs/voice/twiml/dial#answeronbridge)
+                     * is enabled in the <Dial> TwiML verb, the caller will not hear the ringback while
+                     * the call is ringing and awaiting to be accepted on the callee's side. The application
+                     * can use the `SoundPoolManager` to play custom audio files between the
+                     * `Call.Listener.onRinging()` and the `Call.Listener.onConnected()` callbacks.*/
+//                 SoundPoolManager.getInstance(this@VoiceActivity).playRinging()
+            }
+
+            override fun onConnectFailure(call: Call, error: CallException)
+            {
+//            audioSwitch.deactivate()
+//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
+                Log.d(TAG, "Connect failure")
+                val message = String.format(
+                        Locale.US,
+                        "Call Error: %d, %s",
+                        error.errorCode,
+                        error.message)
+            }
+
+            override fun onConnected(call: Call)
+            {
+//            audioSwitch.activate()
+//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
+//            Log.d(TAG, "Connected")
+                activeCall = call
+            }
+
+            override fun onReconnecting(call: Call, callException: CallException) {
+                Log.d(TAG, "onReconnecting")
+            }
+
+            override fun onReconnected(call: Call) {
+                Log.d(TAG, "onReconnected")
+            }
+
+            override fun onDisconnected(call: Call, error: CallException?) {
+//            audioSwitch.deactivate()
+//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
+                Log.d(TAG, "Disconnected")
+                if (error != null) {
+                    val message = String.format(
+                            Locale.US,
+                            "Call Error: %d, %s",
+                            error.errorCode,
+                            error.message)
+                    Log.e(TAG, message)
+                }
+            }
+
+            /*
+                 * currentWarnings: existing quality warnings that have not been cleared yet
+                 * previousWarnings: last set of warnings prior to receiving this callback
+                 *
+                 * Example:
+                 *   - currentWarnings: { A, B }
+                 *   - previousWarnings: { B, C }
+                 *
+                 * Newly raised warnings = currentWarnings - intersection = { A }
+                 * Newly cleared warnings = previousWarnings - intersection = { C }
+                 */
+            override fun onCallQualityWarningsChanged(call: Call,
+                                                      currentWarnings: MutableSet<Call.CallQualityWarning>,
+                                                      previousWarnings: MutableSet<Call.CallQualityWarning>) {
+                if (previousWarnings.size > 1) {
+                    val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
+                    currentWarnings.removeAll(previousWarnings)
+                    intersection.retainAll(previousWarnings)
+                    previousWarnings.removeAll(intersection)
+                }
+                val message = String.format(
+                        Locale.US,
+                        "Newly raised warnings: $currentWarnings Clear warnings $previousWarnings")
+                Log.e(TAG, message)
+            }
+        }
+    }
+
+    private fun registrationListener() : RegistrationListener
+    {
+        return object : RegistrationListener
+        {
+            override fun onRegistered(accessToken: String, fcmToken: String)
+            {
+                Log.d(TAG, "Successfully registered accessToken $accessToken")
+                Log.d(TAG, "Successfully registered fcmToken $fcmToken")
+            }
+
+            override fun onError(error: RegistrationException, accessToken: String, fcmToken: String)
+            {
+                val message = String.format(
+                        Locale.US,
+                        "Registration Error: %d, %s",
+                        error.errorCode,
+                        error.message)
+                Log.e(TAG, message)
+                Log.e(TAG, "FCM accessToken $accessToken")
+                Log.e(TAG, "FCM token $fcmToken")
+            }
+        }
     }
 }
