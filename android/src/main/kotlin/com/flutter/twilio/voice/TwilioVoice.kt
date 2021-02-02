@@ -201,6 +201,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         if (activeCall != null)
         {
             val mute = !activeCall!!.isMuted
+            Log.d(TAG, "mute: $mute")
             activeCall!!.mute(mute)
         }
     }
