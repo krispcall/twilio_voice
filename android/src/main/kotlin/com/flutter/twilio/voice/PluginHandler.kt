@@ -21,6 +21,8 @@ class PluginHandler(private val applicationContext: Context) : MethodCallHandler
 
             "disConnect"->TwilioVoice.instance.disConnect(call,result)
 
+            "mute"->TwilioVoice.instance.mute(call,result)
+
             "acceptCall"->TwilioVoice.instance.acceptCall(call,result)
 
             "handleMessage"->TwilioVoice.instance.handleMessage(call,result)

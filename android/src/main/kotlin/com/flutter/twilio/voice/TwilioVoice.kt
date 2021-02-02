@@ -196,22 +196,28 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         activeCall?.disconnect()
     }
 
+    fun mute(call: MethodCall, result: MethodChannel.Result)
+    {
+        if (activeCall != null)
+        {
+            val mute = !activeCall!!.isMuted
+            activeCall!!.mute(mute)
+        }
+    }
+
     fun handleMessage(call: MethodCall, result: MethodChannel.Result)
     {
-        Log.d(TAG, "handleMessage kt: "+call.argument("notification"))
+        Log.d(TAG, "handleMessage kt: " + call.argument("notification"))
         val notification = call.argument("notification") as? Map<String, Any>
 
         val bundle=createBundleFromMap(notification)
-        Voice.handleMessage(activity, bundle!!, object : MessageListener
-        {
-            override fun onCallInvite(callInvite: CallInvite)
-            {
+        Voice.handleMessage(activity, bundle!!, object : MessageListener {
+            override fun onCallInvite(callInvite: CallInvite) {
                 Log.d(TAG, "onCallInvite: ")
                 activeCallInvite = callInvite
             }
 
-            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?)
-            {
+            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?) {
                 Log.d(TAG, "onCancelledCallInvite: ")
                 cancelledCallIvites = cancelledCallInvite
             }
