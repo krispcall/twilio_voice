@@ -112,31 +112,31 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         methodChannel = MethodChannel(messenger, "TwilioVoice")
         methodChannel.setMethodCallHandler(pluginHandler)
 
-        mediaProgressChannel = EventChannel(messenger, "TwilioVoice/media_progress")
-        mediaProgressChannel.setStreamHandler(object : EventChannel.StreamHandler {
-            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel attached")
-                mediaProgressSink = events
-            }
-
-            override fun onCancel(arguments: Any?) {
-                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel detached")
-                mediaProgressSink = null
-            }
-        })
-
-        loggingChannel = EventChannel(messenger, "TwilioVoice/logging")
-        loggingChannel.setStreamHandler(object : EventChannel.StreamHandler {
-            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel attached")
-                loggingSink = events
-            }
-
-            override fun onCancel(arguments: Any?) {
-                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel detached")
-                loggingSink = null
-            }
-        })
+//        mediaProgressChannel = EventChannel(messenger, "TwilioVoice/media_progress")
+//        mediaProgressChannel.setStreamHandler(object : EventChannel.StreamHandler {
+//            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+//                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel attached")
+//                mediaProgressSink = events
+//            }
+//
+//            override fun onCancel(arguments: Any?) {
+//                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel detached")
+//                mediaProgressSink = null
+//            }
+//        })
+//
+//        loggingChannel = EventChannel(messenger, "TwilioVoice/logging")
+//        loggingChannel.setStreamHandler(object : EventChannel.StreamHandler {
+//            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+//                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel attached")
+//                loggingSink = events
+//            }
+//
+//            override fun onCancel(arguments: Any?) {
+//                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel detached")
+//                loggingSink = null
+//            }
+//        })
 
         notificationChannel = EventChannel(messenger, "TwilioVoice/notification")
         notificationChannel.setStreamHandler(object : EventChannel.StreamHandler {
@@ -188,7 +188,14 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     fun rejectCall(call: MethodCall, result: MethodChannel.Result)
     {
-        activeCallInvite?.reject(activity)
+        if(activeCallInvite!=null)
+        {
+            activeCallInvite?.reject(activity)
+        }
+        else
+        {
+            Log.d(TAG, "handleMessage kt: activeCallInvite is null. Pass handleMessage before invoking")
+        }
     }
 
     fun disConnect(call: MethodCall, result: MethodChannel.Result)
