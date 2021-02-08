@@ -280,9 +280,9 @@ class VoiceClient {
   /// Unregisters for push notifications.  Uses APNs on iOS and FCM on Android.
   ///
   /// Token is only used on Android. iOS implementation retrieves APNs token itself.
-  Future<void> unregisterForNotification(String token) async {
+  Future<void> unregisterForNotification(String accessToken,String token) async {
     try {
-      await TwilioVoice._methodChannel.invokeMethod('unregisterForNotification', <String, Object>{'token': token});
+      await TwilioVoice._methodChannel.invokeMethod('unregisterForNotification', <String, Object>{'accessToken':accessToken,'token': token});
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
