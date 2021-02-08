@@ -42,7 +42,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
-    companion object {
+    companion object
+    {
         @Suppress("unused")
         @JvmStatic
         fun registerWith(registrar: PluginRegistry.Registrar) 
@@ -73,13 +74,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         lateinit var chatListener: ChatListener
 
-        lateinit var registrationListener: RegistrationListener
-
         var channelChannels: HashMap<String, EventChannel> = hashMapOf()
         var channelListeners: HashMap<String, ChannelListener> = hashMapOf()
 
         @JvmStatic
-        lateinit var activity: Activity
+        lateinit var applicationContext: Context
 
         private var activeCall: Call? = null
 
@@ -106,6 +105,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     private fun onAttachedToEngine(applicationContext: Context, messenger: BinaryMessenger) {
         TwilioVoice.messenger = messenger
+        TwilioVoice.applicationContext = applicationContext
+
         val pluginHandler = PluginHandler(applicationContext)
         methodChannel = MethodChannel(messenger, "TwilioVoice")
         methodChannel.setMethodCallHandler(pluginHandler)
@@ -190,7 +191,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(activity, connectOptions, callListener())
+            activeCall = Voice.connect(applicationContext, connectOptions, callListener())
 
         }
         catch (e: Exception)
@@ -203,7 +204,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     {
         if(activeCallInvite!=null)
         {
-            activeCallInvite?.reject(activity)
+            activeCallInvite?.reject(applicationContext)
         }
         else
         {
@@ -232,7 +233,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         val notification = call.argument("notification") as? Map<String, Any>
 
         val bundle=createBundleFromMap(notification)
-        Voice.handleMessage(activity, bundle!!, object : MessageListener {
+        Voice.handleMessage(applicationContext, bundle!!, object : MessageListener {
             override fun onCallInvite(callInvite: CallInvite) {
                 Log.d(TAG, "onCallInvite: ")
                 activeCallInvite = callInvite
@@ -277,7 +278,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.callerInfo)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
-            activeCallInvite?.accept(activity, callListener())
+            activeCallInvite?.accept(applicationContext, callListener())
         }
         catch (error: Exception)
         {
@@ -353,7 +354,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding)
     {
-        activity=binding.activity
+        applicationContext=binding.activity
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -361,7 +362,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        activity=binding.activity
+        applicationContext=binding.activity
     }
 
     override fun onDetachedFromActivity() {
