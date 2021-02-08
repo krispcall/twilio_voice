@@ -308,7 +308,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         notificationSink?.success(eventData)
     }
 
-    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    override fun onAttachedToActivity(binding: ActivityPluginBinding)
+    {
         activity=binding.activity
     }
 
@@ -317,7 +318,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+        activity=binding.activity
     }
 
     override fun onDetachedFromActivity() {
