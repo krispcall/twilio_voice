@@ -1,6 +1,7 @@
 package com.flutter.twilio.voice
 
 import com.twilio.chat.*
+import com.twilio.voice.RegistrationException
 import io.flutter.plugin.common.EventChannel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -267,6 +268,15 @@ object Mapper {
                 "code" to e.code,
                 "message" to e.message,
                 "status" to e.status
+        )
+    }
+
+    fun errorInfoToMap(e: RegistrationException?): Map<String, Any?>? {
+        if (e == null)
+            return null
+        return mapOf(
+                "code" to e.errorCode,
+                "message" to e.message
         )
     }
 

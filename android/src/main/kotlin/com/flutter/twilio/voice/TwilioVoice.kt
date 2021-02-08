@@ -22,8 +22,6 @@ import java.util.*
 
 /** TwilioVoice */
 
-const val TAG="TwilioVoice"
-@Suppress("UNCHECKED_CAST")
 class TwilioVoice: FlutterPlugin, ActivityAware{
     private lateinit var methodChannel: MethodChannel
 
@@ -51,11 +49,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         {
             instance = TwilioVoice()
             instance.onAttachedToEngine(registrar.context(), registrar.messenger())
-            //TODO not need to here
-
-            /*
-         * Ensure the microphone permission is enabled
-         */
         }
 
         lateinit var messenger: BinaryMessenger
@@ -63,18 +56,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         @JvmStatic
         lateinit var instance: TwilioVoice
 
-
-        @JvmStatic
-        lateinit var activity: Activity
-
         @JvmStatic
         var chatClient: ChatClient? = null
 
-        private var activeCall: Call? = null
-
-        private var activeCallInvite: CallInvite? = null
-
-        private var cancelledCallIvites: CancelledCallInvite? = null
+        const val TAG="TwilioVoice"
 
         var mediaProgressSink: EventChannel.EventSink? = null
 
@@ -86,8 +71,21 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         var nativeDebug: Boolean = false
 
+        lateinit var chatListener: ChatListener
+
+        lateinit var registrationListener: RegistrationListener
+
         var channelChannels: HashMap<String, EventChannel> = hashMapOf()
         var channelListeners: HashMap<String, ChannelListener> = hashMapOf()
+
+        @JvmStatic
+        lateinit var activity: Activity
+
+        private var activeCall: Call? = null
+
+        private var activeCallInvite: CallInvite? = null
+
+        private var cancelledCallIvites: CancelledCallInvite? = null
 
         @JvmStatic
         fun debug(msg: String)
@@ -112,44 +110,59 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         methodChannel = MethodChannel(messenger, "TwilioVoice")
         methodChannel.setMethodCallHandler(pluginHandler)
 
-//        mediaProgressChannel = EventChannel(messenger, "TwilioVoice/media_progress")
-//        mediaProgressChannel.setStreamHandler(object : EventChannel.StreamHandler {
-//            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-//                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel attached")
-//                mediaProgressSink = events
-//            }
-//
-//            override fun onCancel(arguments: Any?) {
-//                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel detached")
-//                mediaProgressSink = null
-//            }
-//        })
-//
-//        loggingChannel = EventChannel(messenger, "TwilioVoice/logging")
-//        loggingChannel.setStreamHandler(object : EventChannel.StreamHandler {
-//            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-//                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel attached")
-//                loggingSink = events
-//            }
-//
-//            override fun onCancel(arguments: Any?) {
-//                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel detached")
-//                loggingSink = null
-//            }
-//        })
+        chatChannel = EventChannel(messenger, "TwilioVoice/room")
+        chatChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Chat eventChannel attached")
+                chatListener.events = events
+                chatClient?.setListener(chatListener)
+            }
+
+            override fun onCancel(arguments: Any?) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Chat eventChannel detached")
+                chatListener.events = null
+            }
+        })
+
+        mediaProgressChannel = EventChannel(messenger, "TwilioVoice/media_progress")
+        mediaProgressChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => MediaProgress eventChannel attached")
+                mediaProgressSink = events
+            }
+
+            override fun onCancel(arguments: Any?) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => MediaProgress eventChannel detached")
+                mediaProgressSink = null
+            }
+        })
+
+        loggingChannel = EventChannel(messenger, "TwilioVoice/logging")
+        loggingChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Logging eventChannel attached")
+                loggingSink = events
+            }
+
+            override fun onCancel(arguments: Any?) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Logging eventChannel detached")
+                loggingSink = null
+            }
+        })
 
         notificationChannel = EventChannel(messenger, "TwilioVoice/notification")
         notificationChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioVoice.onAttachedToEngine => Notification eventChannel attached")
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Notification eventChannel attached")
                 notificationSink = events
             }
 
             override fun onCancel(arguments: Any) {
-                debug("TwilioVoice.onAttachedToEngine => Notification eventChannel detached")
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Notification eventChannel detached")
                 notificationSink = null
             }
         })
+
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -277,7 +290,19 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
-        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, registrationListener())
+        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener {
+            override fun onRegistered(accessToken: String, fcmToken: String) {
+                debug("TwilioProgrammableChatPlugin.registerForNotification => registered with FCM $token")
+                sendNotificationEventRegistration("registered", mapOf("result" to true))
+                result.success(null)
+            }
+
+            override fun onError(registrationException: RegistrationException, accessToken: String, fcmToken: String) {
+                debug("TwilioProgrammableChatPlugin.registerForNotification => failed to register with FCM")
+                sendNotificationEventRegistration("registered", mapOf("result" to false), registrationException)
+                result.error("FAILED", "Failed to register for FCM notifications", registrationException)
+            }
+        })
     }
 
     fun unregisterForNotification(call: MethodCall, result: MethodChannel.Result)
@@ -285,7 +310,19 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
-        Voice.unregister(accessToken, Voice.RegistrationChannel.FCM, token, unRegistrationListener())
+        Voice.unregister(accessToken, Voice.RegistrationChannel.FCM, token, object : UnregistrationListener {
+            override fun onUnregistered(accessToken: String?, fcmToken: String?) {
+                debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
+                sendNotificationEventRegistration("deregistered", mapOf("result" to true))
+                result.success(null)
+            }
+
+            override fun onError(registrationException: RegistrationException?, accessToken: String?, fcmToken: String?) {
+                debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
+                sendNotificationEventRegistration("deregistered", mapOf("result" to false), registrationException)
+                result.error("FAILED", "Failed to unregister for FCM notifications", registrationException)
+            }
+        })
 //        chatClient?.unregisterFCMToken(ChatClient.FCMToken(token), object : StatusListener() {
 //            override fun onSuccess() {
 //                debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
@@ -303,6 +340,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     }
 
     private fun sendNotificationEvent(name: String, data: Any?, e: ErrorInfo? = null)
+    {
+        val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
+        notificationSink?.success(eventData)
+    }
+
+    private fun sendNotificationEventRegistration(name: String, data: Any?, e: RegistrationException? = null)
     {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
@@ -421,30 +464,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                         Locale.US,
                         "Newly raised warnings: $currentWarnings Clear warnings $previousWarnings")
                 Log.e(TAG, message)
-            }
-        }
-    }
-
-    private fun registrationListener() : RegistrationListener
-    {
-        return object : RegistrationListener
-        {
-            override fun onRegistered(accessToken: String, fcmToken: String)
-            {
-                Log.d(TAG, "Successfully registered accessToken $accessToken")
-                Log.d(TAG, "Successfully registered fcmToken $fcmToken")
-            }
-
-            override fun onError(error: RegistrationException, accessToken: String, fcmToken: String)
-            {
-                val message = String.format(
-                        Locale.US,
-                        "Registration Error: %d, %s",
-                        error.errorCode,
-                        error.message)
-                Log.e(TAG, message)
-                Log.e(TAG, "FCM accessToken $accessToken")
-                Log.e(TAG, "FCM token $fcmToken")
             }
         }
     }
