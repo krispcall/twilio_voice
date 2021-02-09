@@ -390,10 +390,10 @@ class VoiceClient {
         break;
       case 'onCallInvite':
         print("onCallInvite ${data.toString()}");
-        var callSid = data['callSid'] as String;
-        var to = data['to'] as String;
-        var from = data['from'] as String;
-        var customParameters = data['customParameters'] as Map<String, String>;
+        var callSid = data['data']['callSid'] as String;
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<String, String>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -402,10 +402,10 @@ class VoiceClient {
         break;
       case 'onCancelledCallInvite':
         print("onCancelledCallInvite ${data.toString()}");
-        var callSid = data['callSid'] as String;
-        var to = data['to'] as String;
-        var from = data['from'] as String;
-        var customParameters = data['customParameters'] as Map<String, String>;
+        var callSid = data['data']['callSid'] as String;
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<String, String>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
