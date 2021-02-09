@@ -22,7 +22,7 @@ class NotificationRegistrationEvent {
   NotificationRegistrationEvent(this.isSuccessful, this.error);
 }
 
-class HandleMessageEvent {
+class CallInvite {
   final String callerInfo;
 
   final String callSid;
@@ -33,7 +33,19 @@ class HandleMessageEvent {
 
   final Map<String, String> customParameters;
 
-  HandleMessageEvent(this.callerInfo, this.callSid, this.to, this.from, this.customParameters);
+  CallInvite(this.callerInfo, this.callSid, this.to, this.from, this.customParameters);
+}
+
+class CancelledCallInvite {
+  final String callSid;
+
+  final String to;
+
+  final String from;
+
+  final Map<String, String> customParameters;
+
+  CancelledCallInvite(this.callSid, this.to, this.from, this.customParameters);
 }
 //#endregion
 
@@ -147,11 +159,13 @@ class VoiceClient {
 
   final StreamController<void> _onTokenExpiredCtrl = StreamController<void>.broadcast();
 
-  Stream<HandleMessageEvent> onHandleMessage;
+  Stream<CallInvite> onCallInvite;
 
-  final StreamController<HandleMessageEvent> _onHandleMessage = StreamController<HandleMessageEvent>.broadcast();
+  final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
+  Stream<CancelledCallInvite> onCancelledCallInvite;
 
+  final StreamController<CancelledCallInvite> _onCancelledCallInvite = StreamController<CancelledCallInvite>.broadcast();
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
@@ -191,7 +205,9 @@ class VoiceClient {
     onTokenAboutToExpire = _onTokenAboutToExpireCtrl.stream;
     onTokenExpired = _onTokenExpiredCtrl.stream;
 
-    onHandleMessage = _onHandleMessage.stream;
+    onCallInvite = _onCallInvite.stream;
+
+    onCancelledCallInvite = _onCancelledCallInvite.stream;
 
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
@@ -225,6 +241,8 @@ class VoiceClient {
     {
       await _notificationStream.cancel();
       await _handleMessageStream.cancel();
+      await _onClientSynchronizationCtrl.close();
+      await _onCancelledCallInvite.close();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
     } on PlatformException catch (err) {
@@ -383,7 +401,7 @@ class VoiceClient {
       case 'tokenAboutToExpire':
         _onTokenAboutToExpireCtrl.add(null);
         break;
-      case 'onHandleMessage':
+      case 'onCallInvite':
         var callerInfo = data['callerInfo'] as String;
         var callSid = data['callSid'] as String;
         var to = data['to'] as String;
@@ -394,7 +412,18 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onHandleMessage.add(HandleMessageEvent(callerInfo,callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callerInfo,callSid,to,from,customParameters));
+        break;
+      case 'onCancelledCallInvite':
+        var callSid = data['callSid'] as String;
+        var to = data['to'] as String;
+        var from = data['from'] as String;
+        var customParameters = data['customParameters'] as Map<String, String>;
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        _onCancelledCallInvite.add(CancelledCallInvite(callSid,to,from,customParameters));
         break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);

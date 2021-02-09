@@ -266,8 +266,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "onCancelledCallInvite: ")
                 cancelledCallIvites = cancelledCallInvite
                 debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
-                sendEventHandleMessage("onCallInvite", mapOf("callInvite" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                result.error("FAILED", "Failed to register for FCM notifications", callException)
+                sendEventHandleMessage("onCancelledCallInvite", mapOf("callInvite" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                result.success(Mapper.cancelledCallInviteToMap(cancelledCallInvite))
             }
         })
     }
