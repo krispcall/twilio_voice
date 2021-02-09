@@ -301,7 +301,6 @@ object Mapper {
 
     fun callInviteToMap(message: CallInvite): Map<String, Any?> {
         return mapOf(
-                "callerInfo" to message.callerInfo,
                 "callSid" to message.callSid,
                 "to" to message.to,
                 "from" to message.from,
