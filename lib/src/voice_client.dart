@@ -29,7 +29,7 @@ class CallInvite {
 
   final String from;
 
-  final Map<String, String> customParameters;
+  final Map<dynamic, dynamic> customParameters;
 
   CallInvite(this.callSid, this.to, this.from, this.customParameters);
 }
@@ -393,7 +393,7 @@ class VoiceClient {
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<String, String>;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -405,7 +405,7 @@ class VoiceClient {
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<String, String>;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
