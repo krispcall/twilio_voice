@@ -384,11 +384,14 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     private fun sendEventRegistration(name: String, data: Any?, e: RegistrationException? = null)
     {
+        Log.d(TAG, "sendEventRegistration: "+data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
     }
 
-    private fun sendEventHandleMessage(name: String, data: Any?, e: CallException? = null) {
+    private fun sendEventHandleMessage(name: String, data: Any?, e: CallException? = null)
+    {
+        Log.d(TAG, "sendEventHandleMessage: "+data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         handleMessageSink?.success(eventData)
     }
