@@ -277,7 +277,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "onCallInvite: "+mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
                 cancelledCallIvites = cancelledCallInvite
                 debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
-                sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                sendEventHandleMessage("onCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
                 result.error("Call Cancelled", "Call Cancelled", callException)
             }
         })
