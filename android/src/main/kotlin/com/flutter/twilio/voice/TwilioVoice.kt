@@ -175,7 +175,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         mediaProgressChannel.setStreamHandler(null)
     }
 
-    fun makeCall(call: MethodCall, result: MethodChannel.Result) {
+    fun makeCall(call: MethodCall, result: MethodChannel.Result)
+    {
         val to = call.argument<String>("To") ?: return result.error("ERROR", "Missing To", null)
         val from = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
         val accessToken = call.argument<String>("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
@@ -293,14 +294,24 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener {
             override fun onRegistered(accessToken: String, fcmToken: String) {
+                Log.d(TAG, "Successfully Registered accessToken $accessToken")
+                Log.d(TAG, "Successfully Registered fcmToken $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => registered with FCM $token")
-                sendNotificationEventRegistration("registered", mapOf("result" to true))
+                sendNotificationEventRegistration("registerForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
             override fun onError(registrationException: RegistrationException, accessToken: String, fcmToken: String) {
+                val message = String.format(
+                        Locale.US,
+                        "Registration Error: %d, %s",
+                        registrationException.errorCode,
+                        registrationException.message)
+                Log.e(TAG, message)
+                Log.e(TAG, "FCM accessToken $accessToken")
+                Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => failed to register with FCM")
-                sendNotificationEventRegistration("registered", mapOf("result" to false), registrationException)
+                sendNotificationEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to register for FCM notifications", registrationException)
             }
         })
@@ -313,14 +324,24 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         Voice.unregister(accessToken, Voice.RegistrationChannel.FCM, token, object : UnregistrationListener {
             override fun onUnregistered(accessToken: String?, fcmToken: String?) {
+                Log.d(TAG, "Successfully unRegistered accessToken $accessToken")
+                Log.d(TAG, "Successfully unRegistered fcmToken $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
-                sendNotificationEventRegistration("deregistered", mapOf("result" to true))
+                sendNotificationEventRegistration("unregisterForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
-            override fun onError(registrationException: RegistrationException?, accessToken: String?, fcmToken: String?) {
+            override fun onError(registrationException: RegistrationException, accessToken: String?, fcmToken: String?) {
+                val message = String.format(
+                        Locale.US,
+                        "Registration Error: %d, %s",
+                        registrationException.errorCode,
+                        registrationException.message)
+                Log.e(TAG, message)
+                Log.e(TAG, "FCM accessToken $accessToken")
+                Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
-                sendNotificationEventRegistration("deregistered", mapOf("result" to false), registrationException)
+                sendNotificationEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to unregister for FCM notifications", registrationException)
             }
         })
@@ -465,28 +486,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                         Locale.US,
                         "Newly raised warnings: $currentWarnings Clear warnings $previousWarnings")
                 Log.e(TAG, message)
-            }
-        }
-    }
-
-    private fun unRegistrationListener() : UnregistrationListener
-    {
-        return object : UnregistrationListener
-        {
-            override fun onUnregistered(accessToken: String?, fcmToken: String?) {
-                Log.d(TAG, "Successfully unRegistered accessToken $accessToken")
-                Log.d(TAG, "Successfully unRegistered fcmToken $fcmToken")
-            }
-            override fun onError(error: RegistrationException, accessToken: String, fcmToken: String)
-            {
-                val message = String.format(
-                        Locale.US,
-                        "Registration Error: %d, %s",
-                        error.errorCode,
-                        error.message)
-                Log.e(TAG, message)
-                Log.e(TAG, "FCM accessToken $accessToken")
-                Log.e(TAG, "FCM token $fcmToken")
             }
         }
     }

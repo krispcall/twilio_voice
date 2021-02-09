@@ -381,10 +381,10 @@ class VoiceClient {
     }
 
     switch (eventName) {
-      case 'registered':
+      case 'registerForNotification':
         _onNotificationRegisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
         break;
-      case 'deregistered':
+      case 'unregisterForNotification':
         _onNotificationDeregisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
         break;
       default:
