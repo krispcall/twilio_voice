@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4b13636b-fd2e-4f53-b255-2664280a3fd2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/programmable_voice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/programmable_voice.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612752019259</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Event Register and deregister">
+      <created>1612838328434</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1612838328434</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -189,7 +197,8 @@
     <MESSAGE value="Disconnecting Test" />
     <MESSAGE value="Mic Permission and Mute function added" />
     <MESSAGE value="Unregister for Incoming Twilio" />
-    <option name="LAST_COMMIT_MESSAGE" value="Unregister for Incoming Twilio" />
+    <MESSAGE value="Event Register and deregister" />
+    <option name="LAST_COMMIT_MESSAGE" value="Event Register and deregister" />
   </component>
   <component name="WindowStateProjectService">
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611628951888">
@@ -200,10 +209,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1611644806220" />
-    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1612752014917">
+    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1612838327098">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1612752014917" />
+    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1612838327098" />
     <state x="102" y="55" key="DiffContextDialog" timestamp="1611807710426">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -244,10 +253,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1609904222148" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1612752043909">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1612838420462">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1612752043909" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1612838420462" />
     <state x="390" y="97" width="589" height="596" key="find.popup" timestamp="1612149285754">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

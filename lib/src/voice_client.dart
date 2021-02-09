@@ -2,7 +2,6 @@ part of flutter_twilio_voice;
 
 //#region VoiceClient events
 
-
 class NewMessageNotificationEvent {
   final String channelSid;
 
@@ -27,6 +26,8 @@ class NotificationRegistrationEvent {
 /// Chat client - main entry point for the Chat SDK.
 class VoiceClient {
   /// Stream for the native chat events.
+  StreamSubscription<dynamic> _handleMessageStream;
+
   /// Stream for the notification events.
   StreamSubscription<dynamic> _notificationStream;
 
@@ -132,6 +133,11 @@ class VoiceClient {
 
   final StreamController<void> _onTokenExpiredCtrl = StreamController<void>.broadcast();
 
+  Stream<void> onHandleMessage;
+
+  final StreamController<void> _onHandleMessage = StreamController<void>.broadcast();
+
+
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
@@ -170,10 +176,14 @@ class VoiceClient {
     onRemovedFromChannelNotification = _onRemovedFromChannelNotificationCtrl.stream;
     onTokenAboutToExpire = _onTokenAboutToExpireCtrl.stream;
     onTokenExpired = _onTokenExpiredCtrl.stream;
+
+    onHandleMessage = _onHandleMessage.stream;
+
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
     onNotificationFailed = _onNotificationFailedCtrl.stream;
 
+    _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseEvents);
     _notificationStream = TwilioVoice._notificationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
   }
 
@@ -197,8 +207,10 @@ class VoiceClient {
   ///
   /// It will dispose() the client after shutdown, so it could not be reused.
   Future<void> shutdown() async {
-    try {
+    try
+    {
       await _notificationStream.cancel();
+      await _handleMessageStream.cancel();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
     } on PlatformException catch (err) {
@@ -248,20 +260,16 @@ class VoiceClient {
 
   Future<void> handleMessage(Map<String, dynamic> message) async
   {
-    print("handleMessage: ");
     try
     {
-      final args = {
-        'notification': message['data'],
-      };
+      final args = {'notification': message['data']};
       await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
     }
     on PlatformException catch (err)
     {
-      print("handleMessage: "+err.toString());
+      throw TwilioVoice._convertException(err);
     }
   }
-
 
   /// Registers for push notifications. Uses APNs on iOS and FCM on Android.
   ///
@@ -292,7 +300,8 @@ class VoiceClient {
   /// Update properties from a map.
 
   /// Parse native chat client events to the right event streams.
-  void _parseEvents(dynamic event) {
+  void _parseEvents(dynamic event)
+  {
     final String eventName = event['name'];
     TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data'] ?? {});
@@ -321,7 +330,8 @@ class VoiceClient {
 
     dynamic reason;
 
-    switch (eventName) {
+    switch (eventName)
+    {
       case 'addedToChannelNotification':
         assert(channelSid != null);
         _onAddedToChannelNotificationCtrl.add(channelSid);
@@ -358,6 +368,9 @@ class VoiceClient {
         break;
       case 'tokenAboutToExpire':
         _onTokenAboutToExpireCtrl.add(null);
+        break;
+      case 'onHandleMessage':
+        _onHandleMessage.add(null);
         break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);

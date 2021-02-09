@@ -1,6 +1,8 @@
 package com.flutter.twilio.voice
 
 import com.twilio.chat.*
+import com.twilio.voice.CallInvite
+import com.twilio.voice.CancelledCallInvite
 import com.twilio.voice.RegistrationException
 import io.flutter.plugin.common.EventChannel
 import java.text.SimpleDateFormat
@@ -185,6 +187,7 @@ object Mapper {
         )
     }
 
+
     private fun mediaToMap(media: Message.Media?, messageIndex: Long, channelSid: String): Map<String, Any>? {
         if (media == null) return null
         return mapOf(
@@ -284,5 +287,24 @@ object Mapper {
         if (date == null) return null
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         return dateFormat.format(date)
+    }
+
+    fun callInviteToMap(message: CallInvite): Map<String, Any?> {
+        return mapOf(
+                "callerInfo" to message.callerInfo,
+                "callSid" to message.callSid,
+                "to" to message.to,
+                "from" to message.from,
+                "customParameters" to message.customParameters.toMap()
+        )
+    }
+
+    fun cancelledCallInviteToMap(message: CancelledCallInvite): Map<String, Any?> {
+        return mapOf(
+                "callSid" to message.callSid,
+                "to" to message.to,
+                "from" to message.from,
+                "customParameters" to message.customParameters.toMap()
+        )
     }
 }

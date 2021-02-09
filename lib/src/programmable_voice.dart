@@ -8,6 +8,8 @@ class TwilioVoice {
 
   static const EventChannel _notificationChannel = EventChannel('TwilioVoice/notification');
 
+  static const EventChannel _handleMessageChannel = EventChannel('TwilioVoice/handleMessage');
+
   static StreamSubscription _loggingStream;
 
   static bool _dartDebug = false;

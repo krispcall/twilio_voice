@@ -33,6 +33,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     private lateinit var notificationChannel: EventChannel
 
+    private lateinit var handleMessageChannel: EventChannel
+
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
     // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
     // plugin registration via this function while apps migrate to use the new Android APIs
@@ -67,6 +69,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         var loggingSink: EventChannel.EventSink? = null
 
         var notificationSink: EventChannel.EventSink? = null
+
+        var handleMessageSink: EventChannel.EventSink? = null
 
         var handler = Handler(Looper.getMainLooper())
 
@@ -164,6 +168,19 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             }
         })
 
+        handleMessageChannel = EventChannel(messenger, "TwilioVoice/handleMessage")
+        handleMessageChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => handleMessage eventChannel attached")
+                handleMessageSink = events
+            }
+
+            override fun onCancel(arguments: Any) {
+                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => handleMessage eventChannel detached")
+                handleMessageSink = null
+            }
+        })
+
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -173,6 +190,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         loggingChannel.setStreamHandler(null)
         notificationChannel.setStreamHandler(null)
         mediaProgressChannel.setStreamHandler(null)
+        handleMessageChannel.setStreamHandler(null)
     }
 
     fun makeCall(call: MethodCall, result: MethodChannel.Result)
@@ -235,14 +253,21 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         val bundle=createBundleFromMap(notification)
         Voice.handleMessage(applicationContext, bundle!!, object : MessageListener {
-            override fun onCallInvite(callInvite: CallInvite) {
+            override fun onCallInvite(callInvite: CallInvite)
+            {
                 Log.d(TAG, "onCallInvite: ")
                 activeCallInvite = callInvite
+                debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCallInvite ${callInvite.from}")
+                sendEventHandleMessage("onCallInvite", mapOf("callInvite" to Mapper.callInviteToMap(callInvite)))
+                result.success(Mapper.callInviteToMap(callInvite))
             }
 
             override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?) {
                 Log.d(TAG, "onCancelledCallInvite: ")
                 cancelledCallIvites = cancelledCallInvite
+                debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
+                sendEventHandleMessage("onCallInvite", mapOf("callInvite" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                result.error("FAILED", "Failed to register for FCM notifications", callException)
             }
         })
     }
@@ -297,7 +322,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully Registered accessToken $accessToken")
                 Log.d(TAG, "Successfully Registered fcmToken $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => registered with FCM $token")
-                sendNotificationEventRegistration("registerForNotification", mapOf("result" to true))
+                sendEventRegistration("registerForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
@@ -311,7 +336,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => failed to register with FCM")
-                sendNotificationEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
+                sendEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to register for FCM notifications", registrationException)
             }
         })
@@ -327,7 +352,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully unRegistered accessToken $accessToken")
                 Log.d(TAG, "Successfully unRegistered fcmToken $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
-                sendNotificationEventRegistration("unregisterForNotification", mapOf("result" to true))
+                sendEventRegistration("unregisterForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
@@ -341,36 +366,21 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
-                sendNotificationEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
+                sendEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to unregister for FCM notifications", registrationException)
             }
         })
-//        chatClient?.unregisterFCMToken(ChatClient.FCMToken(token), object : StatusListener() {
-//            override fun onSuccess() {
-//                debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
-//                sendNotificationEvent("deregistered", mapOf("result" to true))
-//                result.success(null)
-//            }
-//
-//            override fun onError(errorInfo: ErrorInfo?) {
-//                debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
-//                super.onError(errorInfo)
-//                sendNotificationEvent("deregistered", mapOf("result" to false), errorInfo)
-//                result.error("FAILED", "Failed to unregister for FCM notifications", errorInfo)
-//            }
-//        })
     }
 
-    private fun sendNotificationEvent(name: String, data: Any?, e: ErrorInfo? = null)
+    private fun sendEventRegistration(name: String, data: Any?, e: RegistrationException? = null)
     {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
     }
 
-    private fun sendNotificationEventRegistration(name: String, data: Any?, e: RegistrationException? = null)
-    {
+    private fun sendEventHandleMessage(name: String, data: Any?, e: ErrorInfo? = null) {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
-        notificationSink?.success(eventData)
+        handleMessageSink?.success(eventData)
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding)
