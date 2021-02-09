@@ -268,7 +268,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 result.success(Mapper.callInviteToMap(callInvite))
             }
 
-            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?) {
+            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?)
+            {
                 Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.callSid)
                 Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.to)
                 Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.from)
@@ -277,13 +278,14 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 cancelledCallIvites = cancelledCallInvite
                 debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
                 sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                result.success(Mapper.cancelledCallInviteToMap(cancelledCallInvite))
+                result.error("Call Cancelled", "Call Cancelled", callException)
             }
         })
     }
 
     private fun createBundleFromMap(parameterMap: Map<String, Any>?): Bundle? {
-        if (parameterMap == null) {
+        if (parameterMap == null)
+        {
             return null
         }
 
