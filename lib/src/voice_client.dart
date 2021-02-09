@@ -389,6 +389,7 @@ class VoiceClient {
         _onTokenAboutToExpireCtrl.add(null);
         break;
       case 'onCallInvite':
+        print("onCallInvite ${data.toString()}");
         var callSid = data['callSid'] as String;
         var to = data['to'] as String;
         var from = data['from'] as String;
@@ -400,6 +401,7 @@ class VoiceClient {
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
+        print("onCancelledCallInvite ${data.toString()}");
         var callSid = data['callSid'] as String;
         var to = data['to'] as String;
         var from = data['from'] as String;

@@ -255,18 +255,28 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         Voice.handleMessage(applicationContext, bundle!!, object : MessageListener {
             override fun onCallInvite(callInvite: CallInvite)
             {
-                Log.d(TAG, "onCallInvite: ")
+                Log.d(TAG, "onCallInvite: "+callInvite.callSid)
+                Log.d(TAG, "onCallInvite: "+callInvite.callerInfo)
+                Log.d(TAG, "onCallInvite: "+callInvite.to)
+                Log.d(TAG, "onCallInvite: "+callInvite.from)
+                Log.d(TAG, "onCallInvite: "+callInvite.customParameters.toString())
+                Log.d(TAG, "onCallInvite: "+mapOf("data" to Mapper.callInviteToMap(callInvite)))
+
                 activeCallInvite = callInvite
                 debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCallInvite ${callInvite.from}")
-                sendEventHandleMessage("onCallInvite", mapOf("callInvite" to Mapper.callInviteToMap(callInvite)))
+                sendEventHandleMessage("onCallInvite", mapOf("data" to Mapper.callInviteToMap(callInvite)))
                 result.success(Mapper.callInviteToMap(callInvite))
             }
 
             override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, @Nullable callException: CallException?) {
-                Log.d(TAG, "onCancelledCallInvite: ")
+                Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.callSid)
+                Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.to)
+                Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.from)
+                Log.d(TAG, "onCancelledCallInvite: "+cancelledCallInvite.customParameters.toString())
+                Log.d(TAG, "onCallInvite: "+mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
                 cancelledCallIvites = cancelledCallInvite
                 debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
-                sendEventHandleMessage("onCancelledCallInvite", mapOf("callInvite" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
                 result.success(Mapper.cancelledCallInviteToMap(cancelledCallInvite))
             }
         })
@@ -322,7 +332,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully Registered accessToken $accessToken")
                 Log.d(TAG, "Successfully Registered fcmToken $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => registered with FCM $token")
-                sendEventRegistration("registerForNotification", mapOf("result" to true))
+                sendEventRegistration("registerForNotification", mapOf("data" to true))
                 result.success(null)
             }
 
@@ -336,7 +346,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => failed to register with FCM")
-                sendEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
+                sendEventRegistration("registerForNotification", mapOf("data" to false), registrationException)
                 result.error("FAILED", "Failed to register for FCM notifications", registrationException)
             }
         })
@@ -352,7 +362,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully unRegistered accessToken $accessToken")
                 Log.d(TAG, "Successfully unRegistered fcmToken $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
-                sendEventRegistration("unregisterForNotification", mapOf("result" to true))
+                sendEventRegistration("unregisterForNotification", mapOf("data" to true))
                 result.success(null)
             }
 
@@ -366,7 +376,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
-                sendEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
+                sendEventRegistration("unregisterForNotification", mapOf("data" to false), registrationException)
                 result.error("FAILED", "Failed to unregister for FCM notifications", registrationException)
             }
         })
