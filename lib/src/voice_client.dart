@@ -229,7 +229,6 @@ class VoiceClient {
       await _notificationStream.cancel();
       await _handleMessageStream.cancel();
       await _onClientSynchronizationCtrl.close();
-      await _onCancelledCallInvite.close();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
     } on PlatformException catch (err) {
@@ -399,6 +398,18 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        break;
+      case 'onCancelledCallInvite':
+        print("onCancelledCallInvite ${data.toString()}");
+        var callSid = data['data']['callSid'] as String;
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);
