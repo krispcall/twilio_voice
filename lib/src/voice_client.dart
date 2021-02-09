@@ -23,8 +23,6 @@ class NotificationRegistrationEvent {
 }
 
 class CallInvite {
-  final String callerInfo;
-
   final String callSid;
 
   final String to;
@@ -33,19 +31,7 @@ class CallInvite {
 
   final Map<String, String> customParameters;
 
-  CallInvite(this.callerInfo, this.callSid, this.to, this.from, this.customParameters);
-}
-
-class CancelledCallInvite {
-  final String callSid;
-
-  final String to;
-
-  final String from;
-
-  final Map<String, String> customParameters;
-
-  CancelledCallInvite(this.callSid, this.to, this.from, this.customParameters);
+  CallInvite(this.callSid, this.to, this.from, this.customParameters);
 }
 //#endregion
 
@@ -163,9 +149,9 @@ class VoiceClient {
 
   final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
-  Stream<CancelledCallInvite> onCancelledCallInvite;
+  Stream<CallInvite> onCancelledCallInvite;
 
-  final StreamController<CancelledCallInvite> _onCancelledCallInvite = StreamController<CancelledCallInvite>.broadcast();
+  final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
@@ -403,17 +389,15 @@ class VoiceClient {
         _onTokenAboutToExpireCtrl.add(null);
         break;
       case 'onCallInvite':
-        var callerInfo = data['callerInfo'] as String;
         var callSid = data['callSid'] as String;
         var to = data['to'] as String;
         var from = data['from'] as String;
         var customParameters = data['customParameters'] as Map<String, String>;
-        assert(callerInfo != null);
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCallInvite.add(CallInvite(callerInfo,callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
         var callSid = data['callSid'] as String;
@@ -424,7 +408,7 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCancelledCallInvite.add(CancelledCallInvite(callSid,to,from,customParameters));
+        _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);
