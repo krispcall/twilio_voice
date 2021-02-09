@@ -21,6 +21,20 @@ class NotificationRegistrationEvent {
 
   NotificationRegistrationEvent(this.isSuccessful, this.error);
 }
+
+class HandleMessageEvent {
+  final String callerInfo;
+
+  final String callSid;
+
+  final String to;
+
+  final String from;
+
+  final Map<String, String> customParameters;
+
+  HandleMessageEvent(this.callerInfo, this.callSid, this.to, this.from, this.customParameters);
+}
 //#endregion
 
 /// Chat client - main entry point for the Chat SDK.
@@ -133,9 +147,9 @@ class VoiceClient {
 
   final StreamController<void> _onTokenExpiredCtrl = StreamController<void>.broadcast();
 
-  Stream<void> onHandleMessage;
+  Stream<HandleMessageEvent> onHandleMessage;
 
-  final StreamController<void> _onHandleMessage = StreamController<void>.broadcast();
+  final StreamController<HandleMessageEvent> _onHandleMessage = StreamController<HandleMessageEvent>.broadcast();
 
 
   /// Called when token has expired.
@@ -370,7 +384,17 @@ class VoiceClient {
         _onTokenAboutToExpireCtrl.add(null);
         break;
       case 'onHandleMessage':
-        _onHandleMessage.add(null);
+        var callerInfo = data['callerInfo'] as String;
+        var callSid = data['callSid'] as String;
+        var to = data['to'] as String;
+        var from = data['from'] as String;
+        var customParameters = data['customParameters'] as Map<String, String>;
+        assert(callerInfo != null);
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        _onHandleMessage.add(HandleMessageEvent(callerInfo,callSid,to,from,customParameters));
         break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);
