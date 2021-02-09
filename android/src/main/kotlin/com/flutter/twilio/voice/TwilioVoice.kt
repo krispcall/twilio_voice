@@ -332,7 +332,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully Registered accessToken $accessToken")
                 Log.d(TAG, "Successfully Registered fcmToken $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => registered with FCM $token")
-                sendEventRegistration("registerForNotification", mapOf("data" to true))
+                sendEventRegistration("registerForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
@@ -346,7 +346,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioProgrammableChatPlugin.registerForNotification => failed to register with FCM")
-                sendEventRegistration("registerForNotification", mapOf("data" to false), registrationException)
+                sendEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to register for FCM notifications", registrationException)
             }
         })
@@ -362,7 +362,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.d(TAG, "Successfully unRegistered accessToken $accessToken")
                 Log.d(TAG, "Successfully unRegistered fcmToken $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => unregistered with FCM $token")
-                sendEventRegistration("unregisterForNotification", mapOf("data" to true))
+                sendEventRegistration("unregisterForNotification", mapOf("result" to true))
                 result.success(null)
             }
 
@@ -376,7 +376,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 Log.e(TAG, "FCM accessToken $accessToken")
                 Log.e(TAG, "FCM token $fcmToken")
                 debug("TwilioVoice.unregisterForNotification => failed to unregister with FCM")
-                sendEventRegistration("unregisterForNotification", mapOf("data" to false), registrationException)
+                sendEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
                 result.error("FAILED", "Failed to unregister for FCM notifications", registrationException)
             }
         })
