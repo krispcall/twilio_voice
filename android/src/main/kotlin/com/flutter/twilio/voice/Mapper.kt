@@ -1,6 +1,7 @@
 package com.flutter.twilio.voice
 
 import com.twilio.chat.*
+import com.twilio.voice.CallException
 import com.twilio.voice.CallInvite
 import com.twilio.voice.CancelledCallInvite
 import com.twilio.voice.RegistrationException
@@ -275,6 +276,15 @@ object Mapper {
     }
 
     fun errorInfoToMap(e: RegistrationException?): Map<String, Any?>? {
+        if (e == null)
+            return null
+        return mapOf(
+                "code" to e.errorCode,
+                "message" to e.message
+        )
+    }
+
+    fun errorInfoToMap(e: CallException?): Map<String, Any?>? {
         if (e == null)
             return null
         return mapOf(

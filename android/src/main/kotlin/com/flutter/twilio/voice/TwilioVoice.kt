@@ -378,7 +378,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         notificationSink?.success(eventData)
     }
 
-    private fun sendEventHandleMessage(name: String, data: Any?, e: ErrorInfo? = null) {
+    private fun sendEventHandleMessage(name: String, data: Any?, e: CallException? = null) {
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         handleMessageSink?.success(eventData)
     }

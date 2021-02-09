@@ -218,7 +218,8 @@ class VoiceClient {
   }
 
   /// Construct from a map.
-  factory VoiceClient._fromMap(Map<String, dynamic> map) {
+  factory VoiceClient._fromMap(Map<String, dynamic> map)
+  {
     var chatClient = VoiceClient(map['accessToken']);
     return chatClient;
   }
