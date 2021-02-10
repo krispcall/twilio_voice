@@ -88,7 +88,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
         private var activeCallInvite: CallInvite? = null
 
-        private var cancelledCallIvites: CancelledCallInvite? = null
+        private var cancelledCallInvites: CancelledCallInvite? = null
 
         @JvmStatic
         fun debug(msg: String)
@@ -262,9 +262,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
             override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, callException: CallException?) {
                 Log.d(TAG, "onCancelledCallInvite: "+mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                cancelledCallIvites = cancelledCallInvite
-                debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
-                sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                if(cancelledCallInvites!=null)
+                {
+                    cancelledCallInvites = cancelledCallInvite
+                    debug("TwilioProgrammableChatPlugin.handleMessage => handleMessage onCancelledCallInvite ${cancelledCallInvite.from}")
+                    sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                }
             }
         })
     }

@@ -304,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612929298076</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Parse handle messages">
+      <created>1612930409200</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1612930409200</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -337,10 +344,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1611644806220" />
-    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1612929297052">
+    <state x="310" y="0" key="CommitChangelistDialog2" timestamp="1612930408379">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1612929297052" />
+    <state x="310" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1612930408379" />
     <state x="102" y="55" key="DiffContextDialog" timestamp="1612854559939">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
