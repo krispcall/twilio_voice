@@ -434,7 +434,7 @@ class VoiceClient {
 
     switch (eventName) {
       case 'onCallInvite':
-        print("onCallInvite ${data.toString()}");
+        print("VoiceClient onCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
@@ -446,7 +446,7 @@ class VoiceClient {
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
-        print("onCancelledCallInvite ${data.toString()}");
+        print("VoiceClient onCancelledCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
