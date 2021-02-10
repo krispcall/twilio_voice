@@ -194,7 +194,7 @@ class VoiceClient {
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
     onNotificationFailed = _onNotificationFailedCtrl.stream;
 
-    _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseEvents);
+    _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
     _notificationStream = TwilioVoice._notificationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
   }
 
@@ -421,6 +421,36 @@ class VoiceClient {
         break;
       case 'unregisterForNotification':
         _onNotificationDeregisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
+        break;
+      default:
+        TwilioVoice._log("Notification event '$eventName' not yet implemented");
+        break;
+    }
+  }
+
+  void _parseHandleMessage(dynamic event) {
+    final String eventName = event['name'];
+    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    final data = Map<String, dynamic>.from(event['data']);
+
+    ErrorInfo exception;
+    if (event['error'] != null) {
+      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+    }
+
+    switch (eventName) {
+      case 'onCallInvite':
+        print("onCallInvite ${data.toString()}");
+        var callSid = data['data']['callSid'] as String;
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       default:
         TwilioVoice._log("Notification event '$eventName' not yet implemented");
