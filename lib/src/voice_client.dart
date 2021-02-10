@@ -149,6 +149,10 @@ class VoiceClient {
 
   final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
+  Stream<CallInvite> onCancelledCallInvite;
+
+  final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
+
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
@@ -189,6 +193,7 @@ class VoiceClient {
     onTokenExpired = _onTokenExpiredCtrl.stream;
 
     onCallInvite = _onCallInvite.stream;
+    onCancelledCallInvite = _onCancelledCallInvite.stream;
 
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
@@ -382,18 +387,6 @@ class VoiceClient {
       case 'tokenAboutToExpire':
         _onTokenAboutToExpireCtrl.add(null);
         break;
-      case 'onCallInvite':
-        print("onCallInvite ${data.toString()}");
-        var callSid = data['data']['callSid'] as String;
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        assert(callSid != null);
-        assert(to != null);
-        assert(from != null);
-        assert(customParameters != null);
-        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
-        break;
       case 'tokenExpired':
         _onTokenExpiredCtrl.add(null);
         break;
@@ -452,6 +445,19 @@ class VoiceClient {
         assert(customParameters != null);
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
+      case '_onCancelledCallInvite':
+        print("onCancelledCallInvite ${data.toString()}");
+        var callSid = data['data']['callSid'] as String;
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        break;
+
       default:
         TwilioVoice._log("Notification event '$eventName' not yet implemented");
         break;
