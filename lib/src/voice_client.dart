@@ -445,7 +445,7 @@ class VoiceClient {
         assert(customParameters != null);
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
-      case '_onCancelledCallInvite':
+      case 'onCancelledCallInvite':
         print("onCancelledCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
