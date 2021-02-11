@@ -283,7 +283,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.toString()}")
                     debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
-                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
@@ -431,7 +431,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
                     debug("TwilioProgrammableChatPlugin.onReconnecting => onReconnecting")
-                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onReconnected(call: Call) {
