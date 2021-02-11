@@ -301,8 +301,7 @@ object Mapper {
                 "from" to message.from,
                 "to" to message.to,
                 "isOnHold" to message.isOnHold,
-                "isMuted" to message.isMuted,
-                "callQualityWarnings" to message.callQualityWarnings.toString()
+                "isMuted" to message.isMuted
         )
     }
 

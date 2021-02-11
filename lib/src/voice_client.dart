@@ -39,13 +39,11 @@ class Call {
 
   final String from;
 
-  final String callQualityWarnings;
-
   final bool isOnHold;
 
   final bool isMuted;
 
-  Call(this.to, this.from, this.callQualityWarnings, this.isOnHold, this.isMuted);
+  Call(this.to, this.from, this.isOnHold, this.isMuted);
 }
 //#endregion
 
@@ -539,99 +537,85 @@ class VoiceClient {
         print("VoiceClient onConnectFailure ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onConnectFailure.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onConnectFailure.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onRinging':
         print("VoiceClient onRinging ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onRinging.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onRinging.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onConnected':
         print("VoiceClient onConnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onConnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onConnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnecting':
         print("VoiceClient onReconnecting ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onReconnecting.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onReconnecting.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnected':
         print("VoiceClient onReconnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onReconnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onReconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onDisconnected':
         print("VoiceClient onDisconnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onDisconnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onDisconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onCallQualityWarningsChanged':
         print("VoiceClient onCallQualityWarningsChanged ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
-        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
         assert(to != null);
         assert(from != null);
-        assert(callQualityWarnings != null);
         assert(isOnHold != null);
         assert(isMuted != null);
-        _onCallQualityWarningsChanged.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        _onCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
         break;
       default:
         TwilioVoice._log("Notification event '$eventName' not yet implemented");
