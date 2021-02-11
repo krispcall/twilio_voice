@@ -450,7 +450,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     Log.d(TAG, "onDisconnected ${call.isOnHold}")
                     Log.d(TAG, "onDisconnected ${call.isMuted}")
                     debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
-                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
