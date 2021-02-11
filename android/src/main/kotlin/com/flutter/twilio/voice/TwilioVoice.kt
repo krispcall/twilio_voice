@@ -445,12 +445,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 }
 
                 override fun onDisconnected(call: Call, callException: CallException?) {
-                    Log.d(TAG, "onReconnecting ${call.from}")
-                    Log.d(TAG, "onReconnecting ${call.to}")
-                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
-                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
-                    Log.d(TAG, "onReconnecting ${call.isMuted}")
-                    Log.d(TAG, "onReconnecting ${callException.toString()}")
+                    Log.d(TAG, "onDisconnected ${call.from}")
+                    Log.d(TAG, "onDisconnected ${call.to}")
+                    Log.d(TAG, "onDisconnected ${call.isOnHold}")
+                    Log.d(TAG, "onDisconnected ${call.isMuted}")
                     debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
                     sendEventOnCall("onDisconnected", mapOf("data" to Mapper.errorInfoToMap(callException)))
                 }
