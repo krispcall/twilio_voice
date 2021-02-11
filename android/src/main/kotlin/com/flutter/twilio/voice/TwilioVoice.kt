@@ -1,18 +1,15 @@
 package com.flutter.twilio.voice
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.twilio.chat.ChannelListener
 import com.twilio.chat.ChatClient
-import com.twilio.chat.ErrorInfo
-import com.twilio.chat.StatusListener
 import com.twilio.voice.*
+import com.twilio.voice.Call.Listener
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -34,6 +31,9 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     private lateinit var notificationChannel: EventChannel
 
     private lateinit var handleMessageChannel: EventChannel
+
+    private lateinit var onCallChannel: EventChannel
+
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
     // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
@@ -71,6 +71,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         var notificationSink: EventChannel.EventSink? = null
 
         var handleMessageSink: EventChannel.EventSink? = null
+
+        var onCallSink: EventChannel.EventSink? = null
 
         var handler = Handler(Looper.getMainLooper())
 
@@ -118,13 +120,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         chatChannel = EventChannel(messenger, "TwilioVoice/room")
         chatChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Chat eventChannel attached")
+                debug("TwilioVoice.onAttachedToEngine => Chat eventChannel attached")
                 chatListener.events = events
                 chatClient?.setListener(chatListener)
             }
 
             override fun onCancel(arguments: Any?) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Chat eventChannel detached")
+                debug("TwilioVoice.onAttachedToEngine => Chat eventChannel detached")
                 chatListener.events = null
             }
         })
@@ -132,12 +134,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         mediaProgressChannel = EventChannel(messenger, "TwilioVoice/media_progress")
         mediaProgressChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => MediaProgress eventChannel attached")
+                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel attached")
                 mediaProgressSink = events
             }
 
             override fun onCancel(arguments: Any?) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => MediaProgress eventChannel detached")
+                debug("TwilioVoice.onAttachedToEngine => MediaProgress eventChannel detached")
                 mediaProgressSink = null
             }
         })
@@ -145,12 +147,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         loggingChannel = EventChannel(messenger, "TwilioVoice/logging")
         loggingChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Logging eventChannel attached")
+                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel attached")
                 loggingSink = events
             }
 
             override fun onCancel(arguments: Any?) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Logging eventChannel detached")
+                debug("TwilioVoice.onAttachedToEngine => Logging eventChannel detached")
                 loggingSink = null
             }
         })
@@ -158,12 +160,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         notificationChannel = EventChannel(messenger, "TwilioVoice/notification")
         notificationChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Notification eventChannel attached")
+                debug("TwilioVoice.onAttachedToEngine => Notification eventChannel attached")
                 notificationSink = events
             }
 
             override fun onCancel(arguments: Any) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => Notification eventChannel detached")
+                debug("TwilioVoice.onAttachedToEngine => Notification eventChannel detached")
                 notificationSink = null
             }
         })
@@ -171,13 +173,26 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         handleMessageChannel = EventChannel(messenger, "TwilioVoice/handleMessage")
         handleMessageChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => handleMessage eventChannel attached")
+                debug("TwilioVoice.onAttachedToEngine => handleMessage eventChannel attached")
                 handleMessageSink = events
             }
 
             override fun onCancel(arguments: Any) {
-                debug("TwilioProgrammableChatPlugin.onAttachedToEngine => handleMessage eventChannel detached")
+                debug("TwilioVoice.onAttachedToEngine => handleMessage eventChannel detached")
                 handleMessageSink = null
+            }
+        })
+
+        onCallChannel = EventChannel(messenger, "TwilioVoice/onCall")
+        onCallChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                debug("TwilioVoice.onAttachedToEngine => onCallChannel eventChannel attached")
+                onCallSink = events
+            }
+
+            override fun onCancel(arguments: Any) {
+                debug("TwilioVoice.onAttachedToEngine => onCallChannel eventChannel detached")
+                onCallSink = null
             }
         })
 
@@ -191,6 +206,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         notificationChannel.setStreamHandler(null)
         mediaProgressChannel.setStreamHandler(null)
         handleMessageChannel.setStreamHandler(null)
+        onCallChannel.setStreamHandler(null)
     }
 
     fun makeCall(call: MethodCall, result: MethodChannel.Result)
@@ -210,7 +226,83 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, callListener())
+            activeCall = Voice.connect(applicationContext, connectOptions, object:Listener {
+                override fun onConnectFailure(call: Call, callException: CallException) {
+                    Log.d(TAG, "onConnectFailure ${callException.message}")
+                    debug("TwilioProgrammableChatPlugin.onConnectFailure => onConnectFailure")
+                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onRinging(call: Call) {
+                    Log.d(TAG, "onConnectFailure ${call.from}")
+                    Log.d(TAG, "onConnectFailure ${call.to}")
+                    Log.d(TAG, "onConnectFailure ${call.callQualityWarnings}")
+                    Log.d(TAG, "onConnectFailure ${call.isOnHold}")
+                    Log.d(TAG, "onConnectFailure ${call.isMuted}")
+                    debug("TwilioProgrammableChatPlugin.onRinging => onRinging")
+                    sendEventOnCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onConnected(call: Call) {
+                    Log.d(TAG, "onConnected ${call.from}")
+                    Log.d(TAG, "onConnected ${call.to}")
+                    Log.d(TAG, "onConnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onConnected ${call.isOnHold}")
+                    Log.d(TAG, "onConnected ${call.isMuted}")
+                    activeCall = call
+                    debug("TwilioProgrammableChatPlugin.onConnected => onConnected")
+                    sendEventOnCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onReconnecting(call: Call, callException: CallException) {
+                    Log.d(TAG, "onReconnecting ${call.from}")
+                    Log.d(TAG, "onReconnecting ${call.to}")
+                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
+                    Log.d(TAG, "onReconnecting ${call.isMuted}")
+                    Log.d(TAG, "onReconnecting ${callException.message}")
+                    debug("TwilioProgrammableChatPlugin.onReconnecting => onReconnecting")
+                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onReconnected(call: Call) {
+                    Log.d(TAG, "onReconnected ${call.from}")
+                    Log.d(TAG, "onReconnected ${call.to}")
+                    Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnected ${call.isOnHold}")
+                    Log.d(TAG, "onReconnected ${call.isMuted}")
+                    debug("TwilioProgrammableChatPlugin.onReconnected => onReconnected")
+                    sendEventOnCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onDisconnected(call: Call, callException: CallException?) {
+                    Log.d(TAG, "onReconnecting ${call.from}")
+                    Log.d(TAG, "onReconnecting ${call.to}")
+                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
+                    Log.d(TAG, "onReconnecting ${call.isMuted}")
+                    Log.d(TAG, "onReconnecting ${callException.toString()}")
+                    debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
+                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.from}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.to}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.callQualityWarnings}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
+                    debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
+                    if (previousWarnings.size > 1) {
+                        val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
+                        currentWarnings.removeAll(previousWarnings)
+                        intersection.retainAll(previousWarnings)
+                        previousWarnings.removeAll(intersection)
+                    }
+                    sendEventOnCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
+                }
+            })
 
         }
         catch (e: Exception)
@@ -302,7 +394,85 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.callerInfo)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
-            activeCallInvite?.accept(applicationContext, callListener())
+            activeCallInvite?.accept(applicationContext, object:Listener
+            {
+                override fun onConnectFailure(call: Call, callException: CallException) {
+                    Log.d(TAG, "onConnectFailure ${callException.message}")
+                    debug("TwilioProgrammableChatPlugin.onConnectFailure => onConnectFailure")
+                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onRinging(call: Call) {
+                    Log.d(TAG, "onConnectFailure ${call.from}")
+                    Log.d(TAG, "onConnectFailure ${call.to}")
+                    Log.d(TAG, "onConnectFailure ${call.callQualityWarnings}")
+                    Log.d(TAG, "onConnectFailure ${call.isOnHold}")
+                    Log.d(TAG, "onConnectFailure ${call.isMuted}")
+                    debug("TwilioProgrammableChatPlugin.onRinging => onRinging")
+                    sendEventOnCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onConnected(call: Call) {
+                    Log.d(TAG, "onConnected ${call.from}")
+                    Log.d(TAG, "onConnected ${call.to}")
+                    Log.d(TAG, "onConnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onConnected ${call.isOnHold}")
+                    Log.d(TAG, "onConnected ${call.isMuted}")
+                    activeCall = call
+                    debug("TwilioProgrammableChatPlugin.onConnected => onConnected")
+                    sendEventOnCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onReconnecting(call: Call, callException: CallException) {
+                    Log.d(TAG, "onReconnecting ${call.from}")
+                    Log.d(TAG, "onReconnecting ${call.to}")
+                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
+                    Log.d(TAG, "onReconnecting ${call.isMuted}")
+                    Log.d(TAG, "onReconnecting ${callException.message}")
+                    debug("TwilioProgrammableChatPlugin.onReconnecting => onReconnecting")
+                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onReconnected(call: Call) {
+                    Log.d(TAG, "onReconnected ${call.from}")
+                    Log.d(TAG, "onReconnected ${call.to}")
+                    Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnected ${call.isOnHold}")
+                    Log.d(TAG, "onReconnected ${call.isMuted}")
+                    debug("TwilioProgrammableChatPlugin.onReconnected => onReconnected")
+                    sendEventOnCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onDisconnected(call: Call, callException: CallException?) {
+                    Log.d(TAG, "onReconnecting ${call.from}")
+                    Log.d(TAG, "onReconnecting ${call.to}")
+                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
+                    Log.d(TAG, "onReconnecting ${call.isMuted}")
+                    Log.d(TAG, "onReconnecting ${callException.toString()}")
+                    debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
+                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                }
+
+                override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.from}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.to}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.callQualityWarnings}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
+                    debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
+                    if (previousWarnings.size > 1)
+                    {
+                        val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
+                        currentWarnings.removeAll(previousWarnings)
+                        intersection.retainAll(previousWarnings)
+                        previousWarnings.removeAll(intersection)
+                    }
+                    sendEventOnCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
+                }
+            })
         }
         catch (error: Exception)
         {
@@ -375,6 +545,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
         handleMessageSink?.success(eventData)
     }
 
+    private fun sendEventOnCall(name: String, data: Any?, e: CallException? = null)
+    {
+        Log.d(TAG, "sendEventHandleMessage: "+data.toString())
+        val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
+        onCallSink?.success(eventData)
+    }
+
     override fun onAttachedToActivity(binding: ActivityPluginBinding)
     {
         applicationContext=binding.activity
@@ -390,105 +567,5 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
 
     override fun onDetachedFromActivity() {
         TODO("Not yet implemented")
-    }
-
-    private fun callListener(): Call.Listener
-    {
-        return object : Call.Listener
-        {
-            /*
-                 * This callback is emitted once before the Call.Listener.onConnected() callback when
-                 * the callee is being alerted of a Call. The behavior of this callback is determined by
-                 * the answerOnBridge flag provided in the Dial verb of your TwiML application
-                 * associated with this client. If the answerOnBridge flag is false, which is the
-                 * default, the Call.Listener.onConnected() callback will be emitted immediately after
-                 * Call.Listener.onRinging(). If the answerOnBridge flag is true, this will cause the
-                 * call to emit the onConnected callback only after the call is answered.
-                 * See answeronbridge for more details on how to use it with the Dial TwiML verb. If the
-                 * twiML response contains a Say verb, then the call will emit the
-                 * Call.Listener.onConnected callback immediately after Call.Listener.onRinging() is
-                 * raised, irrespective of the value of answerOnBridge being set to true or false
-                 */
-            override fun onRinging(call: Call)
-            {
-                Log.d(TAG, "Ringing")
-                /*
-                     * When [answerOnBridge](https://www.twilio.com/docs/voice/twiml/dial#answeronbridge)
-                     * is enabled in the <Dial> TwiML verb, the caller will not hear the ringback while
-                     * the call is ringing and awaiting to be accepted on the callee's side. The application
-                     * can use the `SoundPoolManager` to play custom audio files between the
-                     * `Call.Listener.onRinging()` and the `Call.Listener.onConnected()` callbacks.*/
-//                 SoundPoolManager.getInstance(this@VoiceActivity).playRinging()
-            }
-
-            override fun onConnectFailure(call: Call, error: CallException)
-            {
-//            audioSwitch.deactivate()
-//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
-                val message = String.format(
-                        Locale.US,
-                        "Call Error: %d, %s",
-                        error.errorCode,
-                        error.message)
-                Log.d(TAG, "Connect failure $message")
-            }
-
-            override fun onConnected(call: Call)
-            {
-//            audioSwitch.activate()
-//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
-                Log.d(TAG, "Connected")
-                activeCall = call
-            }
-
-            override fun onReconnecting(call: Call, callException: CallException) {
-                Log.d(TAG, "onReconnecting")
-            }
-
-            override fun onReconnected(call: Call)
-            {
-                Log.d(TAG, "onReconnected")
-            }
-
-            override fun onDisconnected(call: Call, error: CallException?) {
-//            audioSwitch.deactivate()
-//            SoundPoolManager.getInstance(this@VoiceActivity).stopRinging()
-                Log.d(TAG, "Disconnected")
-                if (error != null) {
-                    val message = String.format(
-                            Locale.US,
-                            "Call Error: %d, %s",
-                            error.errorCode,
-                            error.message)
-                    Log.e(TAG, message)
-                }
-            }
-
-            /*
-                 * currentWarnings: existing quality warnings that have not been cleared yet
-                 * previousWarnings: last set of warnings prior to receiving this callback
-                 *
-                 * Example:
-                 *   - currentWarnings: { A, B }
-                 *   - previousWarnings: { B, C }
-                 *
-                 * Newly raised warnings = currentWarnings - intersection = { A }
-                 * Newly cleared warnings = previousWarnings - intersection = { C }
-                 */
-            override fun onCallQualityWarningsChanged(call: Call,
-                                                      currentWarnings: MutableSet<Call.CallQualityWarning>,
-                                                      previousWarnings: MutableSet<Call.CallQualityWarning>) {
-                if (previousWarnings.size > 1) {
-                    val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
-                    currentWarnings.removeAll(previousWarnings)
-                    intersection.retainAll(previousWarnings)
-                    previousWarnings.removeAll(intersection)
-                }
-                val message = String.format(
-                        Locale.US,
-                        "Newly raised warnings: $currentWarnings Clear warnings $previousWarnings")
-                Log.e(TAG, message)
-            }
-        }
     }
 }

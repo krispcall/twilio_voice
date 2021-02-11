@@ -33,15 +33,33 @@ class CallInvite {
 
   CallInvite(this.callSid, this.to, this.from, this.customParameters);
 }
+
+class Call {
+  final String to;
+
+  final String from;
+
+  final String callQualityWarnings;
+
+  final bool isOnHold;
+
+  final bool isMuted;
+
+  Call(this.to, this.from, this.callQualityWarnings, this.isOnHold, this.isMuted);
+}
 //#endregion
 
 /// Chat client - main entry point for the Chat SDK.
 class VoiceClient {
-  /// Stream for the native chat events.
-  StreamSubscription<dynamic> _handleMessageStream;
 
   /// Stream for the notification events.
   StreamSubscription<dynamic> _notificationStream;
+
+  /// Stream for the native chat events.
+  StreamSubscription<dynamic> _handleMessageStream;
+
+  /// Stream for the native chat events.
+  StreamSubscription<dynamic> _onCallStream;
 
   //#region Private API properties
 
@@ -153,6 +171,35 @@ class VoiceClient {
 
   final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
 
+  Stream<Call> onConnectFailure;
+
+  final StreamController<Call> _onConnectFailure = StreamController<Call>.broadcast();
+
+  Stream<Call> onRinging;
+
+  final StreamController<Call> _onRinging = StreamController<Call>.broadcast();
+
+  Stream<Call> onConnected;
+
+  final StreamController<Call> _onConnected = StreamController<Call>.broadcast();
+
+  Stream<Call> onReconnecting;
+
+  final StreamController<Call> _onReconnecting = StreamController<Call>.broadcast();
+
+  Stream<Call> onReconnected;
+
+  final StreamController<Call> _onReconnected = StreamController<Call>.broadcast();
+
+  Stream<Call> onDisconnected;
+
+  final StreamController<Call> _onDisconnected = StreamController<Call>.broadcast();
+
+  Stream<Call> onCallQualityWarningsChanged;
+
+  final StreamController<Call> _onCallQualityWarningsChanged = StreamController<Call>.broadcast();
+
+
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
@@ -192,15 +239,25 @@ class VoiceClient {
     onTokenAboutToExpire = _onTokenAboutToExpireCtrl.stream;
     onTokenExpired = _onTokenExpiredCtrl.stream;
 
-    onCallInvite = _onCallInvite.stream;
-    onCancelledCallInvite = _onCancelledCallInvite.stream;
+    onNotificationFailed = _onNotificationFailedCtrl.stream;
 
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
-    onNotificationFailed = _onNotificationFailedCtrl.stream;
 
-    _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
+    onCallInvite=_onCallInvite.stream;
+    onCancelledCallInvite=_onCancelledCallInvite.stream;
+
+    onConnectFailure = _onConnectFailure.stream;
+    onRinging = _onRinging.stream;
+    onConnected = _onConnected.stream;
+    onReconnecting = _onReconnecting.stream;
+    onReconnected = _onReconnected.stream;
+    onDisconnected = _onDisconnected.stream;
+    onCallQualityWarningsChanged = _onCallQualityWarningsChanged.stream;
+
     _notificationStream = TwilioVoice._notificationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
+    _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
+    _onCallStream = TwilioVoice._onCallChannel.receiveBroadcastStream(0).listen(_parseOnCall);
   }
 
   /// Construct from a map.
@@ -228,6 +285,7 @@ class VoiceClient {
     {
       await _notificationStream.cancel();
       await _handleMessageStream.cancel();
+      await _onCallStream.cancel();
       await _onClientSynchronizationCtrl.close();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
@@ -443,7 +501,7 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callSid,to,from,customParameters),);
         break;
       case 'onCancelledCallInvite':
         print("VoiceClient onCancelledCallInvite ${data.toString()}");
@@ -458,6 +516,123 @@ class VoiceClient {
         _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
 
+      default:
+        TwilioVoice._log("Notification event '$eventName' not yet implemented");
+        break;
+    }
+  }
+
+  void _parseOnCall(dynamic event) {
+    final String eventName = event['name'];
+    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    final data = Map<String, dynamic>.from(event['data']);
+
+    ErrorInfo exception;
+    if (event['error'] != null) {
+      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+    }
+
+    switch (eventName)
+    {
+      case 'onConnectFailure':
+        print("VoiceClient onConnectFailure ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onConnectFailure.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onRinging':
+        print("VoiceClient onRinging ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onRinging.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onConnected':
+        print("VoiceClient onConnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onConnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onReconnecting':
+        print("VoiceClient onReconnecting ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onReconnecting.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onReconnected':
+        print("VoiceClient onReconnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onReconnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onDisconnected':
+        print("VoiceClient onDisconnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onDisconnected.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
+      case 'onCallQualityWarningsChanged':
+        print("VoiceClient onCallQualityWarningsChanged ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var callQualityWarnings = data['data']['callQualityWarnings'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        assert(to != null);
+        assert(from != null);
+        assert(callQualityWarnings != null);
+        assert(isOnHold != null);
+        assert(isMuted != null);
+        _onCallQualityWarningsChanged.add(Call(to,from,callQualityWarnings,isOnHold, isMuted));
+        break;
       default:
         TwilioVoice._log("Notification event '$eventName' not yet implemented");
         break;

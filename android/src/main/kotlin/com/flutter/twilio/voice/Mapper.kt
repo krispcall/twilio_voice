@@ -1,10 +1,7 @@
 package com.flutter.twilio.voice
 
 import com.twilio.chat.*
-import com.twilio.voice.CallException
-import com.twilio.voice.CallInvite
-import com.twilio.voice.CancelledCallInvite
-import com.twilio.voice.RegistrationException
+import com.twilio.voice.*
 import io.flutter.plugin.common.EventChannel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -297,6 +294,16 @@ object Mapper {
         if (date == null) return null
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         return dateFormat.format(date)
+    }
+
+    fun callToMap(message: Call): Map<String, Any?> {
+        return mapOf(
+                "from" to message.from,
+                "to" to message.to,
+                "isOnHold" to message.isOnHold,
+                "isMuted" to message.isMuted,
+                "callQualityWarnings" to message.callQualityWarnings.toString()
+        )
     }
 
     fun callInviteToMap(message: CallInvite): Map<String, Any?> {
