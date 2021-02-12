@@ -230,7 +230,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     debug("TwilioProgrammableChatPlugin.onConnectFailure => onConnectFailure")
-                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onRinging(call: Call) {
@@ -262,7 +262,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
                     debug("TwilioProgrammableChatPlugin.onReconnecting => onReconnecting")
-                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onReconnected(call: Call) {
@@ -399,7 +399,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     debug("TwilioProgrammableChatPlugin.onConnectFailure => onConnectFailure")
-                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.errorInfoToMap(callException)))
+                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onRinging(call: Call) {
