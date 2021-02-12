@@ -234,13 +234,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 }
 
                 override fun onRinging(call: Call) {
-                    Log.d(TAG, "onConnectFailure ${call.from}")
-                    Log.d(TAG, "onConnectFailure ${call.to}")
-                    Log.d(TAG, "onConnectFailure ${call.callQualityWarnings}")
-                    Log.d(TAG, "onConnectFailure ${call.isOnHold}")
-                    Log.d(TAG, "onConnectFailure ${call.isMuted}")
+                    Log.d(TAG, "onRinging ${call.from}")
+                    Log.d(TAG, "onRinging ${call.to}")
+                    Log.d(TAG, "onRinging ${call.callQualityWarnings}")
+                    Log.d(TAG, "onRinging ${call.isOnHold}")
+                    Log.d(TAG, "onRinging ${call.isMuted}")
                     debug("TwilioProgrammableChatPlugin.onRinging => onRinging")
-                    sendEventOnCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOnCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onConnected(call: Call) {
@@ -276,12 +276,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 }
 
                 override fun onDisconnected(call: Call, callException: CallException?) {
-                    Log.d(TAG, "onReconnecting ${call.from}")
-                    Log.d(TAG, "onReconnecting ${call.to}")
-                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
-                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
-                    Log.d(TAG, "onReconnecting ${call.isMuted}")
-                    Log.d(TAG, "onReconnecting ${callException.toString()}")
+                    Log.d(TAG, "onDisconnected ${call.from}")
+                    Log.d(TAG, "onDisconnected ${call.to}")
+                    Log.d(TAG, "onDisconnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onDisconnected ${call.isOnHold}")
+                    Log.d(TAG, "onDisconnected ${call.isMuted}")
+                    Log.d(TAG, "onDisconnected ${callException.toString()}")
                     debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
                     sendEventOnCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
                 }
@@ -293,7 +293,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
-                    debug("TwilioProgrammableChatPlugin.onDisconnected => onDisconnected")
+                    debug("TwilioProgrammableChatPlugin.onCallQualityWarningsChanged => onCallQualityWarningsChanged")
                     if (previousWarnings.size > 1) {
                         val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
                         currentWarnings.removeAll(previousWarnings)
@@ -403,13 +403,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
                 }
 
                 override fun onRinging(call: Call) {
-                    Log.d(TAG, "onConnectFailure ${call.from}")
-                    Log.d(TAG, "onConnectFailure ${call.to}")
-                    Log.d(TAG, "onConnectFailure ${call.callQualityWarnings}")
-                    Log.d(TAG, "onConnectFailure ${call.isOnHold}")
-                    Log.d(TAG, "onConnectFailure ${call.isMuted}")
+                    Log.d(TAG, "onRinging ${call.from}")
+                    Log.d(TAG, "onRinging ${call.to}")
+                    Log.d(TAG, "onRinging ${call.callQualityWarnings}")
+                    Log.d(TAG, "onRinging ${call.isOnHold}")
+                    Log.d(TAG, "onRinging ${call.isMuted}")
                     debug("TwilioProgrammableChatPlugin.onRinging => onRinging")
-                    sendEventOnCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOnCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onConnected(call: Call) {
