@@ -556,7 +556,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
@@ -564,6 +563,5 @@ class TwilioVoice: FlutterPlugin, ActivityAware{
     }
 
     override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
     }
 }
