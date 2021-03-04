@@ -539,10 +539,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onConnectFailure.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onRinging':
@@ -551,10 +547,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onRinging.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onConnected':
@@ -563,10 +555,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onConnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnecting':
@@ -575,10 +563,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onReconnecting.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnected':
@@ -587,10 +571,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onReconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onDisconnected':
@@ -599,10 +579,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onDisconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onCallQualityWarningsChanged':
@@ -611,10 +587,6 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        assert(to != null);
-        assert(from != null);
-        assert(isOnHold != null);
-        assert(isMuted != null);
         _onCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
         break;
       default:
