@@ -1,14 +1,11 @@
 package com.flutter.twilio.voice
 
-import com.twilio.chat.*
 import com.twilio.voice.*
-import io.flutter.plugin.common.EventChannel
-import java.text.SimpleDateFormat
-import java.util.Date
 import org.json.JSONArray
 import org.json.JSONObject
 
-object Mapper {
+object Mapper
+{
     fun jsonObjectToMap(jsonObject: JSONObject): Map<String, Any?> {
         val result = mutableMapOf<String, Any?>()
         jsonObject.keys().forEach {
@@ -60,12 +57,6 @@ object Mapper {
         return result
     }
 
-    fun mapToAttributes(map: Map<String, Any>?): Attributes? {
-        if (map == null) return null
-        val attrObject = mapToJSONObject(map)
-        if (attrObject != null) return Attributes(attrObject) else return null
-    }
-
     fun listToJSONArray(list: List<Any>): JSONArray {
         val result = JSONArray()
         list.forEach {
@@ -80,202 +71,11 @@ object Mapper {
         return result
     }
 
-    fun chatClientToMap(chatClient: ChatClient): Map<String, Any> {
-        return mapOf(
-                "channels" to channelsToMap(chatClient.channels),
-                "myIdentity" to chatClient.myIdentity,
-                "connectionState" to chatClient.connectionState.toString(),
-                "users" to usersToMap(chatClient.users),
-                "isReachabilityEnabled" to chatClient.isReachabilityEnabled
-        )
-    }
-
-    fun attributesToMap(attributes: Attributes): Map<String, Any> {
-        return mapOf(
-                "type" to attributes.type.toString(),
-                "data" to attributes.toString()
-        )
-    }
-
-    private fun channelsToMap(channels: Channels): Map<String, Any> {
-        val subscribedChannelsMap = channels.subscribedChannels.map { channelToMap(it) }
-        return mapOf(
-                "subscribedChannels" to subscribedChannelsMap
-        )
-    }
-
-    fun channelToMap(channel: Channel?): Map<String, Any?>? {
-        if (channel == null) {
-            return null
-        }
-
-        // Setting flutter event listener for the given channel if one does not yet exist.
-        if (!TwilioVoice.channelChannels.containsKey(channel.sid)) {
-            TwilioVoice.channelChannels[channel.sid] = EventChannel(TwilioVoice.messenger, "TwilioVoice/${channel.sid}")
-            TwilioVoice.channelChannels[channel.sid]?.setStreamHandler(object : EventChannel.StreamHandler {
-                override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                    TwilioVoice.debug("Mapper.channelToMap => EventChannel for Channel(${channel.sid}) attached")
-                    TwilioVoice.channelListeners[channel.sid] = ChannelListener(events)
-                    channel.addListener(TwilioVoice.channelListeners[channel.sid])
-                }
-
-                override fun onCancel(arguments: Any?) {
-                    TwilioVoice.debug("Mapper.channelToMap => EventChannel for Channel(${channel.sid}) detached")
-                    channel.removeListener(TwilioVoice.channelListeners[channel.sid])
-                    TwilioVoice.channelListeners.remove(channel.sid)
-                }
-            })
-        }
-
-        return mapOf(
-                "sid" to channel.sid,
-                "type" to channel.type.toString(),
-                "messages" to messagesToMap(channel.messages),
-                "attributes" to attributesToMap(channel.attributes),
-                "status" to channel.status.toString(),
-                "synchronizationStatus" to channel.synchronizationStatus.toString(),
-                "dateCreated" to dateToString(channel.dateCreatedAsDate),
-                "createdBy" to channel.createdBy,
-                "dateUpdated" to dateToString(channel.dateUpdatedAsDate),
-                "lastMessageDate" to dateToString(channel.lastMessageDate),
-                "lastMessageIndex" to channel.lastMessageIndex
-        )
-    }
-
-    private fun usersToMap(users: Users): Map<String, Any> {
-        val subscribedUsersMap = users.subscribedUsers.map { userToMap(it) }
-        return mapOf(
-                "subscribedUsers" to subscribedUsersMap,
-                "myUser" to userToMap(users.myUser)
-        )
-    }
-
-    fun userToMap(user: User): Map<String, Any> {
-        return mapOf(
-                "friendlyName" to user.friendlyName,
-                "attributes" to attributesToMap(user.attributes),
-                "identity" to user.identity,
-                "isOnline" to user.isOnline,
-                "isNotifiable" to user.isNotifiable,
-                "isSubscribed" to user.isSubscribed
-        )
-    }
-
-    private fun messagesToMap(messages: Messages?): Map<String, Any>? {
-        if (messages == null) return null
-        return mapOf(
-                "lastConsumedMessageIndex" to messages.lastConsumedMessageIndex
-        )
-    }
-
-    fun messageToMap(message: Message): Map<String, Any?> {
-        return mapOf(
-                "sid" to message.sid,
-                "author" to message.author,
-                "dateCreated" to message.dateCreated,
-                "messageBody" to message.messageBody,
-                "channelSid" to message.channelSid,
-                "memberSid" to message.memberSid,
-                "member" to memberToMap(message.member),
-                "messageIndex" to message.messageIndex,
-                "type" to message.type.toString(),
-                "hasMedia" to message.hasMedia(),
-                "media" to mediaToMap(message.media, message.messageIndex, message.channelSid),
-                "attributes" to attributesToMap(message.attributes)
-        )
-    }
-
-
-    private fun mediaToMap(media: Message.Media?, messageIndex: Long, channelSid: String): Map<String, Any>? {
-        if (media == null) return null
-        return mapOf(
-                "sid" to media.sid,
-                "fileName" to media.fileName,
-                "type" to media.type,
-                "size" to media.size,
-                "channelSid" to channelSid,
-                "messageIndex" to messageIndex
-        )
-    }
-
-    fun membersListToMap(members: List<Member>): Map<String, List<Map<String, Any?>?>> {
-        val membersListMap = members.map { memberToMap(it) }
-        return mapOf(
-            "membersList" to membersListMap
-        )
-    }
-
-    fun memberToMap(member: Member?): Map<String, Any?>? {
-        if (member == null) return null
-        return mapOf(
-                "sid" to member.sid,
-                "lastConsumedMessageIndex" to member.lastConsumedMessageIndex,
-                "lastConsumptionTimestamp" to member.lastConsumptionTimestamp,
-                "channelSid" to member.channel.sid,
-                "identity" to member.identity,
-                "type" to member.type.toString(),
-                "attributes" to attributesToMap(member.attributes)
-        )
-    }
-
-    inline fun <reified T> paginatorToMap(pageId: String, paginator: Paginator<T>, itemType: String): Map<String, Any> {
-        val itemsListMap = paginator.items.map {
-            when (itemType) {
-                "userDescriptor" -> userDescriptorToMap(it as UserDescriptor)
-                "channelDescriptor" -> channelDescriptorToMap(it as ChannelDescriptor)
-                else -> throw Exception("Unknown item type received '$itemType'")
-            }
-        }
-
-        return mapOf(
-                "pageId" to pageId,
-                "pageSize" to paginator.pageSize,
-                "hasNextPage" to paginator.hasNextPage(),
-                "items" to itemsListMap,
-                "itemType" to itemType
-        )
-    }
-
-    fun userDescriptorToMap(userDescriptor: UserDescriptor): Map<String, Any> {
-        return mapOf(
-                "friendlyName" to userDescriptor.friendlyName,
-                "attributes" to attributesToMap(userDescriptor.attributes),
-                "identity" to userDescriptor.identity,
-                "isOnline" to userDescriptor.isOnline,
-                "isNotifiable" to userDescriptor.isNotifiable
-        )
-    }
-
-    fun channelDescriptorToMap(channelDescriptor: ChannelDescriptor): Map<String, Any?> {
-        return mapOf(
-                "sid" to channelDescriptor.sid,
-                "friendlyName" to channelDescriptor.friendlyName,
-                "attributes" to attributesToMap(channelDescriptor.attributes),
-                "uniqueName" to channelDescriptor.uniqueName,
-                "dateUpdated" to dateToString(channelDescriptor.dateUpdated),
-                "dateCreated" to dateToString(channelDescriptor.dateCreated),
-                "createdBy" to channelDescriptor.createdBy,
-                "membersCount" to channelDescriptor.membersCount,
-                "messagesCount" to channelDescriptor.messagesCount,
-                "unconsumedMessagesCount" to channelDescriptor.unconsumedMessagesCount,
-                "status" to channelDescriptor.status.toString()
-        )
-    }
-
-    fun errorInfoToMap(e: ErrorInfo?): Map<String, Any?>? {
-        if (e == null)
-            return null
-        return mapOf(
-                "code" to e.code,
-                "message" to e.message,
-                "status" to e.status
-        )
-    }
-
     fun errorInfoToMap(e: RegistrationException?): Map<String, Any?>? {
         if (e == null)
             return null
         return mapOf(
+                "status" to e.errorCode,
                 "code" to e.errorCode,
                 "message" to e.message
         )
@@ -288,12 +88,6 @@ object Mapper {
                 "code" to e.errorCode,
                 "message" to e.message
         )
-    }
-
-    private fun dateToString(date: Date?): String? {
-        if (date == null) return null
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        return dateFormat.format(date)
     }
 
     fun callToMap(message: Call): Map<String, Any?> {

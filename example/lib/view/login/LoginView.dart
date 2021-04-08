@@ -68,7 +68,8 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
   @override
   Widget create(BuildContext context)
   {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
         statusBarColor: Colors.grey.shade400
     ));
 
@@ -306,7 +307,10 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
   configureNotification(String apiToken) async
   {
     voiceClient=VoiceClient(apiToken);
-    voiceClient.registerForNotification(apiToken, await FirebaseMessaging().getToken());
+    voiceClient.registerForNotification(apiToken, await FirebaseMessaging().getToken()).then((value)
+    {
+      print(value);
+    });
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.subscribeToTopic("com.flutter.twilio.voice_example");
     _firebaseMessaging.configure(

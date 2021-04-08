@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.twilio:voice-android:5.6.0@aar" type="AndroidModuleLibraryType">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bfa6c1e8ebe7912e3e80ab5e12889aa3/jetified-voice-android-5.6.0/jars/classes.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bfa6c1e8ebe7912e3e80ab5e12889aa3/jetified-voice-android-5.6.0/jars/libs/libwebrtc.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bfa6c1e8ebe7912e3e80ab5e12889aa3/jetified-voice-android-5.6.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1d596c2631966f01de8109143a3aa244/jetified-voice-android-5.6.0/jars/libs/libwebrtc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1d596c2631966f01de8109143a3aa244/jetified-voice-android-5.6.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1d596c2631966f01de8109143a3aa244/jetified-voice-android-5.6.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -4,17 +4,11 @@ part of flutter_twilio_voice;
 class TwilioVoice {
   static const MethodChannel _methodChannel = MethodChannel('TwilioVoice');
 
-  static const EventChannel _loggingChannel = EventChannel('TwilioVoice/logging');
-
-  static const EventChannel _notificationChannel = EventChannel('TwilioVoice/notification');
+  static const EventChannel registrationChannel = EventChannel('TwilioVoice/registrationChannel');
 
   static const EventChannel _handleMessageChannel = EventChannel('TwilioVoice/handleMessage');
 
   static const EventChannel _onCallChannel = EventChannel('TwilioVoice/onCall');
-
-  static StreamSubscription _loggingStream;
-
-  static bool _dartDebug = false;
 
   static VoiceClient voiceClient;
 
@@ -32,38 +26,6 @@ class TwilioVoice {
     // - "JSONException" Something went wrong parsing a JSON string.
     // - "MISSING_PARAMS" Missing params, only the native debug method uses this at the moment.
     return err;
-  }
-
-  /// Internal logging method for dart.
-  static void _log(dynamic msg) {
-    if (_dartDebug) {
-      print('[   DART   ] $msg');
-    }
-  }
-
-  /// Enable debug logging.
-  ///
-  /// For native logging set [native] to `true` and for dart set [dart] to `true`.
-  static Future<void> debug({
-    bool dart = false,
-    bool native = false,
-    bool sdk = false,
-  }) async {
-    assert(dart != null);
-    assert(native != null);
-    assert(sdk != null);
-    _dartDebug = dart;
-    await _methodChannel.invokeMethod('debug', {'native': native, 'sdk': sdk});
-    if (native && _loggingStream == null) {
-      _loggingStream = _loggingChannel.receiveBroadcastStream().listen((dynamic event) {
-        if (native) {
-          print('[  NATIVE  ] $event');
-        }
-      });
-    } else if (!native && _loggingStream != null) {
-      await _loggingStream.cancel();
-      _loggingStream = null;
-    }
   }
 
   /// Create to a [ChatClient].

@@ -1,7 +1,7 @@
 part of flutter_twilio_voice;
 
-//#region VoiceClient events
 
+const String TAG="VoiceClient Flutter";
 class NewMessageNotificationEvent {
   final String channelSid;
 
@@ -47,11 +47,10 @@ class Call {
 }
 //#endregion
 
-/// Chat client - main entry point for the Chat SDK.
 class VoiceClient {
 
   /// Stream for the notification events.
-  StreamSubscription<dynamic> _notificationStream;
+  StreamSubscription<dynamic> registrationStream;
 
   /// Stream for the native chat events.
   StreamSubscription<dynamic> _handleMessageStream;
@@ -59,21 +58,10 @@ class VoiceClient {
   /// Stream for the native chat events.
   StreamSubscription<dynamic> _onCallStream;
 
-  //#region Private API properties
-
-  ConnectionState _connectionState;
-
   final String accessToken;
 
   bool _isReachAbilityEnabled;
   //#endregion
-
-  //#region Public API properties
-  /// [Channels] available to the current client.
-  /// Current transport state
-  ConnectionState get connectionState {
-    return _connectionState;
-  }
 
   /// Get user identity for the current user.
   String get myAccessToken {
@@ -107,60 +95,31 @@ class VoiceClient {
   /// [Channel] synchronization updates are delivered via different callback.
   //#endregion
 
-  //#region VoiceClient events
-  final StreamController<VoiceClientSynchronizationStatus> _onClientSynchronizationCtrl = StreamController<VoiceClientSynchronizationStatus>.broadcast();
-
-  /// Called when client synchronization status changes.
-  Stream<VoiceClientSynchronizationStatus> onClientSynchronization;
-
-  final StreamController<ConnectionState> _onConnectionStateCtrl = StreamController<ConnectionState>.broadcast();
-
-  /// Called when client connnection state has changed.
-  Stream<ConnectionState> onConnectionState;
-
-  final StreamController<ErrorInfo> _onErrorCtrl = StreamController<ErrorInfo>.broadcast();
-
   /// Called when an error condition occurs.
   Stream<ErrorInfo> onError;
   //#endregion
 
-  //#region Notification events
-  final StreamController<String> _onAddedToChannelNotificationCtrl = StreamController<String>.broadcast();
-
   /// Called when client receives a push notification for added to channel event.
   Stream<String> onAddedToChannelNotification;
-
-  final StreamController<String> _onInvitedToChannelNotificationCtrl = StreamController<String>.broadcast();
 
   /// Called when client receives a push notification for invited to channel event.
   Stream<String> onInvitedToChannelNotification;
 
-  final StreamController<NewMessageNotificationEvent> _onNewMessageNotificationCtrl = StreamController<NewMessageNotificationEvent>.broadcast();
-
   /// Called when client receives a push notification for new message.
   Stream<NewMessageNotificationEvent> onNewMessageNotification;
 
-  final StreamController<ErrorInfo> _onNotificationFailedCtrl = StreamController<ErrorInfo>.broadcast();
-
   /// Called when registering for push notifications fails.
   Stream<ErrorInfo> onNotificationFailed;
-
-  final StreamController<String> _onRemovedFromChannelNotificationCtrl = StreamController<String>.broadcast();
 
   /// Called when client receives a push notification for removed from channel event.
   Stream<String> onRemovedFromChannelNotification;
   //#endregion
 
-  //#region Token events
-  final StreamController<void> _onTokenAboutToExpireCtrl = StreamController<void>.broadcast();
-
   /// Called when token is about to expire soon.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
   Stream<void> onTokenAboutToExpire;
-
-  final StreamController<void> _onTokenExpiredCtrl = StreamController<void>.broadcast();
-
+  
   Stream<CallInvite> onCallInvite;
 
   final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
@@ -226,18 +185,6 @@ class VoiceClient {
   //#endregion
 
   VoiceClient(this.accessToken) : assert(accessToken != null) {
-    onClientSynchronization = _onClientSynchronizationCtrl.stream;
-    onConnectionState = _onConnectionStateCtrl.stream;
-    onError = _onErrorCtrl.stream;
-    onAddedToChannelNotification = _onAddedToChannelNotificationCtrl.stream;
-    onInvitedToChannelNotification = _onInvitedToChannelNotificationCtrl.stream;
-    onNewMessageNotification = _onNewMessageNotificationCtrl.stream;
-    onNotificationFailed = _onNotificationFailedCtrl.stream;
-    onRemovedFromChannelNotification = _onRemovedFromChannelNotificationCtrl.stream;
-    onTokenAboutToExpire = _onTokenAboutToExpireCtrl.stream;
-    onTokenExpired = _onTokenExpiredCtrl.stream;
-
-    onNotificationFailed = _onNotificationFailedCtrl.stream;
 
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
@@ -253,7 +200,7 @@ class VoiceClient {
     onDisconnected = _onDisconnected.stream;
     onCallQualityWarningsChanged = _onCallQualityWarningsChanged.stream;
 
-    _notificationStream = TwilioVoice._notificationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
+    registrationStream = TwilioVoice.registrationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
     _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
     _onCallStream = TwilioVoice._onCallChannel.receiveBroadcastStream(0).listen(_parseOnCall);
   }
@@ -281,10 +228,9 @@ class VoiceClient {
   Future<void> shutdown() async {
     try
     {
-      await _notificationStream.cancel();
+      await registrationStream.cancel();
       await _handleMessageStream.cancel();
       await _onCallStream.cancel();
-      await _onClientSynchronizationCtrl.close();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
     } on PlatformException catch (err) {
@@ -345,126 +291,49 @@ class VoiceClient {
     }
   }
 
-  /// Registers for push notifications. Uses APNs on iOS and FCM on Android.
-  ///
-  /// Token is only used on Android. iOS implementation retrieves APNs token itself.
-  ///
-  /// Twilio iOS SDK handles receiving messages when app is in the background and displaying
-  /// notifications.
-  Future<void> registerForNotification(String accessToken,String token) async {
-    try {
-      await TwilioVoice._methodChannel.invokeMethod('registerForNotification', <String, Object>{'accessToken':accessToken,'token': token});
-    } on PlatformException catch (err) {
+
+  Future<bool> registerForNotification(String accessToken,String token) async
+  {
+    try
+    {
+      final data = await TwilioVoice._methodChannel.invokeMethod('registerForNotification', <String, Object>{'accessToken':accessToken,'token': token});
+      return data["result"];
+    }
+    on PlatformException catch (err)
+    {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  /// Unregisters for push notifications.  Uses APNs on iOS and FCM on Android.
-  ///
-  /// Token is only used on Android. iOS implementation retrieves APNs token itself.
-  Future<void> unregisterForNotification(String accessToken,String token) async {
-    try {
-      await TwilioVoice._methodChannel.invokeMethod('unregisterForNotification', <String, Object>{'accessToken':accessToken,'token': token});
-    } on PlatformException catch (err) {
+
+  Future<bool> unregisterForNotification(String accessToken,String token) async
+  {
+    try
+    {
+      final data = await TwilioVoice._methodChannel.invokeMethod('unregisterForNotification', <String, Object>{'accessToken':accessToken,'token': token});
+      return data["result"];
+    }
+    on PlatformException catch (err)
+    {
       throw TwilioVoice._convertException(err);
     }
   }
-  //#endregion
 
-  /// Update properties from a map.
-
-  /// Parse native chat client events to the right event streams.
-  void _parseEvents(dynamic event)
+  void _parseNotificationEvents(dynamic event)
   {
     final String eventName = event['name'];
-    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
-    final data = Map<String, dynamic>.from(event['data'] ?? {});
-
-    if (data['voiceClient'] != null) {
-      final chatClientMap = Map<String, dynamic>.from(data['chatClient']);
-    }
-
-    ErrorInfo exception;
-    if (event['error'] != null) {
-      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
-    }
-
-    Map<String, dynamic> channelMap;
-    if (data['channel'] != null) {
-      channelMap = Map<String, dynamic>.from(data['channel'] as Map<dynamic, dynamic>);
-    }
-
-    Map<String, dynamic> userMap;
-    if (data['user'] != null) {
-      userMap = Map<String, dynamic>.from(data['user'] as Map<dynamic, dynamic>);
-    }
-
-    var channelSid = data['channelSid'] as String;
-
-    dynamic reason;
-
-    switch (eventName)
-    {
-      case 'addedToChannelNotification':
-        assert(channelSid != null);
-        _onAddedToChannelNotificationCtrl.add(channelSid);
-        break;
-      case 'connectionStateChange':
-        var connectionState = EnumToString.fromString(ConnectionState.values, data['connectionState']);
-        assert(connectionState != null);
-        _connectionState = connectionState;
-        _onConnectionStateCtrl.add(connectionState);
-        break;
-      case 'error':
-        assert(exception != null);
-        _onErrorCtrl.add(exception);
-        break;
-      case 'invitedToChannelNotification':
-        assert(channelSid != null);
-        _onInvitedToChannelNotificationCtrl.add(channelSid);
-        break;
-      case 'newMessageNotification':
-        var messageSid = data['messageSid'] as String;
-        var messageIndex = data['messageIndex'] as int;
-        assert(channelSid != null);
-        assert(messageSid != null);
-        assert(messageIndex != null);
-        _onNewMessageNotificationCtrl.add(NewMessageNotificationEvent(channelSid, messageSid, messageIndex));
-        break;
-      case 'notificationFailed':
-        assert(exception != null);
-        _onNotificationFailedCtrl.add(exception);
-        break;
-      case 'removedFromChannelNotification':
-        assert(channelSid != null);
-        _onRemovedFromChannelNotificationCtrl.add(channelSid);
-        break;
-      case 'tokenAboutToExpire':
-        _onTokenAboutToExpireCtrl.add(null);
-        break;
-      case 'tokenExpired':
-        _onTokenExpiredCtrl.add(null);
-        break;
-      default:
-        TwilioVoice._log("Event '$eventName' not yet implemented");
-        break;
-    }
-  }
-
-  /// Parse native chat client events to the right event streams.
-  void _parseNotificationEvents(dynamic event) {
-    final String eventName = event['name'];
-    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
-    if (event['error'] != null) {
+    if (event['error'] != null)
+    {
       final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
       exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
     }
 
-    switch (eventName) {
+    switch (eventName)
+    {
       case 'registerForNotification':
         _onNotificationRegisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
         break;
@@ -472,14 +341,15 @@ class VoiceClient {
         _onNotificationDeregisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
         break;
       default:
-        TwilioVoice._log("Notification event '$eventName' not yet implemented");
+        print("$TAG Notification event '$eventName' not yet implemented");
         break;
     }
   }
 
-  void _parseHandleMessage(dynamic event) {
+  void _parseHandleMessage(dynamic event) 
+  {
     final String eventName = event['name'];
-    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -488,9 +358,10 @@ class VoiceClient {
       exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
     }
 
-    switch (eventName) {
+    switch (eventName) 
+    {
       case 'onCallInvite':
-        print("VoiceClient onCallInvite ${data.toString()}");
+        print("$TAG onCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
@@ -502,7 +373,7 @@ class VoiceClient {
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters),);
         break;
       case 'onCancelledCallInvite':
-        print("VoiceClient onCancelledCallInvite ${data.toString()}");
+        print("$TAG onCancelledCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
@@ -515,14 +386,14 @@ class VoiceClient {
         break;
 
       default:
-        TwilioVoice._log("Notification event '$eventName' not yet implemented");
+        print("$TAG Notification event '$eventName' not yet implemented");
         break;
     }
   }
 
   void _parseOnCall(dynamic event) {
     final String eventName = event['name'];
-    TwilioVoice._log("VoiceClient => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -534,7 +405,7 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onConnectFailure':
-        print("VoiceClient onConnectFailure ${data.toString()}");
+        print("$TAG onConnectFailure ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -542,7 +413,7 @@ class VoiceClient {
         _onConnectFailure.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onRinging':
-        print("VoiceClient onRinging ${data.toString()}");
+        print("$TAG onRinging ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -550,7 +421,7 @@ class VoiceClient {
         _onRinging.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onConnected':
-        print("VoiceClient onConnected ${data.toString()}");
+        print("$TAG onConnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -558,7 +429,7 @@ class VoiceClient {
         _onConnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnecting':
-        print("VoiceClient onReconnecting ${data.toString()}");
+        print("$TAG onReconnecting ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -566,7 +437,7 @@ class VoiceClient {
         _onReconnecting.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onReconnected':
-        print("VoiceClient onReconnected ${data.toString()}");
+        print("$TAG onReconnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -574,7 +445,7 @@ class VoiceClient {
         _onReconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onDisconnected':
-        print("VoiceClient onDisconnected ${data.toString()}");
+        print("$TAG onDisconnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -582,7 +453,7 @@ class VoiceClient {
         _onDisconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onCallQualityWarningsChanged':
-        print("VoiceClient onCallQualityWarningsChanged ${data.toString()}");
+        print("$TAG onCallQualityWarningsChanged ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -590,7 +461,7 @@ class VoiceClient {
         _onCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
         break;
       default:
-        TwilioVoice._log("Notification event '$eventName' not yet implemented");
+        print("$TAG event '$eventName' not yet implemented");
         break;
     }
   }
