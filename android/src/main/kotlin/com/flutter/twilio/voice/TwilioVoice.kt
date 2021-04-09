@@ -168,7 +168,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 override fun onConnectFailure(call: Call, callException: CallException)
                 {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
-                    sendEventHandleMessage("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onRinging(call: Call) {

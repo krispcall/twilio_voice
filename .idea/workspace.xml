@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,23 +84,31 @@
       <option name="project" value="LOCAL" />
       <updated>1617952494470</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="OutGoing events done preparing response">
+      <created>1617953625796</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617953625796</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Handling registration event response" />
     <MESSAGE value="Handling OutGoing Events" />
-    <option name="LAST_COMMIT_MESSAGE" value="Handling OutGoing Events" />
+    <MESSAGE value="OutGoing events done preparing response" />
+    <option name="LAST_COMMIT_MESSAGE" value="OutGoing events done preparing response" />
   </component>
   <component name="WindowStateProjectService">
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1617870781861">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1617870781861" />
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1617952492508">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1617953624886">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1617952492508" />
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1617953624886" />
     <state x="129" y="55" key="DiffContextDialog" timestamp="1617951636685">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -109,26 +117,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="543" y="276" key="Github.Dialog.Accounts.Choose/0.0.1366.728@0.0.1366.728" timestamp="1617881221600" />
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1617952764875">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1617953686291">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1617952764875" />
-    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1617952764874">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1617953686291" />
+    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1617953686291">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1617952764874" />
-    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1617952764873">
+    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1617953686291" />
+    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1617953686290">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1617952764873" />
-    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1617952764875">
+    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1617953686290" />
+    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1617953686291">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1617952764875" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1617952504061">
+    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1617953686291" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1617953633964">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1617952504061" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1617953633964" />
     <state x="390" y="97" width="596" height="534" key="find.popup" timestamp="1617873768259">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
