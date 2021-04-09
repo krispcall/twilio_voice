@@ -2,8 +2,6 @@ package com.flutter.twilio.voice
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.twilio.voice.*
@@ -133,13 +131,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     fun makeCall(call: MethodCall, result: MethodChannel.Result)
     {
-        val to = call.argument("To") ?: return result.error("ERROR", "Missing To", null)
-        val from = call.argument("from") ?: return result.error("ERROR", "Missing from", null)
-        val accessToken = call.argument("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
-        val displayName = call.argument("displayName") ?: return result.error("ERROR", "Missing display name", null)
+        val to: String = call.argument<String>("To") ?: return result.error("ERROR", "Missing To", null)
+        val from: String = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
+        val accessToken: String = call.argument<String>("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
+        val displayName: String = call.argument<String>("displayName") ?: return result.error("ERROR", "Missing display name", null)
         try
         {
-
             val params = HashMap<String, String>()
             params["To"] = to
             params["from"] = from
@@ -220,7 +217,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     sendEventOnCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
                 }
             })
-
         }
         catch (e: Exception)
         {
@@ -228,7 +224,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
-    fun rejectCall(call: MethodCall, result: MethodChannel.Result)
+    fun rejectCall()
     {
         if(activeCallInvite!=null)
         {
@@ -240,12 +236,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
-    fun disConnect(call: MethodCall, result: MethodChannel.Result)
+    fun disConnect()
     {
         activeCall?.disconnect()
     }
 
-    fun mute(call: MethodCall, result: MethodChannel.Result)
+    fun mute()
     {
         if (activeCall != null)
         {
@@ -255,7 +251,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
-    fun handleMessage(call: MethodCall, result: MethodChannel.Result)
+    fun handleMessage(call: MethodCall)
     {
         val notification = call.argument("notification") as? Map<String, Any>
 
@@ -303,7 +299,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         return bundle
     }
 
-    fun acceptCall(call: MethodCall, result: MethodChannel.Result)
+    fun acceptCall()
     {
         try
         {

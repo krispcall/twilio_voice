@@ -15,15 +15,15 @@ class PluginHandler : MethodCallHandler
 
             "makeCall"->TwilioVoice.instance.makeCall(call,result)
 
-            "rejectCall"->TwilioVoice.instance.rejectCall(call,result)
+            "rejectCall"->TwilioVoice.instance.rejectCall()
 
-            "disConnect"->TwilioVoice.instance.disConnect(call,result)
+            "disConnect"->TwilioVoice.instance.disConnect()
 
-            "mute"->TwilioVoice.instance.mute(call,result)
+            "mute"->TwilioVoice.instance.mute()
 
-            "acceptCall"->TwilioVoice.instance.acceptCall(call,result)
+            "acceptCall"->TwilioVoice.instance.acceptCall()
 
-            "handleMessage"->TwilioVoice.instance.handleMessage(call,result)
+            "handleMessage"->TwilioVoice.instance.handleMessage(call)
 
             else -> result.notImplemented()
         }
