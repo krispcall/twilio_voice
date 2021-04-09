@@ -151,6 +151,7 @@ class VoiceClient {
 
   Stream<Call> outGoingCallCallQualityWarningsChanged;
   final StreamController<Call> _outGoingCallCallQualityWarningsChanged = StreamController<Call>.broadcast();
+
   //Incoming
   Stream<Call> onConnectFailure;
   final StreamController<Call> _onConnectFailure = StreamController<Call>.broadcast();
