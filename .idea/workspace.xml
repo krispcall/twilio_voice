@@ -77,7 +77,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617952007194</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Handling OutGoing Events">
+      <created>1617952494470</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617952494470</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -90,10 +97,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1617870781861" />
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1617952006030">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1617952492508">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1617952006030" />
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1617952492508" />
     <state x="129" y="55" key="DiffContextDialog" timestamp="1617951636685">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -102,26 +109,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="543" y="276" key="Github.Dialog.Accounts.Choose/0.0.1366.728@0.0.1366.728" timestamp="1617881221600" />
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1617881579791">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1617952764875">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1617881579791" />
-    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1617881579791">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1617952764875" />
+    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1617952764874">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1617881579791" />
-    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1617881579791">
+    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1617952764874" />
+    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1617952764873">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1617881579791" />
-    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1617881579791">
+    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1617952764873" />
+    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1617952764875">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1617881579791" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1617951650844">
+    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1617952764875" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1617952504061">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1617951650844" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1617952504061" />
     <state x="390" y="97" width="596" height="534" key="find.popup" timestamp="1617873768259">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
