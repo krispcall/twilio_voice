@@ -22,8 +22,9 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     private lateinit var handleMessageChannel: EventChannel
 
-    private lateinit var onCallChannel: EventChannel
+    private lateinit var callOutGoingChannel: EventChannel
 
+    private lateinit var onCallChannel: EventChannel
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
     // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
@@ -55,7 +56,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
         var handleMessageSink: EventChannel.EventSink? = null
 
+        var callOutGoingSink: EventChannel.EventSink? = null
+
         var onCallSink: EventChannel.EventSink? = null
+
 
         @JvmStatic
         lateinit var applicationContext: Context
@@ -106,6 +110,19 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             }
         })
 
+        callOutGoingChannel = EventChannel(messenger, "TwilioVoice/callOutGoingChannel")
+        callOutGoingChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
+                Log.d(TAG, "onListen: TwilioVoice.onAttachedToEngine => onCallChannel eventChannel attached")
+                callOutGoingSink = events
+            }
+
+            override fun onCancel(arguments: Any) {
+                Log.d(TAG, "onCancel: TwilioVoice.onAttachedToEngine => onCallChannel eventChannel detached")
+                callOutGoingSink = null
+            }
+        })
+
         onCallChannel = EventChannel(messenger, "TwilioVoice/onCall")
         onCallChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
@@ -127,6 +144,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         registrationChannel.setStreamHandler(null)
         handleMessageChannel.setStreamHandler(null)
         onCallChannel.setStreamHandler(null)
+        callOutGoingChannel.setStreamHandler(null)
     }
 
     fun makeCall(call: MethodCall, result: MethodChannel.Result)
@@ -145,7 +163,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, object:Listener {
+            activeCall = Voice.connect(applicationContext, connectOptions, object:Listener
+            {
                 override fun onConnectFailure(call: Call, callException: CallException)
                 {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
@@ -158,7 +177,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
                     Log.d(TAG, "onRinging ${call.isOnHold}")
                     Log.d(TAG, "onRinging ${call.isMuted}")
-                    sendEventOnCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onConnected(call: Call) {
@@ -168,7 +187,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onConnected ${call.isOnHold}")
                     Log.d(TAG, "onConnected ${call.isMuted}")
                     activeCall = call
-                    sendEventOnCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onReconnecting(call: Call, callException: CallException) {
@@ -178,7 +197,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnecting ${call.isOnHold}")
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
-                    sendEventOnCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onReconnected(call: Call)
@@ -188,7 +207,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onReconnected ${call.isOnHold}")
                     Log.d(TAG, "onReconnected ${call.isMuted}")
-                    sendEventOnCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onDisconnected(call: Call, callException: CallException?) {
@@ -198,7 +217,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onDisconnected ${call.isOnHold}")
                     Log.d(TAG, "onDisconnected ${call.isMuted}")
                     Log.d(TAG, "onDisconnected ${callException.toString()}")
-                    sendEventOnCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
                 override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
@@ -208,13 +227,14 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
-                    if (previousWarnings.size > 1) {
+                    if (previousWarnings.size > 1)
+                    {
                         val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
                         currentWarnings.removeAll(previousWarnings)
                         intersection.retainAll(previousWarnings)
                         previousWarnings.removeAll(intersection)
                     }
-                    sendEventOnCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
+                    sendEventOutGoingCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
                 }
             })
         }
@@ -440,6 +460,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         Log.d(TAG, "sendEventHandleMessage: "+data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         handleMessageSink?.success(eventData)
+    }
+
+    private fun sendEventOutGoingCall(name: String, data: Any?, e: CallException? = null)
+    {
+        Log.d(TAG, "sendEventOutGoingCall: "+data.toString())
+        val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
+        callOutGoingSink?.success(eventData)
     }
 
     private fun sendEventOnCall(name: String, data: Any?, e: CallException? = null)

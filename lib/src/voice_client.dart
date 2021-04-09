@@ -55,6 +55,8 @@ class VoiceClient {
   /// Stream for the native chat events.
   StreamSubscription<dynamic> _handleMessageStream;
 
+  StreamSubscription<dynamic> _callOutGoingStream;
+
   /// Stream for the native chat events.
   StreamSubscription<dynamic> _onCallStream;
 
@@ -128,32 +130,47 @@ class VoiceClient {
 
   final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> onConnectFailure;
+  //OUtGoing
+  Stream<Call> outGoingCallConnectFailure;
+  final StreamController<Call> _outGoingCallConnectFailure = StreamController<Call>.broadcast();
 
+  Stream<Call> outGoingCallRinging;
+  final StreamController<Call> _outGoingCallRinging = StreamController<Call>.broadcast();
+
+  Stream<Call> outGoingCallConnected;
+  final StreamController<Call> _outGoingCallConnected = StreamController<Call>.broadcast();
+
+  Stream<Call> outGoingCallReconnecting;
+  final StreamController<Call> _outGoingCallReconnecting = StreamController<Call>.broadcast();
+
+  Stream<Call> outGoingCallReconnected;
+  final StreamController<Call> _outGoingCallReconnected = StreamController<Call>.broadcast();
+
+  Stream<Call> outGoingCallDisconnected;
+  final StreamController<Call> _outGoingCallDisconnected = StreamController<Call>.broadcast();
+
+  Stream<Call> outGoingCallCallQualityWarningsChanged;
+  final StreamController<Call> _outGoingCallCallQualityWarningsChanged = StreamController<Call>.broadcast();
+  //Incoming
+  Stream<Call> onConnectFailure;
   final StreamController<Call> _onConnectFailure = StreamController<Call>.broadcast();
 
   Stream<Call> onRinging;
-
   final StreamController<Call> _onRinging = StreamController<Call>.broadcast();
 
   Stream<Call> onConnected;
-
   final StreamController<Call> _onConnected = StreamController<Call>.broadcast();
 
   Stream<Call> onReconnecting;
-
   final StreamController<Call> _onReconnecting = StreamController<Call>.broadcast();
 
   Stream<Call> onReconnected;
-
   final StreamController<Call> _onReconnected = StreamController<Call>.broadcast();
 
   Stream<Call> onDisconnected;
-
   final StreamController<Call> _onDisconnected = StreamController<Call>.broadcast();
 
   Stream<Call> onCallQualityWarningsChanged;
-
   final StreamController<Call> _onCallQualityWarningsChanged = StreamController<Call>.broadcast();
 
 
@@ -192,6 +209,16 @@ class VoiceClient {
     onCallInvite=_onCallInvite.stream;
     onCancelledCallInvite=_onCancelledCallInvite.stream;
 
+    //OutGoing
+    outGoingCallConnectFailure = _outGoingCallConnectFailure.stream;
+    outGoingCallRinging = _outGoingCallRinging.stream;
+    outGoingCallConnected = _outGoingCallConnected.stream;
+    outGoingCallReconnecting = _outGoingCallReconnecting.stream;
+    outGoingCallReconnected = _outGoingCallReconnected.stream;
+    outGoingCallDisconnected = _outGoingCallDisconnected.stream;
+    outGoingCallCallQualityWarningsChanged = _outGoingCallCallQualityWarningsChanged.stream;
+
+    //Incoming
     onConnectFailure = _onConnectFailure.stream;
     onRinging = _onRinging.stream;
     onConnected = _onConnected.stream;
@@ -202,6 +229,7 @@ class VoiceClient {
 
     registrationStream = TwilioVoice.registrationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
     _handleMessageStream = TwilioVoice._handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
+    _callOutGoingStream = TwilioVoice._callOutGoingChannel.receiveBroadcastStream(0).listen(_parseOutGoingCallEvent);
     _onCallStream = TwilioVoice._onCallChannel.receiveBroadcastStream(0).listen(_parseOnCall);
   }
 
@@ -230,6 +258,7 @@ class VoiceClient {
     {
       await registrationStream.cancel();
       await _handleMessageStream.cancel();
+      await _callOutGoingStream.cancel();
       await _onCallStream.cancel();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
@@ -387,6 +416,83 @@ class VoiceClient {
 
       default:
         print("$TAG Notification event '$eventName' not yet implemented");
+        break;
+    }
+  }
+
+  void _parseOutGoingCallEvent(dynamic event)
+  {
+    final String eventName = event['name'];
+    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
+    final data = Map<String, dynamic>.from(event['data']);
+
+    ErrorInfo exception;
+    if (event['error'] != null)
+    {
+      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+    }
+
+    switch (eventName)
+    {
+      case 'onConnectFailure':
+        print("$TAG onConnectFailure ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onRinging':
+        print("$TAG onRinging ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onConnected':
+        print("$TAG onConnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onReconnecting':
+        print("$TAG onReconnecting ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onReconnected':
+        print("$TAG onReconnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onDisconnected':
+        print("$TAG onDisconnected ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted));
+        break;
+      case 'onCallQualityWarningsChanged':
+        print("$TAG onCallQualityWarningsChanged ${data.toString()}");
+        var to = data['data']['to'] as String;
+        var from = data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] as bool;
+        _outGoingCallCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
+        break;
+      default:
+        print("$TAG event '$eventName' not yet implemented");
         break;
     }
   }

@@ -8,6 +8,8 @@ class TwilioVoice {
 
   static const EventChannel _handleMessageChannel = EventChannel('TwilioVoice/handleMessage');
 
+  static const EventChannel _callOutGoingChannel = EventChannel('TwilioVoice/callOutGoingChannel');
+
   static const EventChannel _onCallChannel = EventChannel('TwilioVoice/onCall');
 
   static VoiceClient voiceClient;
