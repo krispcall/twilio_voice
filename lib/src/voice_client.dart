@@ -201,8 +201,8 @@ class VoiceClient {
   Stream<NotificationRegistrationEvent> onNotificationDeregistered;
   //#endregion
 
-  VoiceClient(this.accessToken) : assert(accessToken != null) {
-
+  VoiceClient(this.accessToken) : assert(accessToken != null)
+  {
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
 
@@ -228,7 +228,7 @@ class VoiceClient {
     incomingCallQualityWarningsChanged = _incomingCallQualityWarningsChanged.stream;
 
     registrationStream = TwilioVoice.registrationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
-    handleMessageStream = TwilioVoice.handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
+    handleMessageStream = TwilioVoice.handleMessageChannel.receiveBroadcastStream(1).listen(_parseHandleMessage);
     callOutGoingStream = TwilioVoice.callOutGoingChannel.receiveBroadcastStream(0).listen(_parseOutGoingCallEvent);
     callIncomingStream = TwilioVoice.callIncomingChannel.receiveBroadcastStream(0).listen(_parseIncomingCallEvents);
   }
@@ -399,7 +399,7 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCallInvite.sink.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
