@@ -399,7 +399,7 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCallInvite.add(CallInvite(callSid,to,from,customParameters),);
+        _onCallInvite.sink.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
