@@ -400,6 +400,7 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         _onCallInvite.sink.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.sink.done;
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
