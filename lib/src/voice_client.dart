@@ -228,7 +228,7 @@ class VoiceClient {
     incomingCallQualityWarningsChanged = _incomingCallQualityWarningsChanged.stream;
 
     registrationStream = TwilioVoice.registrationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
-    handleMessageStream = TwilioVoice.handleMessageChannel.receiveBroadcastStream(1).listen(_parseHandleMessage);
+    handleMessageStream = TwilioVoice.handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
     callOutGoingStream = TwilioVoice.callOutGoingChannel.receiveBroadcastStream(0).listen(_parseOutGoingCallEvent);
     callIncomingStream = TwilioVoice.callIncomingChannel.receiveBroadcastStream(0).listen(_parseIncomingCallEvents);
   }
@@ -253,7 +253,8 @@ class VoiceClient {
   /// Cleanly shuts down the messaging client when you are done with it.
   ///
   /// It will dispose() the client after shutdown, so it could not be reused.
-  Future<void> shutdown() async {
+  Future<void> shutdown() async
+  {
     try
     {
       await registrationStream.cancel();
@@ -390,6 +391,7 @@ class VoiceClient {
     switch (eventName) 
     {
       case 'onCallInvite':
+        onCallInvite=_onCallInvite.stream;
         print("$TAG onCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
@@ -400,6 +402,7 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.close();
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");

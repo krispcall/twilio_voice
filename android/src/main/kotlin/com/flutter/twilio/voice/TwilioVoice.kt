@@ -490,7 +490,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         applicationContext=binding.activity
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
+    override fun onDetachedFromActivityForConfigChanges()
+    {
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
