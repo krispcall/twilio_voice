@@ -391,8 +391,11 @@ class VoiceClient {
     switch (eventName) 
     {
       case 'onCallInvite':
-        _onCallInvite = StreamController<CallInvite>.broadcast();
-        onCallInvite=_onCallInvite.stream;
+        if(_onCallInvite.isClosed)
+        {
+          _onCallInvite = StreamController<CallInvite>.broadcast();
+          onCallInvite=_onCallInvite.stream;
+        }
         print("$TAG onCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
         var to = data['data']['to'] as String;
