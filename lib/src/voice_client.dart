@@ -124,7 +124,7 @@ class VoiceClient {
   Stream<void> onTokenAboutToExpire;
   
   Stream<CallInvite> onCallInvite;
-  final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
+  StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> onCancelledCallInvite;
   final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
@@ -391,6 +391,7 @@ class VoiceClient {
     switch (eventName) 
     {
       case 'onCallInvite':
+        _onCallInvite = StreamController<CallInvite>.broadcast();
         onCallInvite=_onCallInvite.stream;
         print("$TAG onCallInvite ${data.toString()}");
         var callSid = data['data']['callSid'] as String;
