@@ -325,7 +325,7 @@ class VoiceClient {
   {
     try
     {
-      await TwilioVoice._methodChannel.invokeMethod('sendDigit', <String, Object>{'token': digit});
+      await TwilioVoice._methodChannel.invokeMethod('sendDigit', <String, Object>{'digit': digit});
     }
     on PlatformException catch (err)
     {
