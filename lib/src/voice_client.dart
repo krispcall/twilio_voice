@@ -321,6 +321,17 @@ class VoiceClient {
     }
   }
 
+  Future<void> sendDigit(String digit) async
+  {
+    try
+    {
+      await TwilioVoice._methodChannel.invokeMethod('sendDigit', <String, Object>{'token': digit});
+    }
+    on PlatformException catch (err)
+    {
+      throw TwilioVoice._convertException(err);
+    }
+  }
 
   Future<bool> registerForNotification(String accessToken,String token) async
   {

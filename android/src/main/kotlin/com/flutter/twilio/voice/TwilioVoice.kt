@@ -413,6 +413,12 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
+    fun sendDigit(call: MethodCall, result: MethodChannel.Result)
+    {
+        val digit: String = call.argument<String>("digit") ?: return result.error("MISSING_PARAMS", "The parameter 'digit' was not given", null)
+        activeCall?.sendDigits(digit)
+    }
+
     fun registerForNotification(call: MethodCall, result: MethodChannel.Result)
     {
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
