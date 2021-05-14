@@ -4,24 +4,7 @@
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/flutter/twilio/voice_example/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/flutter/twilio/voice_example/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/flutter/twilio/voice_example/FirebaseCloudMessagingPluginRegistrant.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/AppInjector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/AppInjector.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/base/BaseView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/base/BaseView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/pages/notification_examples_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/pages/notification_examples_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/repository/AuthRepositoryImpl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/repository/AuthRepositoryImpl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/repository/ContentRepositoryImpl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/repository/ContentRepositoryImpl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/utils/CommonFunctions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/utils/CommonFunctions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,22 +233,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="543" y="276" key="Github.Dialog.Accounts.Choose/0.0.1366.728@0.0.1366.728" timestamp="1617881221600" />
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1618311275932">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1620989983662">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1618311275932" />
-    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1618311275932">
+    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
+    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1620989983662">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1618311275932" />
-    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1618311275931">
+    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
+    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1620989983661">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1618311275931" />
-    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1618311275932">
+    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1620989983661" />
+    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1620989983662">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1618311275932" />
+    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
     <state x="163" y="0" key="SettingsEditor" timestamp="1618204410365">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
