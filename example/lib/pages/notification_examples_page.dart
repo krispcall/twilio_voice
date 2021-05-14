@@ -124,8 +124,8 @@ class _NotificationExamplesPageState extends State<NotificationExamplesPage>
 
     AlertDialog alert = AlertDialog(
       title: Text("Choose the new badge amount"),
-      content: NumberPicker.integer(
-          initialValue: amount,
+      content: NumberPicker(
+          value: amount,
           minValue: 0,
           maxValue: 999,
           onChanged: (newValue) => amount = newValue

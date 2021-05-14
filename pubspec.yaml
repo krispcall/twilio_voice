@@ -2,7 +2,6 @@ name: voice
 description: flutter twilio voice
 version: 0.0.1
 author: Joshan Tandukar
-homepage:
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -11,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  enum_to_string: ^1.0.13
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:

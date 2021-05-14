@@ -26,7 +26,7 @@ abstract class BaseState<P extends BasePresenter, V extends BaseView>
 
   BaseState()
   {
-    presenter = Injector.getInjector().get();
+    presenter = Injector().get();
     presenter.view = this;
   }
 

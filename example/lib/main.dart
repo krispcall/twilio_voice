@@ -1,5 +1,6 @@
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:voice_example/string/Strings.dart';
@@ -10,6 +11,7 @@ import 'colors/colors.dart';
 Future<void> main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   AppInjector.inject();
   AwesomeNotifications().initialize(
       null,
@@ -157,7 +159,6 @@ Future<void> main() async
             channelName: 'Grouped notifications',
             channelDescription: 'Notifications with group functionality',
             groupKey: 'grouped',
-            setAsGroupSummary: true,
             defaultColor: Colors.lightGreen,
             ledColor: Colors.lightGreen,
             vibrationPattern: lowVibrationPattern,

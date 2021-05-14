@@ -30,7 +30,7 @@ class AuthRepositoryImpl extends AuthRepository {
       'Authorization':'Bearer '+ await secureRepo.getApiToken(),
     };
     final response = await http.post(
-        '$banner?$_results=${toString()}',
+        Uri.parse('$banner?$_results=${toString()}'),
         headers: requestHeaders,
         body: map);
     if (response.statusCode >= 200 && response.statusCode<300)

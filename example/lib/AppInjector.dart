@@ -18,7 +18,7 @@ class AppInjector {
   static const String BASE_URL = "base_url";
 
   static inject() {
-    final injector = Injector.getInjector();
+    final injector = Injector();
 
     //strings
     injector.map<String>((i) => "http://128.199.75.138/api/", key: BASE_URL);
