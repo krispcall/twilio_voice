@@ -124,7 +124,7 @@ class VoiceClient {
   Stream<void> onTokenAboutToExpire;
   
   Stream<CallInvite> onCallInvite;
-  final StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
+  StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> onCancelledCallInvite;
   final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
@@ -201,8 +201,8 @@ class VoiceClient {
   Stream<NotificationRegistrationEvent> onNotificationDeregistered;
   //#endregion
 
-  VoiceClient(this.accessToken) : assert(accessToken != null) {
-
+  VoiceClient(this.accessToken) : assert(accessToken != null)
+  {
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
 
@@ -253,7 +253,8 @@ class VoiceClient {
   /// Cleanly shuts down the messaging client when you are done with it.
   ///
   /// It will dispose() the client after shutdown, so it could not be reused.
-  Future<void> shutdown() async {
+  Future<void> shutdown() async
+  {
     try
     {
       await registrationStream.cancel();
@@ -320,6 +321,17 @@ class VoiceClient {
     }
   }
 
+  Future<void> sendDigit(String digit) async
+  {
+    try
+    {
+      await TwilioVoice._methodChannel.invokeMethod('sendDigit', <String, Object>{'digit': digit});
+    }
+    on PlatformException catch (err)
+    {
+      throw TwilioVoice._convertException(err);
+    }
+  }
 
   Future<bool> registerForNotification(String accessToken,String token) async
   {
@@ -399,7 +411,7 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        _onCallInvite.sink.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
