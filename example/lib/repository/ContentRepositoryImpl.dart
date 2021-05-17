@@ -41,7 +41,7 @@ class ContentRepositoryImpl extends ContentRepository
     try
     {
       final Response response = await client.get(
-          url,
+          Uri.parse(url),
           headers: requestHeaders
       );
       final ResponseApi psApiResponse = ResponseApi(response);
@@ -93,14 +93,13 @@ class ContentRepositoryImpl extends ContentRepository
     Map<String, String> requestHeaders = {
       'Content-type': 'application/x-www-form-urlencoded',
       'Accept': 'application/x-www-form-urlencoded',
-      'Authorization':'Bearer '+apiToken
     };
     try
     {
       final response = await http.post(
-        '$url',
+        Uri.parse('$url'),
         headers: requestHeaders,
-        body: valueMap,
+        body: json.encode(map),
       ).catchError((dynamic e)
       {
         print("${e.toString()}");

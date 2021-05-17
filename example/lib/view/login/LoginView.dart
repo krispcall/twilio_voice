@@ -1,5 +1,6 @@
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ import 'LoginPresenter.dart';
 import 'LoginViewCallback.dart';
 
 
-final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 VoiceClient voiceClient;
 
 
@@ -307,19 +308,29 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
   configureNotification(String apiToken) async
   {
     voiceClient=VoiceClient(apiToken);
-    voiceClient.registerForNotification(apiToken, await FirebaseMessaging().getToken()).then((value)
+    voiceClient.registerForNotification(apiToken, await FirebaseMessaging.instance.getToken()).then((value)
     {
       print(value);
     });
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.subscribeToTopic("com.flutter.twilio.voice_example");
-    _firebaseMessaging.configure(
-      onMessage: onMessage,
-      onBackgroundMessage: onBackgroundMessage,
-      onLaunch: onLaunch,
-      onResume: onResume,
-    );
-    print("FCM "+await FirebaseMessaging().getToken());
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message)
+    {
+      if(message.data.containsKey("twi_account_sid"))
+      {
+        voiceClient.handleMessage(message.data);
+        showIncomingCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message.data);
+      }
+      else
+      {
+
+      }
+    });
+
+    FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
+
+    print("FCM "+await FirebaseMessaging.instance.getToken());
     push(SignUpView(),withReplacement: false);
   }
 
@@ -368,14 +379,14 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
 Future<dynamic> onMessage(Map<String, dynamic> message) async
 {
   print('Main::onMessage => $message');
-  voiceClient.handleMessage(message);
-  showIncomingCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
+
 }
 
-Future<dynamic> onBackgroundMessage(Map<String, dynamic> message) async {
+Future<dynamic> onBackgroundMessage(RemoteMessage message) async {
   print('Main::onBackgroundMessage => $message');
-  voiceClient.handleMessage(message);
-  showBackgroundCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message);
+  await Firebase.initializeApp();
+  voiceClient.handleMessage(message.data);
+  showBackgroundCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message.data);
 }
 
 Future<dynamic> onLaunch(Map<String, dynamic> message) async {
