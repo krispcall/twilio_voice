@@ -1,9 +1,8 @@
 import Flutter
 import Foundation
-//import TwilioChatClient
 
 public class PluginHandler {
-    // swiftlint:disable:next function_body_length
+   
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         SwiftTwilioVoice.debug("PluginHandler.handle => received \(call.method)")
         switch call.method {
@@ -65,7 +64,8 @@ public class PluginHandler {
     }
     
     private func create(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        SwiftTwilioVoice.debug("TwilioProgrammableChatPlugin.create => called")
+        
+        SwiftTwilioVoice.debug("SwiftVoicePluggin.create => called")
         
         guard let arguments = call.arguments as? [String: Any?] else {
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing parameters", details: nil))
@@ -78,6 +78,7 @@ public class PluginHandler {
         }
         
         let propertiesObj = arguments["properties"]
+        
         if(propertiesObj != nil){
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'token' parameter", details: nil))
         }

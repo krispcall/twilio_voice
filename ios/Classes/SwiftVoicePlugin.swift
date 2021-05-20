@@ -128,6 +128,10 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         print("Inside Registration")
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
+        print("Argments for Registation")
+        print(arguments)
+        
+        
         guard let token = deviceToken as NSData? else {
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
         
@@ -177,24 +181,18 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
         
-        
+        print("Arguments for makCall")
         print(arguments)
 
     
-        guard let callTo = arguments["to"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        guard let callTo = arguments["to"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
         
-        print(callTo)
+        guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
         
-        guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         
-        print(callFrom)
-        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
         
-        print(accessToken)
-        
-        guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
-        
-        print(displayName)
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["to": callTo,
@@ -221,9 +219,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
+        print("Arguments for sendDigit")
+        print(arguments)
+        
         guard let digit = arguments["digit"] as? String
         else {
-            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))
+            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'digit' parameter", details: nil))
         }
         
         activeCall?.sendDigits(digit)
@@ -238,6 +239,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let arguments:Dictionary<String, AnyObject> = message.arguments as! Dictionary<String,   AnyObject>;
         
+        print("arguments for handleMessage")
+        print(arguments)
+        
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
                 SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
@@ -246,13 +250,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                         SwiftTwilioVoice.debug("Requesting APNS token")
                         SwiftTwilioVoice.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
-                        
+                        print("TwilioVoiceSDK initialize")
                         TwilioVoiceSDK.handleNotification(arguments, delegate:HandleNotificationDelegate(), delegateQueue:nil)
                     }
                 }
             }
         }
-        result(nil)
     }
     
     
@@ -264,6 +267,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         if(activeCallInvite != nil)
         {
+            print("activeCallInvite?.reject() called")
+            
             activeCallInvite?.reject()
         }
         else
@@ -284,6 +289,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         if (activeCall != nil)
         {
             if((activeCall?.isMuted) != nil){
+                
                 //TODO: unable to find the mute method
                 
                 //activeCall.mute()
@@ -301,6 +307,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         print("Inside AcceptCall")
         
         if(activeCall != nil){
+            print("activeCallInvite?.accept(with: IncomingCallDelegate()) iniated")
             activeCallInvite?.accept(with: IncomingCallDelegate())
         }
     }
@@ -311,10 +318,18 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
     
     
     public func unregisterForNotification(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("Inside UnRegister")
+        
+        print("Inside unRegisterForNotification")
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
-        guard let token = deviceToken as NSData? else {return}
-        guard let accessToken = arguments["accessToken"] as? String else {return}
+        
+        print("Arguments for registration");
+        print(arguments)
+        
+        guard let token = deviceToken as NSData? else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'deviceToken' parameter", details: nil))}
+        
+
+        
+        guard let accessToken = arguments["accessToken"] as? String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         
         if #available(iOS 10.0, *) {
             DispatchQueue.main.async {
@@ -326,19 +341,19 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                     if let error = error {
                         print ("Successfully Un-Registered accessToken $accessToken fcmToken $fcmToken")
                         self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: error as NSError)
-                        result( ["result" : true])
+                       return result( ["result" : true])
                     }
                     else {
                         print("Successfully Unregistered accessToken $accessToken fcmToken $fcmToken")
                         self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: nil)
                         
-                        result (["result": true])
+                       return result (["result": true])
                     }
                 }
                 
             }
         }
-        result(nil)
+    
     }
     
     
