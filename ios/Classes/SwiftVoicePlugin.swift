@@ -177,9 +177,14 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
         
+        
+        print(arguments)
+
+    
         guard let callTo = arguments["to"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
         
         print(callTo)
+        
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
         
         print(callFrom)
