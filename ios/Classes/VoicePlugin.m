@@ -1,4 +1,4 @@
-#import "TwilioVoice.h"
+#import "VoicePlugin.h"
 #if __has_include(<voice/voice-Swift.h>)
 #import <voice/voice-Swift.h>
 #else

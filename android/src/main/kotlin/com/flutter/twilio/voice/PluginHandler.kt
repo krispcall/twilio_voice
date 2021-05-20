@@ -35,6 +35,7 @@ class PluginHandler : MethodCallHandler
 
         val token = call.argument<String>("token")
         val propertiesObj = call.argument<Map<String, Any>>("properties")
+
         if (token == null) {
             return result.error("ERROR", "Missing token", null)
         }

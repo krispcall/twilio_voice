@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/Runner/GoogleService-Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/Runner/notifications-quickstart-swift-master.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/voice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/voice.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/VoicePlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/VoicePlugin.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/voice.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/voice.podspec" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,9 +49,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="e5b7af66-7198-428a-b674-a105c6b54ae0" />
   </component>
   <component name="ProjectId" id="1qsW9kQC6FfKccsCu5LRL8O9nYY" />
   <component name="ProjectLevelVcsManager">
@@ -37,8 +70,13 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.externalResources" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ios/Classes" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
@@ -200,6 +238,9 @@
     <option name="localTasksCounter" value="21" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Handling registration event response" />
@@ -249,10 +290,15 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
-    <state x="163" y="0" key="SettingsEditor" timestamp="1618204410365">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="153" y="25" width="997" height="715" key="SettingsEditor" timestamp="1621329894916">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1618204410365" />
+    <state x="153" y="25" width="997" height="715" key="SettingsEditor/0.25.1280.715@0.25.1280.715" timestamp="1621329894916" />
+    <state x="490" y="307" key="VCS.ChangelistChooser" timestamp="1621333004182">
+      <screen x="0" y="25" width="1280" height="715" />
+    </state>
+    <state x="490" y="307" key="VCS.ChangelistChooser/0.25.1280.715@0.25.1280.715" timestamp="1621333004182" />
     <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1618471522426">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -265,10 +311,11 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="390" y="97" width="596" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1618299053582" />
-    <state x="384" y="152" key="git4idea.merge.GitPullDialog" timestamp="1618223413023">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="360" y="174" key="git4idea.merge.GitPullDialog" timestamp="1621329863377">
+      <screen x="0" y="25" width="1280" height="715" />
     </state>
     <state x="384" y="152" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1618223413023" />
+    <state x="360" y="174" key="git4idea.merge.GitPullDialog/0.25.1280.715@0.25.1280.715" timestamp="1621329863377" />
     <state x="682" y="164" key="run.anything.popup" timestamp="1617876615749">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

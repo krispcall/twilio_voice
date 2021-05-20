@@ -85,6 +85,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         methodChannel.setMethodCallHandler(pluginHandler)
 
         registrationChannel = EventChannel(messenger, "TwilioVoice/registrationChannel")
+
         registrationChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
                 Log.d(TAG, "onListen: TwilioVoice.onAttachedToEngine => Notification eventChannel attached ")
@@ -280,6 +281,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val notification = call.argument("notification") as? Map<String, Any>
 
         val bundle=createBundleFromMap(notification)
+
         Voice.handleMessage(applicationContext, bundle!!, object : MessageListener {
             override fun onCallInvite(callInvite: CallInvite)
             {
