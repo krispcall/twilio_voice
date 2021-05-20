@@ -177,10 +177,19 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
         
-        guard let callTo = arguments["to"] as? String else {return}
-        guard let callFrom = arguments["from"] as? String else {return}
-        guard let accessToken = arguments["accessToken"] as?String else {return}
-        guard  let  displayName = arguments["displayName"] as?String else{return}
+        guard let callTo = arguments["to"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        
+        print(callTo)
+        guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        
+        print(callFrom)
+        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        
+        print(accessToken)
+        
+        guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+        
+        print(displayName)
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["to": callTo,
@@ -191,6 +200,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         let call = TwilioVoiceSDK.connect(options: connectOptions,
                                           delegate: OutGoingCallDelegate())
+        
+        print(call.from as Any)
+        
         activeCall = call
         
         result(nil)
@@ -208,10 +220,10 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         else {
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))
         }
-         activeCall?.sendDigits(digit)
-    
-        result(nil)
-    }
+        
+        activeCall?.sendDigits(digit)
+        
+        }
     
     
     
@@ -433,11 +445,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
     }
     
-    
-    
-    
-    
-    class OutGoingCallDelegate:NSObject,CallDelegate{
+
+class OutGoingCallDelegate:NSObject,CallDelegate{
         
         func callDidReconnect(call: Call) {
             NSLog(TAG, "\("onReconnected") \(String(describing: call.from))")
