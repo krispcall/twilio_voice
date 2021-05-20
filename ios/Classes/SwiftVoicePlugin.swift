@@ -168,7 +168,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                     }
                 }
             }
-            result(nil)
+        
         }
         
     }
@@ -184,7 +184,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         print("Arguments for makCall")
         print(arguments)
 
-        guard let callTo = arguments["to"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
+        guard let callTo = arguments["To"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
         
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
 
