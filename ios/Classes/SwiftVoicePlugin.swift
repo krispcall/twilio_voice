@@ -133,10 +133,10 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         
         guard let token = deviceToken as NSData? else {
-            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'deviceToken' parameter", details: nil))}
         
         guard let accessToken = arguments["accessToken"] as? String else {
-            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'sdk' parameter", details: nil))}
+            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
