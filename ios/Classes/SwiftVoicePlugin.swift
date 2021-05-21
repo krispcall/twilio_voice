@@ -145,7 +145,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         
         guard let token = self.deviceToken as NSData? else {
-            print("Missing 'accessToken' parameter")
+            print("Missing 'deviceToken' parameter")
             return result (["result": true])
         }
         
