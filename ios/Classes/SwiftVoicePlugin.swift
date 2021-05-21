@@ -62,14 +62,14 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         voipRegistry.delegate = self
         voipRegistry.desiredPushTypes = Set([PKPushType.voIP])
-
-    
+        
         let appDelegate = UIApplication.shared.delegate
+        
         guard let controller = appDelegate?.window??.rootViewController as? FlutterViewController else {
             fatalError("rootViewController is not type FlutterViewController")
         }
         
-        let registrar = controller.registrar(forPlugin: "TwilioVoice")
+//        let registrar = controller.registrar(forPlugin: "TwilioVoice")
     }
     
     
@@ -372,8 +372,6 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
     }
     
     
-    
-
     public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("Inside get device Token")
         self.deviceToken = deviceToken
