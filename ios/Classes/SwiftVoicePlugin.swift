@@ -145,9 +145,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         
         guard let token = self.deviceToken as NSData? else {
-            return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'deviceToken' parameter", details: nil))}
+            print("Missing 'accessToken' parameter")
+            return result (["result": true])
+        }
         
         guard let accessToken = arguments["accessToken"] as? String else {
+            
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         
         if #available(iOS 10.0, *) {
@@ -166,7 +169,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                                 print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken")
                                 
                                 self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
-                                result( ["result" : true])
+                               return result( ["result" : true])
                                 
                             }
                             else {
@@ -174,7 +177,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                                 
                                 self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
                                 
-                                result (["result": true])
+                               return result (["result": true])
                             }
                         }
                         
@@ -221,9 +224,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         print(call.from as Any)
         
         activeCall = call
-        
-        result(nil)
-        
+                
     }
     
     
