@@ -157,14 +157,14 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         }
         
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
-                SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
-                if granted {
-                    DispatchQueue.main.async {
-                        SwiftTwilioVoice.debug("Requesting APNS token")
-                        SwiftTwilioVoice.reasonForTokenRetrieval = "register"
-                        UIApplication.shared.registerForRemoteNotifications()
+//        if #available(iOS 10.0, *) {
+//            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
+//                SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
+//                if granted {
+//                    DispatchQueue.main.async {
+//                        SwiftTwilioVoice.debug("Requesting APNS token")
+//                        SwiftTwilioVoice.reasonForTokenRetrieval = "register"
+//                        UIApplication.shared.registerForRemoteNotifications()
             
                         
                         TwilioVoiceSDK.register(accessToken: accessToken,
@@ -185,11 +185,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                             }
                         }
                         
-                    }
-                }
-            }
-        
-        }
+//                    }
+//                }
+//            }
+//
+//        }
         
     }
     
