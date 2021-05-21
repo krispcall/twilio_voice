@@ -4,6 +4,8 @@ import TwilioVoice
 import CallKit
 import PushKit
 import UserNotifications
+import Foundation
+
 
 var  TAG = "TwilioVoiceIOS";
 
@@ -33,6 +35,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         set{UserDefaults.standard.setValue(newValue, forKey: kCachedDeviceToken)}
     }
     
+
     private  var methodChannel: FlutterMethodChannel?
     public static var methodChannelSink: FlutterEventSink?
     
@@ -56,8 +59,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         self.voipRegistry = PKPushRegistry.init(queue: DispatchQueue.main)
         super.init()
+        
         voipRegistry.delegate = self
         voipRegistry.desiredPushTypes = Set([PKPushType.voIP])
+
+    
         let appDelegate = UIApplication.shared.delegate
         guard let controller = appDelegate?.window??.rootViewController as? FlutterViewController else {
             fatalError("rootViewController is not type FlutterViewController")
@@ -72,14 +78,20 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         instance = SwiftTwilioVoice()
         instance?.onRegister(registrar)
     }
-    
-    
-    public func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        
+ 
+
+    public func pushRegistry(_ registry: PKPushRegistry, didUpdate
+                                pushCredentials: PKPushCredentials, for type: PKPushType) {
+        
         NSLog("pushRegistry:didUpdatePushCredentials:forType:")
         
         if type == PKPushType.voIP {
+            print("Inside pushRegistry")
             self.deviceToken = pushCredentials.token as Data;
-            
+
+            print("deviceToken")
+            print(deviceToken! as Data);
         }
     }
     
@@ -132,7 +144,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         print(arguments)
         
         
-        guard let token = deviceToken as NSData? else {
+        guard let token = self.deviceToken as NSData? else {
             return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'deviceToken' parameter", details: nil))}
         
         guard let accessToken = arguments["accessToken"] as? String else {
@@ -146,6 +158,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                         SwiftTwilioVoice.debug("Requesting APNS token")
                         SwiftTwilioVoice.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
+            
                         
                         TwilioVoiceSDK.register(accessToken: accessToken,
                                                 deviceToken: token as Data) { (error) in
@@ -359,12 +372,20 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
     
     
     
-    public func application(_ application: UIApplication,didFailToRegisterForRemoteNotificationsWithError
+
+    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Inside get device Token")
+        self.deviceToken = deviceToken
+    }
+    
+    
+    public func application(_ application:UIApplication,didFailToRegisterForRemoteNotificationsWithError
                                 error: Error) {
+        print("Inside application")
         SwiftTwilioVoice.debug("didFailToRegisterForRemoteNotificationsWithError => onFail")
         sendNotificationEvent("registered", data: ["result": false], error: error)
     }
-    
+
     
     
     
@@ -728,4 +749,13 @@ class OutGoingCallDelegate:NSObject,CallDelegate{
     }
     
     
+}
+
+
+
+extension Data {
+    var hexString: String {
+        let hexString = map { String(format: "%02.2hhx", $0) }.joined()
+        return hexString
+    }
 }
