@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: com.twilio.sdk:twilio:8.14.0" type="AndroidModuleLibraryType">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twilio.sdk/twilio/8.14.0/b6b3abbd9444b25eff2d30c5dcc6d71f5b20c92a/twilio-8.14.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
