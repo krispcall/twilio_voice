@@ -12,7 +12,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
 import java.util.*
 
-
 /** TwilioVoice */
 
 class TwilioVoice: FlutterPlugin, ActivityAware {
@@ -164,16 +163,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, object:Listener
-            {
-                override fun onConnectFailure(call: Call, callException: CallException)
-                {
+            activeCall = Voice.connect(applicationContext, connectOptions, object : Listener {
+                override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onRinging(call: Call)
-                {
+                override fun onRinging(call: Call) {
                     Log.d(TAG, "onRinging ${call.from}")
                     Log.d(TAG, "onRinging ${call.to}")
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
@@ -182,8 +178,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     sendEventOutGoingCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onConnected(call: Call)
-                {
+                override fun onConnected(call: Call) {
                     Log.d(TAG, "onConnected ${call.from}")
                     Log.d(TAG, "onConnected ${call.to}")
                     Log.d(TAG, "onConnected ${call.callQualityWarnings}")
@@ -276,6 +271,16 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
+    fun hold()
+    {
+        if (activeCall != null)
+        {
+            val hold = !activeCall!!.isOnHold
+            activeCall!!.hold(hold)
+            Log.d(TAG, "hold: $hold")
+        }
+    }
+
     fun handleMessage(call: MethodCall)
     {
         val notification = call.argument("notification") as? Map<String, Any>
@@ -283,15 +288,15 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val bundle=createBundleFromMap(notification)
 
         Voice.handleMessage(applicationContext, bundle!!, object : MessageListener {
-            override fun onCallInvite(callInvite: CallInvite)
-            {
-                Log.d(TAG, "onCallInvite: "+mapOf("data" to Mapper.callInviteToMap(callInvite)))
+            override fun onCallInvite(callInvite: CallInvite) {
+                Log.d(TAG, "onCallInvite: " + mapOf("data" to Mapper.callInviteToMap(callInvite)))
                 activeCallInvite = callInvite
                 sendEventHandleMessage("onCallInvite", mapOf("data" to Mapper.callInviteToMap(callInvite)))
             }
 
-            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, callException: CallException?) {
-                Log.d(TAG, "onCancelledCallInvite: "+mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+            override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, callException: CallException?)
+            {
+                Log.d(TAG, "onCancelledCallInvite: " + mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
                 cancelledCallInvites = cancelledCallInvite
                 sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
             }
@@ -333,16 +338,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.callerInfo)
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
-            activeCallInvite?.accept(applicationContext, object:Listener
-            {
-                override fun onConnectFailure(call: Call, callException: CallException)
-                {
+            activeCallInvite?.accept(applicationContext, object : Listener {
+                override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onRinging(call: Call)
-                {
+                override fun onRinging(call: Call) {
                     Log.d(TAG, "onRinging ${call.from}")
                     Log.d(TAG, "onRinging ${call.to}")
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
@@ -351,8 +353,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     sendEventIncomingCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onConnected(call: Call)
-                {
+                override fun onConnected(call: Call) {
                     Log.d(TAG, "onConnected ${call.from}")
                     Log.d(TAG, "onConnected ${call.to}")
                     Log.d(TAG, "onConnected ${call.callQualityWarnings}")
@@ -362,8 +363,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     sendEventIncomingCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onReconnecting(call: Call, callException: CallException)
-                {
+                override fun onReconnecting(call: Call, callException: CallException) {
                     Log.d(TAG, "onReconnecting ${call.from}")
                     Log.d(TAG, "onReconnecting ${call.to}")
                     Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
@@ -373,8 +373,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     sendEventIncomingCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
                 }
 
-                override fun onReconnected(call: Call)
-                {
+                override fun onReconnected(call: Call) {
                     Log.d(TAG, "onReconnected ${call.from}")
                     Log.d(TAG, "onReconnected ${call.to}")
                     Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
@@ -398,8 +397,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
-                    if (previousWarnings.size > 1)
-                    {
+                    if (previousWarnings.size > 1) {
                         val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
                         currentWarnings.removeAll(previousWarnings)
                         intersection.retainAll(previousWarnings)
@@ -426,13 +424,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
-        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener
-        {
-            override fun onRegistered(accessToken: String, fcmToken: String)
-            {
+        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener {
+            override fun onRegistered(accessToken: String, fcmToken: String) {
                 Log.d(TAG, "Successfully Registered accessToken $accessToken fcmToken $fcmToken")
                 sendEventRegistration("registerForNotification", mapOf("result" to true))
-                result.success( mapOf("result" to true))
+                result.success(mapOf("result" to true))
             }
 
             override fun onError(registrationException: RegistrationException, accessToken: String, fcmToken: String) {
@@ -450,11 +446,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
 
         Voice.unregister(accessToken, Voice.RegistrationChannel.FCM, token, object : UnregistrationListener {
-            override fun onUnregistered(accessToken: String?, fcmToken: String?)
-            {
+            override fun onUnregistered(accessToken: String?, fcmToken: String?) {
                 Log.d(TAG, "Successfully unRegistered accessToken $accessToken fcmToken $fcmToken")
                 sendEventRegistration("unregisterForNotification", mapOf("result" to true))
-                result.success( mapOf("result" to true))
+                result.success(mapOf("result" to true))
             }
 
             override fun onError(registrationException: RegistrationException, accessToken: String?, fcmToken: String?) {
@@ -467,28 +462,28 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     private fun sendEventRegistration(name: String, data: Any?, e: RegistrationException? = null)
     {
-        Log.d(TAG, "sendEventRegistration: "+data.toString())
+        Log.d(TAG, "sendEventRegistration: " + data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         notificationSink?.success(eventData)
     }
 
     private fun sendEventHandleMessage(name: String, data: Any?, e: CallException? = null)
     {
-        Log.d(TAG, "sendEventHandleMessage: "+data.toString())
+        Log.d(TAG, "sendEventHandleMessage: " + data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         handleMessageSink?.success(eventData)
     }
 
     private fun sendEventOutGoingCall(name: String, data: Any?, e: CallException? = null)
     {
-        Log.d(TAG, "sendEventOutGoingCall: "+data.toString())
+        Log.d(TAG, "sendEventOutGoingCall: " + data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         callOutGoingSink?.success(eventData)
     }
 
     private fun sendEventIncomingCall(name: String, data: Any?, e: CallException? = null)
     {
-        Log.d(TAG, "sendEventHandleMessage: "+data.toString())
+        Log.d(TAG, "sendEventHandleMessage: " + data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         callIncomingSink?.success(eventData)
     }

@@ -19,14 +19,36 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
+    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Hold">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_12_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_twilio_sdk_twilio_8_14_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_codec_commons_codec_1_15.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_io_commons_io_2_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_logging_commons_logging_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__io_jsonwebtoken_jjwt_api_0_11_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__io_jsonwebtoken_jjwt_jackson_0_11_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_activation_javax_activation_api_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_xml_bind_jaxb_api_2_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpclient_4_5_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpcore_4_4_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_5_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_5_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_1_7_30.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Mapper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/Mapper.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/signup/SignupView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/view/signup/SignupView.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +74,7 @@
     <property name="android.sdk.path" value="D:/SDK" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/android" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -253,42 +275,42 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1617870781861" />
-    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1618471502794">
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1623823859690">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1618471502794" />
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1623823859690" />
     <state x="129" y="55" key="DiffContextDialog" timestamp="1618461177177">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="129" y="55" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1618461177177" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1620979970908">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1623815066436">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1620979970908" />
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1623815066436" />
     <state x="543" y="276" key="Github.Dialog.Accounts.Choose" timestamp="1617881221600">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="543" y="276" key="Github.Dialog.Accounts.Choose/0.0.1366.728@0.0.1366.728" timestamp="1617881221600" />
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom" timestamp="1620989983662">
+    <state width="1323" height="249" key="GridCell.Tab.0.bottom" timestamp="1623822335385">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
-    <state width="1323" height="250" key="GridCell.Tab.0.center" timestamp="1620989983662">
+    <state width="1323" height="249" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623822335385" />
+    <state width="1323" height="249" key="GridCell.Tab.0.center" timestamp="1623822335384">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
-    <state width="1323" height="250" key="GridCell.Tab.0.left" timestamp="1620989983661">
+    <state width="1323" height="249" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
+    <state width="1323" height="249" key="GridCell.Tab.0.left" timestamp="1623822335384">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1620989983661" />
-    <state width="1323" height="250" key="GridCell.Tab.0.right" timestamp="1620989983662">
+    <state width="1323" height="249" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
+    <state width="1323" height="249" key="GridCell.Tab.0.right" timestamp="1623822335384">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="250" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1620989983662" />
-    <state x="153" y="25" width="997" height="715" key="SettingsEditor" timestamp="1621329894916">
-      <screen x="0" y="25" width="1280" height="715" />
+    <state width="1323" height="249" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
+    <state x="163" y="0" width="997" height="715" key="SettingsEditor" timestamp="1623811454838">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1618204410365" />
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623811454838" />
     <state x="153" y="25" width="997" height="715" key="SettingsEditor/0.25.1280.715@0.25.1280.715" timestamp="1621329894916" />
     <state x="490" y="307" key="VCS.ChangelistChooser" timestamp="1621333004182">
       <screen x="0" y="25" width="1280" height="715" />
@@ -302,11 +324,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="492" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1617954687159" />
-    <state x="411" y="134" width="629" height="602" key="find.popup" timestamp="1622602847500">
-      <screen x="0" y="25" width="1440" height="820" />
+    <state x="390" y="97" width="596" height="534" key="find.popup" timestamp="1623821921772">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="97" width="596" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1618299053582" />
-    <state x="411" y="134" width="629" height="602" key="find.popup/0.25.1440.820@0.25.1440.820" timestamp="1622602847500" />
+    <state x="390" y="97" width="596" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1623821921772" />
     <state x="360" y="174" key="git4idea.merge.GitPullDialog" timestamp="1621329863377">
       <screen x="0" y="25" width="1280" height="715" />
     </state>

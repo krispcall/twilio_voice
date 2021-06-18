@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:voice_example/Constants/Constants.dart';
 import 'package:voice_example/base/BaseView.dart';
 import 'package:voice_example/colors/colors.dart';
@@ -36,6 +37,7 @@ class SignUpState extends BaseState<SignUpPresenter, SignUpView> implements Sign
   @override
   void initState()
   {
+    requestRecordPermission();
     controllerTo = TextEditingController();
     controllerFrom = TextEditingController(text: "support_agent_+61480031300");
     AwesomeNotifications().createdStream.listen((receivedNotification) {
@@ -158,6 +160,13 @@ class SignUpState extends BaseState<SignUpPresenter, SignUpView> implements Sign
                               controllerTo.text,
                               "joshan",
                             );
+                          },
+                        ),
+                        RaisedButton(
+                          child: Text("Hold"),
+                          onPressed: () async
+                          {
+                            await voiceClient.hold();
                           },
                         ),
                       ]),
@@ -283,5 +292,31 @@ class SignUpState extends BaseState<SignUpPresenter, SignUpView> implements Sign
               },
             )
     );
+  }
+
+  Future<bool> requestRecordPermission() async
+  {
+    Map<Permission, PermissionStatus> permissionStatus  = await [
+      Permission.microphone,
+      Permission.accessMediaLocation,
+      Permission.mediaLibrary,
+      Permission.phone,
+      Permission.storage,
+      Permission.notification,
+      Permission.camera,
+    ].request();
+
+    for(int i=0;i<permissionStatus.length;i++)
+    {
+      if (permissionStatus[i].isGranted)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    return true;
   }
 }

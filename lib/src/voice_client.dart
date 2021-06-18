@@ -301,6 +301,14 @@ class VoiceClient {
     }
   }
 
+  Future<void> hold() async {
+    try {
+      await TwilioVoice._methodChannel.invokeMethod('hold');
+    } on PlatformException catch (err) {
+      throw TwilioVoice._convertException(err);
+    }
+  }
+
   Future<void> acceptCall() async {
     try {
       await TwilioVoice._methodChannel.invokeMethod('acceptCall');
