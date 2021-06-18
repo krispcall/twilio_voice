@@ -20,7 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/awesome_notifications/ios/awesome_notifications.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/awesome_notifications/ios/awesome_notifications.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/Mapper.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/Mapper.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +52,7 @@
     <property name="android.sdk.path" value="D:/SDK" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -296,10 +302,11 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="492" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1617954687159" />
-    <state x="390" y="97" width="596" height="534" key="find.popup" timestamp="1618299053582">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="411" y="134" width="629" height="602" key="find.popup" timestamp="1622602847500">
+      <screen x="0" y="25" width="1440" height="820" />
     </state>
     <state x="390" y="97" width="596" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1618299053582" />
+    <state x="411" y="134" width="629" height="602" key="find.popup/0.25.1440.820@0.25.1440.820" timestamp="1622602847500" />
     <state x="360" y="174" key="git4idea.merge.GitPullDialog" timestamp="1621329863377">
       <screen x="0" y="25" width="1280" height="715" />
     </state>

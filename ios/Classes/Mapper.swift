@@ -4,39 +4,92 @@ import TwilioVoice
 // swiftlint:disable file_length type_body_length
 public class Mapper {
     
+    public static func checkStringNil(data: Any?) -> String{
+        if(data == nil){
+            return ""
+        }else {
+            return data as! String
+        }
+    }
     
-    public static func callToDict(_ message: Call?) -> [String: Any] {
-        return [
-            "data" :[
-                "from" :message!.from!,
-                "to" :message!.to!,
-                "isOnHold" :message!.isOnHold,
-                "isMuted" :message!.isMuted]
-        ]
+    public static func checkBoolNil(data: Any?) -> Bool{
+        if(data == nil){
+            return false
+        }else {
+            return data as! Bool
+        }
+    }
+    
+    public static func checkDicNil(data: Any?) -> [String: Any]{
+        if(data == nil){
+            return ["":""]
+        }else {
+            return data as! [String: Any]
+        }
     }
     
     
-    public static func callInviteToDict(_ call: CallInvite?) -> [String: Any] {
+    public static func callToDict(_ message: Call?) -> [String: Any] {
+        let emptyData =  ["data" :[
+        "isOnHold" :false,
+        "to" :"",
+        "from" :"",
+        "isMuted" :false]]
+        if(message != nil){
+
         return [
             "data" :[
-                "callSid" :call!.callSid as String,
-                "to" :call!.to as String,
-                "from" :call!.from! as String,
-                "customParameters" : call!.customParameters! as Dictionary<String,String>
-         ]
+                "from" :checkStringNil(data: message?.from),
+                "to" : checkStringNil(data: message?.to),
+                "isOnHold" : checkBoolNil(data: message?.isOnHold),
+                "isMuted" :checkBoolNil(data: message?.isMuted)]
         ]
+        }
+        return emptyData
+    }
+    
+
+    
+    
+    public static func callInviteToDict(_ call: CallInvite?) -> [String: Any] {
+        let emptyData =  ["data" :[
+        "callSid" :"",
+        "to" :"",
+        "from" :"",
+        "customParameters" :["":""]]]
+        
+        if(call != nil){
+            return [
+                "data" :[
+                    "callSid" : checkStringNil(data: call?.callSid),
+                    "from" :checkStringNil(data: call?.from),
+                    "to" : checkStringNil(data: call?.to),
+                    "customParameters" : checkDicNil(data: call?.customParameters)
+             ]
+            ]
+        }
+        return emptyData;
     }
     
     
     public static func cancelledCallInviteToDict(_ call: CancelledCallInvite?) -> [String: Any] {
-        return [
-            "data" :[
-                "callSid" :call!.callSid as String,
-                "to" :call!.to as String,
-                "from" :call!.from! as String,
-                "customParameters" : call!.customParameters! as Dictionary<String,String>
-         ]
-        ]
+        let emptyData =  ["data" :[
+        "callSid" :"",
+        "to" :"",
+        "from" :"",
+        "customParameters" :["":""]]]
+        
+        if(call != nil){
+            return [
+                "data" :[
+                    "callSid" : checkStringNil(data: call?.callSid),
+                    "from" :checkStringNil(data: call?.from),
+                    "to" : checkStringNil(data: call?.to),
+                    "customParameters" : checkDicNil(data: call?.customParameters)
+             ]
+            ]
+        }
+        return emptyData;
     }
     
     

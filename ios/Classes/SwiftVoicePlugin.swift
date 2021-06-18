@@ -4,27 +4,37 @@ import TwilioVoice
 import CallKit
 import PushKit
 import UserNotifications
-import Foundation
+//import Foundation
+import AVFoundation
+
 
 
 var  TAG = "TwilioVoiceIOS";
 
 
-private var activeCall: Call?
 
-private var activeCallInvite: CallInvite?
-private var cancelledCallInvites: CancelledCallInvite?
+public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate,
+                               CallDelegate, NotificationDelegate, AVAudioPlayerDelegate, CXProviderDelegate{
 
 
-public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
-    
+    private var activeCall: Call?
+    var callKitProvider: CXProvider
+    var audioDevice: DefaultAudioDevice = DefaultAudioDevice()
+
+    private var activeCallInvite: CallInvite?
+    private var cancelledCallInvites: CancelledCallInvite?
+    var callKitCompletionCallback: ((Bool)->Swift.Void?)? = nil
+    var incomingPushCompletionCallback: (()->Swift.Void?)? = nil
+
     var _result: FlutterResult?
     public static var loggingSink: FlutterEventSink?
     public static  var nativeDebug = false
     public static var messenger: FlutterBinaryMessenger?
     public static var reasonForTokenRetrieval: String?
     public static  var instance: SwiftTwilioVoice?
-    
+    var callKitCallController: CXCallController
+    var callOutgoing: Bool = false;
+
     
     let kCachedDeviceToken = "CachedDeviceToken"
     let kCachedBindingDate = "CachedBindingDate"
@@ -56,10 +66,18 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
     
     //intit
     public override init() {
-        
+        let configuration = CXProviderConfiguration(localizedName: "Test" as String)
+        configuration.maximumCallGroups = 1
+        configuration.maximumCallsPerCallGroup = 1
+        if let callKitIcon = UIImage(named: "logo_white") {
+            configuration.iconTemplateImageData = callKitIcon.pngData()
+        }
         self.voipRegistry = PKPushRegistry.init(queue: DispatchQueue.main)
+        callKitProvider = CXProvider(configuration: configuration)
+        callKitCallController = CXCallController()
+
         super.init()
-        
+        callKitProvider.setDelegate(self, queue: nil)
         voipRegistry.delegate = self
         voipRegistry.desiredPushTypes = Set([PKPushType.voIP])
         
@@ -70,6 +88,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         }
         
 //        let registrar = controller.registrar(forPlugin: "TwilioVoice")
+    }
+    
+    deinit {
+        // CallKit has an odd API contract where the developer must call invalidate or the CXProvider is leaked.
+        callKitProvider.invalidate()
     }
     
     
@@ -83,15 +106,283 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
 
     public func pushRegistry(_ registry: PKPushRegistry, didUpdate
                                 pushCredentials: PKPushCredentials, for type: PKPushType) {
-        
-        NSLog("pushRegistry:didUpdatePushCredentials:forType:")
-        
         if type == PKPushType.voIP {
             print("Inside pushRegistry")
             self.deviceToken = pushCredentials.token as Data;
 
             print("deviceToken")
             print(deviceToken! as Data);
+        }
+    }
+    
+    var defaultCaller = "Unknown Caller"
+    private var clients: [String:String]!
+//    var callKitProvider: CXProvider
+
+    public func callDidReconnect(call: Call) {
+        print("This is outgoing event onReconnected")
+        sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
+    }
+         
+    public func callDidStartRinging(call: Call) {
+        print("This is outgoing event callDidStartRinging")
+        sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+    }
+    
+    public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
+        print("This is outgoing event callDidReceivedQualityWarning")
+        sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+    }
+    
+    public func callIsReconnecting(call: Call, error: Error) {
+        print("This is outgoing event callIsIsReconnecting")
+        sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
+    }
+    
+    
+    public func callDidConnect(call: Call) {
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            print("This is outgoing event callDidConnect")
+            sendEventOutGoingCall("onConnected",data:Mapper.callToDict(call), error: nil)
+        }else {
+            sendEventIncomingCall("onConnected",data:Mapper.callToDict(call), error: nil)
+        }
+    }
+    
+    public func callDidFailToConnect(call: Call, error: Error) {
+        print("This is outgoing event callDidFailToConnect")
+        sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
+    }
+    
+    public func callDidDisconnect(call: Call, error: Error?) {
+        print("This is outgoing event callDidDisconnect")
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            print("This is outgoing event callDidConnect")
+            sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
+        }else {
+            sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
+            guard let id = activeCall?.uuid else {
+                return
+            }
+            let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+
+            if(direction == "Incoming"){
+                callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
+            }
+        }
+    }
+    
+    //outgoing event-------------------------------------------------------------------------------
+    
+    func sendEventOutGoingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
+        let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
+        print("This is outgoing event",name)
+        if let outgoingCallEventSink = SwiftTwilioVoice.callOutGoingSink {
+            outgoingCallEventSink(eventData)
+        }
+    }
+    
+    
+    func sendEventHandleCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
+        let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
+        print("This is handle event",name)
+        if let incomingCallEventSink = SwiftTwilioVoice.handleMessageSink {
+            incomingCallEventSink(eventData)
+        }
+    }
+    
+    func sendEventIncomingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
+        let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
+        print("This is incoming event",name)
+        if let incomingCallEventSink = SwiftTwilioVoice.callIncomingSink {
+            incomingCallEventSink(eventData)
+        }
+    }
+
+    
+    // Call
+    
+    public func callInviteReceived(callInvite: CallInvite) {
+        print("This is incoming event callDidDisconnect",callInvite.callSid)
+        activeCallInvite = callInvite
+        sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
+        reportIncomingCall(from: callInvite.from! as String, uuid: callInvite.uuid)
+        self.activeCallInvite = callInvite
+    }
+    
+
+    
+    
+    public func cancelledCallInviteReceived(cancelledCallInvite: CancelledCallInvite,error:Error) {
+        print("this is cancelledCallInviteReceived",error)
+        cancelledCallInvites = cancelledCallInvite
+        sendEventHandleCall("onCancelledCallInvite", data:Mapper.cancelledCallInviteToDict(cancelledCallInvite),error:nil)
+        if let ci = self.activeCallInvite {
+            performEndCallAction(uuid: ci.uuid)
+        }
+    }
+    
+    func reportIncomingCall(from: String, uuid: UUID) {
+        let callHandle = CXHandle(type: .generic, value: from)
+        let callUpdate = CXCallUpdate()
+        callUpdate.remoteHandle = callHandle
+        callUpdate.localizedCallerName = from
+        callUpdate.supportsDTMF = true
+        callUpdate.supportsHolding = true
+        callUpdate.supportsGrouping = false
+        callUpdate.supportsUngrouping = false
+        callUpdate.hasVideo = false
+        
+        callKitProvider.reportNewIncomingCall(with: uuid, update: callUpdate) { error in
+            if let error = error {
+                print("this is error",error.localizedDescription)
+//                self.sendPhoneCallEvents(description: "LOG|Failed to report incoming call successfully: \(error.localizedDescription).", isError: false)
+            } else {
+//                self.sendPhoneCallEvents(description: "LOG|Incoming call successfully reported.", isError: false)
+            }
+        }
+    }
+    
+    func performAnswerVoiceCall(uuid: UUID, completionHandler: @escaping (Bool) -> Swift.Void) {
+        if let ci = self.activeCallInvite {
+            let acceptOptions: AcceptOptions = AcceptOptions(callInvite: ci) { (builder) in
+                builder.uuid = ci.uuid
+            }
+            let theCall = ci.accept(options: acceptOptions, delegate: self)
+            self.activeCall = theCall
+            self.activeCallInvite = nil
+            
+            guard #available(iOS 13, *) else {
+                self.incomingPushHandled()
+                return
+            }
+        } else {
+            sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(activeCall), error: nil)
+        }
+    }
+    
+    func performEndCallAction(uuid: UUID) {
+        let endCallAction = CXEndCallAction(call: uuid)
+        let transaction = CXTransaction(action: endCallAction)
+        
+        callKitCallController.request(transaction) { error in
+            if let error = error {
+                print("this is error",error.localizedDescription)
+            } else {
+                print("this is performEndCallAction")
+            }
+        }
+    }
+    
+    func incomingPushHandled() {
+        if let completion = self.incomingPushCompletionCallback {
+            self.incomingPushCompletionCallback = nil
+            completion()
+        }
+    }
+    
+    // MARK: CXProviderDelegate
+    public func providerDidReset(_ provider: CXProvider) {
+        print("This is CXProviderDelegate DidReset")
+        audioDevice.isEnabled = false
+    }
+    
+    public func providerDidBegin(_ provider: CXProvider) {
+        print("This is CXProviderDelegate DidBegin")
+    }
+    
+    public func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
+        print("This is CXProviderDelegate isEnabled true")
+        audioDevice.isEnabled = true
+    }
+    
+    public func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
+        print("This is CXProviderDelegate isEnabled false")
+        audioDevice.isEnabled = false
+    }
+    
+    public func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
+        print("This is CXProviderDelegate timedOutPerformingAction")
+    }
+    
+    public func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
+        provider.reportOutgoingCall(with: action.callUUID, startedConnectingAt: Date())
+        
+//        self.performVoiceCall(uuid: action.callUUID, client: "") { (success) in
+//            if (success) {
+//                self.sendPhoneCallEvents(description: "LOG|provider:performAnswerVoiceCall() successful", isError: false)
+//                provider.reportOutgoingCall(with: action.callUUID, connectedAt: Date())
+//            } else {
+//                self.sendPhoneCallEvents(description: "LOG|provider:performVoiceCall() failed", isError: false)
+//            }
+//        }
+        action.fulfill()
+    }
+    
+    public func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        self.performAnswerVoiceCall(uuid: action.callUUID) { (success) in
+            if success {
+                print("Answer Call Success")
+            } else {
+                self.sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(self.activeCall), error: nil)
+            }
+        }
+        action.fulfill()
+    }
+    
+    
+    public func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        if (self.activeCallInvite != nil) {
+            self.activeCallInvite?.reject()
+            self.activeCallInvite = nil
+        }else if let call = self.activeCall {
+            callOutgoing = true;
+            call.disconnect()
+        }
+        action.fulfill()
+    }
+    
+    public func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
+        if let call = self.activeCall {
+            call.isOnHold = action.isOnHold
+            action.fulfill()
+        } else {
+            action.fail()
+        }
+    }
+    
+    public func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
+        if let call = self.activeCall {
+            call.isMuted = action.isMuted
+            action.fulfill()
+        } else {
+            action.fail()
+        }
+    }
+    
+    
+    // MARK: Call Receive
+
+    public func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        print("this is payload",payload);
+        // Save for later when the notification is properly handled.
+//        self.incomingPushCompletionCallback = completion
+        if (type == PKPushType.voIP) {
+            print("this is incoming call");
+            TwilioVoiceSDK.handleNotification(payload.dictionaryPayload, delegate: self, delegateQueue: nil)
+        }
+        if let version = Float(UIDevice.current.systemVersion), version < 13.0 {
+            // Save for later when the notification is properly handled.
+            self.incomingPushCompletionCallback = completion
+        } else {
+            /**
+             * The Voice SDK processes the call notification and returns the call invite synchronously. Report the incoming call to
+             * CallKit and fulfill the completion before exiting this callback method.
+             */
+            print("version greater than 13")
+            completion()
         }
     }
     
@@ -141,7 +432,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
         print("Argments for Registation")
-        print(arguments)
+        print("Arguments",arguments)
         
         
         guard let token = self.deviceToken as NSData? else {
@@ -157,19 +448,20 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         }
         
-//        if #available(iOS 10.0, *) {
-//            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
-//                SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
-//                if granted {
-//                    DispatchQueue.main.async {
-//                        SwiftTwilioVoice.debug("Requesting APNS token")
-//                        SwiftTwilioVoice.reasonForTokenRetrieval = "register"
-//                        UIApplication.shared.registerForRemoteNotifications()
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
+                SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
+                if granted {
+                    DispatchQueue.main.async {
+                        SwiftTwilioVoice.debug("Requesting APNS token")
+                        SwiftTwilioVoice.reasonForTokenRetrieval = "register"
+                        UIApplication.shared.registerForRemoteNotifications()
             
                         
                         TwilioVoiceSDK.register(accessToken: accessToken,
                                                 deviceToken: token as Data) { (error) in
                             if let error = error {
+                                print("error")
                                 print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken")
                                 
                                 self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
@@ -178,6 +470,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                             }
                             else {
                                 print("Successfully registered accessToken $accessToken fcmToken $fcmToken")
+                                print("this is access token", accessToken)
+                                print("this is device token", token)
                                 
                                 self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
                                 
@@ -185,11 +479,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                             }
                         }
                         
-//                    }
-//                }
-//            }
-//
-//        }
+                    }
+                }
+            }
+
+        }
         
     }
     
@@ -200,11 +494,13 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         _result = result
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
-        
+        callOutgoing = true;
         print("Arguments for makCall")
         print(arguments)
 
-        guard let callTo = arguments["To"] as? String else {return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
+        guard let callTo = arguments["To"] as? String else {
+            print("this is call to ",arguments["To"] as? String ?? "no data")
+            return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
         
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
 
@@ -215,19 +511,21 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
         
         
+        
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
-            builder.params = ["to": callTo,
+            builder.params = ["To": callTo,
                               "from":callFrom,
                               "accessToken":accessToken,
                               "displayName":displayName ]
         }
         
-        let call = TwilioVoiceSDK.connect(options: connectOptions,
-                                          delegate: OutGoingCallDelegate())
+        print("this is formated data" ,connectOptions);
+        activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
         
-        print(call.from as Any)
+        print("call ",call)
         
-        activeCall = call
+//        activeCall = call
+        
                 
     }
     
@@ -260,7 +558,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         print("arguments for handleMessage")
         print(arguments)
-        
+                
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
                 SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
@@ -270,7 +568,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
                         SwiftTwilioVoice.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
                         print("TwilioVoiceSDK initialize")
-                        TwilioVoiceSDK.handleNotification(arguments, delegate:HandleNotificationDelegate(), delegateQueue:nil)
+                        TwilioVoiceSDK.handleNotification(arguments, delegate:self, delegateQueue:nil)
                     }
                 }
             }
@@ -299,7 +597,17 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
     
     public func disConnect(){
         print("Inside Disconnect")
+        callOutgoing = false;
         activeCall?.disconnect()
+        guard let id = activeCall?.uuid else {
+            return
+        }
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+
+        if(direction == "Incoming"){
+            callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
+        }
+
     }
     
     public func mute(){
@@ -307,14 +615,19 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         if (activeCall != nil)
         {
-            if((activeCall?.isMuted) != nil){
+            print("this is activeCall");
+            if((activeCall?.isMuted == false)){
                 
                 //TODO: unable to find the mute method
-                
+                print("call is mute");
                 //activeCall.mute()
                 activeCall?.isMuted = true;
 //                NSLog(TAG, "mute: $mute")
                 
+            }else {
+                print("this is activeCall");
+                print("call is unmute");
+                activeCall?.isMuted = false;
             }
         }
         
@@ -327,7 +640,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         
         if(activeCall != nil){
             print("activeCallInvite?.accept(with: IncomingCallDelegate()) iniated")
-            activeCallInvite?.accept(with: IncomingCallDelegate())
+            activeCallInvite?.accept(with: self)
         }
     }
     
@@ -489,269 +802,6 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, PKPushRegistryDelegate{
         }
         
     }
-    
-
-class OutGoingCallDelegate:NSObject,CallDelegate{
-        
-        func callDidReconnect(call: Call) {
-            NSLog(TAG, "\("onReconnected") \(String(describing: call.from))")
-            NSLog(TAG, "\("onReconnected") \(String(describing: call.to))")
-            NSLog(TAG, "\("onReconnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onReconnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onReconnected") \(call.isMuted)")
-            self.sendEventOutGoingCall("onReconnected", data:Mapper.callToDict(call),error:nil)
-        }
-        
-        
-        public func callInviteReceived(callInvite: CallInvite) {
-            
-            
-        }
-        
-        public func callDidStartRinging(call: Call) {
-            
-            NSLog(TAG, "\("onRinging") \(String(describing: call.from))")
-            NSLog(TAG, "\("onRinging") \(String(describing: call.to))")
-            NSLog(TAG, "\("onRinging") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onRinging") \( call.isOnHold)")
-            NSLog(TAG,"\("onRinging") \(call.isMuted)")
-            
-            self.sendEventOutGoingCall("onRinging", data:Mapper.callToDict(call) , error: nil)
-            
-            
-        }
-        
-        public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
-            
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(String(describing: call.from))")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(String(describing: call.to))")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \( call.isOnHold)")
-            NSLog(TAG ,"\("onCallQualityWarningsChanged") \(call.isMuted)")
-            //            NSLog(TAG, "\("onCallQualityWarningsChanged") \(currentWarnings)")
-            
-            //        if (previousWarnings.count > 1)
-            //           {
-            //               let  intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
-            //               currentWarnings!.removeAll()
-            //               intersection!.retainAll(previousWarnings)
-            //               previousWarnings!.removeAll(intersection)
-            //           }
-            self.sendEventOutGoingCall("onCallQualityWarningsChanged",
-                                       data: Mapper.callToDict(call),error: nil)
-            
-            
-        }
-        
-        
-        public func callIsReconnecting(call: Call, error: Error) {
-            
-            NSLog(TAG, "\("onReconnecting")\(String(describing: call.from))")
-            NSLog(TAG, "\("onReconnecting")\(String(describing: call.to))")
-            NSLog(TAG, "\("onReconnecting") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onReconnecting") \(call.isOnHold)")
-            NSLog(TAG, "\("onReconnecting") \(call.isMuted)")
-            NSLog(TAG, "\("onReconnecting") \(error.localizedDescription)")
-            
-            self.sendEventOutGoingCall("onReconnecting", data:  Mapper.callToDict(call),error:error)
-            
-        }
-        
-        
-        public func cancelledCallInviteReceived(cancelledCallInvite :   CancelledCallInvite,error:Error) {
-            
-            
-        }
-        
-        
-        public func callDidConnect(call: Call) {
-            NSLog(TAG, "\("onConnected") \(String(describing: call.from))")
-            NSLog(TAG, "\("onConnected") \(String(describing: call.to))")
-            NSLog(TAG, "\("onConnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onConnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onConnected") \(call.isMuted)")
-            activeCall = call
-            self.sendEventOutGoingCall("onConnected", data: Mapper.callToDict(call),error: nil)
-        }
-        
-        
-        
-        public func callDidFailToConnect(call: Call, error: Error) {
-            
-            NSLog(TAG, "\("onConnectFailure") \(error)")
-            sendEventOutGoingCall("onConnectFailure",data : Mapper.callToDict(call),error: error)
-        }
-        
-        
-        public func callDidDisconnect(call: Call, error: Error?) {
-            NSLog(TAG, "\("onDisconnected")\(String(describing: call.from))")
-            NSLog(TAG, "\("onDisconnected")\(String(describing: call.to))")
-            NSLog(TAG, "\("onDisconnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onDisconnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onDisconnected") \(call.isMuted)")
-            NSLog(TAG, "\("onDisconnected") \(String(describing: error))")
-            self.sendEventOutGoingCall("onDisconnected", data:Mapper.callToDict(call),error: error)
-        }
-        
-        
-        //outgoing event-------------------------------------------------------------------------------
-        
-        func sendEventOutGoingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
-            let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-            
-            if let outgoingCallEventSink = SwiftTwilioVoice.callOutGoingSink {
-                outgoingCallEventSink(eventData)
-            }
-            
-            
-        }
-        
-        
-    }
-    
-    
-    
-    class IncomingCallDelegate:NSObject,CallDelegate{
-        
-        func callDidReconnect(call: Call) {
-            NSLog(TAG, "\("onReconnected") \(String(describing: call.from))")
-            NSLog(TAG, "\("onReconnected") \(String(describing: call.to))")
-            NSLog(TAG, "\("onReconnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onReconnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onReconnected") \(call.isMuted)")
-            self.sendEventIncomingCall("onReconnected", data:Mapper.callToDict(call),error:nil)
-        }
-        
-        // Call
-        public func callInviteReceived(callInvite: CallInvite) {
-            
-            
-        }
-        
-        public func callDidStartRinging(call: Call) {
-            
-            NSLog(TAG, "\("onRinging") \(String(describing: call.from))")
-            NSLog(TAG, "\("onRinging") \(String(describing: call.to))")
-            NSLog(TAG, "\("onRinging") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onRinging") \( call.isOnHold)")
-            NSLog(TAG,"\("onRinging") \(call.isMuted)")
-            self.sendEventIncomingCall("onRinging", data:Mapper.callToDict(call) , error: nil)
-            
-        }
-        
-        
-        public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
-            
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(String(describing: call.from))")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(String(describing: call.to))")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onCallQualityWarningsChanged") \( call.isOnHold)")
-            NSLog(TAG ,"\("onCallQualityWarningsChanged") \(call.isMuted)")
-            
-            
-            //        if (previousWarnings.count > 1)
-            //           {
-            //               let  intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
-            //               currentWarnings!.removeAll()
-            //               intersection!.retainAll(previousWarnings)
-            //               previousWarnings!.removeAll(intersection)
-            //           }
-            self.sendEventIncomingCall("onCallQualityWarningsChanged",
-                                       data: Mapper.callToDict(call),error: nil)
-            
-            
-        }
-        
-        
-        public func callIsReconnecting(call: Call, error: Error) {
-            
-            NSLog(TAG, "\("onReconnecting") \(String(describing: call.from))")
-            NSLog(TAG, "\("onReconnecting") \(String(describing: call.to))")
-            NSLog(TAG, "\("onReconnecting") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onReconnecting") \(call.isOnHold)")
-            NSLog(TAG, "\("onReconnecting") \(call.isMuted)")
-            NSLog(TAG, "\("onReconnecting") \(error.localizedDescription)")
-            
-            self.sendEventIncomingCall("onReconnecting", data:  Mapper.callToDict(call),error:error)
-            
-        }
-        
-        
-        public func cancelledCallInviteReceived(cancelledCallInvite :   CancelledCallInvite,error:Error) {
-            
-            
-        }
-        
-        
-        public func callDidConnect(call: Call) {
-            NSLog(TAG, "\("onConnected")\(String(describing: call.from))")
-            NSLog(TAG, "\("onConnected") \(String(describing: call.to))")
-            NSLog(TAG, "\("onConnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onConnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onConnected") \(call.isMuted)")
-            
-            activeCall = call
-            self.sendEventIncomingCall("onConnected", data: Mapper.callToDict(call),error: nil)
-        }
-        
-        
-        
-        public func callDidFailToConnect(call: Call, error: Error) {
-            
-            NSLog(TAG, "\("onConnectFailure") \(error.localizedDescription)")
-            sendEventIncomingCall("onConnectFailure",data : Mapper.callToDict(call),error: error)
-        }
-        
-        
-        public func callDidDisconnect(call: Call, error: Error?) {
-            NSLog(TAG, "\("onDisconnected") \(String(describing: call.from))")
-            NSLog(TAG, "\("onDisconnected") \(String(describing: call.to))")
-            NSLog(TAG, "\("onDisconnected") \(call.callQualityWarnings)")
-            NSLog(TAG, "\("onDisconnected") \(call.isOnHold)")
-            NSLog(TAG, "\("onDisconnected") \(call.isMuted)")
-            NSLog(TAG, "\("onDisconnected") \(String(describing: error?.localizedDescription))")
-            
-            self.sendEventIncomingCall("onDisconnected", data:Mapper.callToDict(call),error: error)
-        }
-        
-        
-        //outgoingevent-------------------------------------------------------------------------------
-        
-        func sendEventIncomingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
-            let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-            
-            if let outgoingCallEventSink = SwiftTwilioVoice.callOutGoingSink {
-                outgoingCallEventSink(eventData)
-            }
-            
-            
-        }
-    }
-    
-    class  HandleNotificationDelegate : NSObject,NotificationDelegate {
-        
-        func callInviteReceived(callInvite: CallInvite) {
-            
-            activeCallInvite = callInvite
-            self.sendEventHandleMessage("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
-        }
-        
-        func cancelledCallInviteReceived(cancelledCallInvite: CancelledCallInvite, error: Error) {
-            cancelledCallInvites = cancelledCallInvite
-            self.sendEventHandleMessage("onCancelledCallInvite", data:Mapper.cancelledCallInviteToDict(cancelledCallInvite),error:error)
-        }
-        
-        func sendEventHandleMessage(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
-            let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-            
-            if let handleMessageSink = SwiftTwilioVoice.handleMessageSink {
-                handleMessageSink(eventData)
-            }
-        }
-        
-    }
-    
-    
 }
 
 
@@ -762,3 +812,6 @@ extension Data {
         return hexString
     }
 }
+
+
+
