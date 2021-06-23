@@ -303,6 +303,7 @@ class VoiceClient {
 
   Future<void> hold() async {
     try {
+      print("this is hold 1");
       await TwilioVoice._methodChannel.invokeMethod('hold');
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
