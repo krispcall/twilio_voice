@@ -253,12 +253,14 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     fun makeCallWithSid(call: MethodCall, result: MethodChannel.Result)
     {
+        val accessToken: String = call.argument<String>("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
         val to: String = call.argument<String>("To") ?: return result.error("ERROR", "Missing To", null)
         val from: String = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
         val workspaceSid: String = call.argument<String>("workspaceSid") ?: return result.error("ERROR", "Missing workspaceSid", null)
         val channelSid: String = call.argument<String>("channelSid") ?: return result.error("ERROR", "Missing channelSid", null)
         val agentId: String = call.argument<String>("agentId") ?: return result.error("ERROR", "Missing agentId", null)
 
+        Log.d(TAG, "makeCall ${accessToken}")
         Log.d(TAG, "makeCall ${to}")
         Log.d(TAG, "makeCall ${from}")
         Log.d(TAG, "makeCall ${workspaceSid}")
