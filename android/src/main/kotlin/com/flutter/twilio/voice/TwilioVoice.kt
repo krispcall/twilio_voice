@@ -251,6 +251,114 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
+    fun makeCallWithSid(call: MethodCall, result: MethodChannel.Result)
+    {
+        val to: String = call.argument<String>("To") ?: return result.error("ERROR", "Missing To", null)
+        val from: String = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
+        val workspaceSid: String = call.argument<String>("workspaceSid") ?: return result.error("ERROR", "Missing workspaceSid", null)
+        val channelSid: String = call.argument<String>("channelSid") ?: return result.error("ERROR", "Missing channelSid", null)
+        val agentId: String = call.argument<String>("agentId") ?: return result.error("ERROR", "Missing agentId", null)
+
+        Log.d(TAG, "makeCall ${to}")
+        Log.d(TAG, "makeCall ${from}")
+        Log.d(TAG, "makeCall ${workspaceSid}")
+        Log.d(TAG, "makeCall ${channelSid}")
+        Log.d(TAG, "makeCall ${agentId}")
+        try
+        {
+            val params = HashMap<String, String>()
+            params["To"] = to
+            params["from"] = from
+            params["workspace_sid"] = workspaceSid
+            params["channel_sid"] = channelSid
+            params["agent_id"] = agentId
+
+            val connectOptions = ConnectOptions.Builder(accessToken)
+                    .params(params)
+                    .build()
+            activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
+            {
+                override fun onConnectFailure(call: Call, callException: CallException)
+                {
+                    Log.d(TAG, "onConnectFailure ${callException.message}")
+                    sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onRinging(call: Call) {
+                    Log.d(TAG, "onRinging ${call.from}")
+                    Log.d(TAG, "onRinging ${call.to}")
+                    Log.d(TAG, "onRinging ${call.callQualityWarnings}")
+                    Log.d(TAG, "onRinging ${call.isOnHold}")
+                    Log.d(TAG, "onRinging ${call.isMuted}")
+                    sendEventOutGoingCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onConnected(call: Call) {
+                    Log.d(TAG, "onConnected ${call.from}")
+                    Log.d(TAG, "onConnected ${call.to}")
+                    Log.d(TAG, "onConnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onConnected ${call.isOnHold}")
+                    Log.d(TAG, "onConnected ${call.isMuted}")
+                    activeCall = call
+                    sendEventOutGoingCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onReconnecting(call: Call, callException: CallException)
+                {
+                    Log.d(TAG, "onReconnecting ${call.from}")
+                    Log.d(TAG, "onReconnecting ${call.to}")
+                    Log.d(TAG, "onReconnecting ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnecting ${call.isOnHold}")
+                    Log.d(TAG, "onReconnecting ${call.isMuted}")
+                    Log.d(TAG, "onReconnecting ${callException.message}")
+                    sendEventOutGoingCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onReconnected(call: Call)
+                {
+                    Log.d(TAG, "onReconnected ${call.from}")
+                    Log.d(TAG, "onReconnected ${call.to}")
+                    Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onReconnected ${call.isOnHold}")
+                    Log.d(TAG, "onReconnected ${call.isMuted}")
+                    sendEventOutGoingCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onDisconnected(call: Call, callException: CallException?)
+                {
+                    Log.d(TAG, "onDisconnected ${call.from}")
+                    Log.d(TAG, "onDisconnected ${call.to}")
+                    Log.d(TAG, "onDisconnected ${call.callQualityWarnings}")
+                    Log.d(TAG, "onDisconnected ${call.isOnHold}")
+                    Log.d(TAG, "onDisconnected ${call.isMuted}")
+                    Log.d(TAG, "onDisconnected ${callException.toString()}")
+                    sendEventOutGoingCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
+                }
+
+                override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.from}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.to}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.callQualityWarnings}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
+                    Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
+                    if (previousWarnings.size > 1)
+                    {
+                        val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
+                        currentWarnings.removeAll(previousWarnings)
+                        intersection.retainAll(previousWarnings)
+                        previousWarnings.removeAll(intersection)
+                    }
+                    sendEventOutGoingCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
+                }
+            })
+        }
+        catch (e: Exception)
+        {
+            result.error("ERROR", e.toString(), e)
+        }
+    }
+
     fun rejectCall()
     {
         if(activeCallInvite!=null)
