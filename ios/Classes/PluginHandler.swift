@@ -19,6 +19,9 @@ public class PluginHandler {
         case "makeCall":
             SwiftTwilioVoice.instance?.makeCall(call,result:result)
             
+        case "makeCallWithSid":
+            SwiftTwilioVoice.instance?.makeCallWithSid(call,result:result)
+            
         case "rejectCall" :
             SwiftTwilioVoice.instance?.rejectCall()
             
