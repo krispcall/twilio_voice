@@ -28,6 +28,9 @@ public class PluginHandler {
         case "mute":
             SwiftTwilioVoice.instance?.mute()
             
+        case "hold":
+            SwiftTwilioVoice.instance?.hold()
+            
         case "acceptCall":
             SwiftTwilioVoice.instance?.acceptCall()
             

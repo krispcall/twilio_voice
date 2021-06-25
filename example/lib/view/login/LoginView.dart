@@ -308,17 +308,19 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
   configureNotification(String apiToken) async
   {
     voiceClient=VoiceClient(apiToken);
-    voiceClient.registerForNotification(apiToken, await FirebaseMessaging.instance.getToken()).then((value)
+    voiceClient.registerForNotification(apiToken,  Platform.isAndroid? await _fcm.getToken(): await _fcm.getAPNSToken()).then((value)
     {
-      print(value);
+      print("token register $value");
     });
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.subscribeToTopic("com.flutter.twilio.voice_example");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message)
     {
+      print("this is is on Message listen $message");
       if(message.data.containsKey("twi_account_sid"))
       {
+        print('message contains twi account sid');
         voiceClient.handleMessage(message.data);
         showIncomingCallNotification(Constants.NOTIFICATION_CALL_INCOMING,NotificationImportance.Max,message.data);
       }

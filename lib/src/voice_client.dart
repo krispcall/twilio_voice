@@ -122,7 +122,7 @@ class VoiceClient {
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
   Stream<void> onTokenAboutToExpire;
-  
+
   Stream<CallInvite> onCallInvite;
   StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
 
@@ -203,6 +203,7 @@ class VoiceClient {
 
   VoiceClient(this.accessToken) : assert(accessToken != null)
   {
+    print('this is accesstoekn $accessToken');
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
 
@@ -302,6 +303,7 @@ class VoiceClient {
 
   Future<void> hold() async {
     try {
+      print("this is hold 1");
       await TwilioVoice._methodChannel.invokeMethod('hold');
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
@@ -395,7 +397,7 @@ class VoiceClient {
     }
   }
 
-  void _parseHandleMessage(dynamic event) 
+  void _parseHandleMessage(dynamic event)
   {
     final String eventName = event['name'];
     print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
@@ -407,7 +409,7 @@ class VoiceClient {
       exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
     }
 
-    switch (eventName) 
+    switch (eventName)
     {
       case 'onCallInvite':
         print("$TAG onCallInvite ${data.toString()}");
@@ -496,7 +498,8 @@ class VoiceClient {
         _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted));
         break;
       case 'onDisconnected':
-        print("$TAG onDisconnected ${data.toString()}");
+        print("this is data ${data.toString()}");
+        print("$TAG onDisconnected test ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
