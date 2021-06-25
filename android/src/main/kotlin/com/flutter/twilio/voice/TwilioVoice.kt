@@ -153,6 +153,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val from: String = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
         val accessToken: String = call.argument<String>("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
         val displayName: String = call.argument<String>("displayName") ?: return result.error("ERROR", "Missing display name", null)
+        Log.d(TAG, "makeCall ${to}")
+        Log.d(TAG, "makeCall ${from}")
+        Log.d(TAG, "makeCall ${accessToken}")
+        Log.d(TAG, "makeCall ${displayName}")
+
         try
         {
             val params = HashMap<String, String>()
@@ -163,8 +168,10 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
                     .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, object : Listener {
-                override fun onConnectFailure(call: Call, callException: CallException) {
+            activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
+            {
+                override fun onConnectFailure(call: Call, callException: CallException)
+                {
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
