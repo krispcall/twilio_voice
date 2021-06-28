@@ -162,7 +162,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         {
             val params = HashMap<String, String>()
             params["To"] = to
-            params["from"] = from
+            params["From"] = from
             params["accessToken"] = accessToken
             params["displayName"] = displayName
             val connectOptions = ConnectOptions.Builder(accessToken)
