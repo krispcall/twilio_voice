@@ -270,7 +270,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         {
             val params = HashMap<String, String>()
             params["To"] = to
-            params["from"] = from
+            params["From"] = from
             params["workspace_sid"] = workspaceSid
             params["channel_sid"] = channelSid
             params["agent_id"] = agentId
