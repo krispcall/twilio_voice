@@ -316,7 +316,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["To": callTo,
-                              "from":callFrom,
+                              "From":callFrom,
                               "workspace_sid":workspaceSid,
                               "channel_sid":channelSid,
                               "agent_id": agentId ]
