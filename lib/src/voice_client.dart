@@ -277,9 +277,9 @@ class VoiceClient {
     }
   }
 
-  Future<void> makeCallWithSid(String to,String from,String workspaceSid,String channelSid,String agentId) async {
+  Future<void> makeCallWithSid(String to,String from,String workspaceSid,String channelSid,String agentId,String token) async {
     try {
-      await TwilioVoice._methodChannel.invokeMethod('makeCallWithSid', <String, Object>{'To': to,'from':from,'workspaceSid':workspaceSid, 'channelSid':channelSid, 'agentId':agentId});
+      await TwilioVoice._methodChannel.invokeMethod('makeCallWithSid', <String, Object>{'To': to,'from':from,'workspaceSid':workspaceSid, 'channelSid':channelSid, 'agentId':agentId, 'accessToken':token});
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
