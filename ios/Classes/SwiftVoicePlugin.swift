@@ -291,6 +291,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         callOutgoing = true;
         print("Arguments for makCall1")
 //        print(arguments)
+        
+        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
 
         guard let callTo = arguments["To"] as? String else {
             print("this is call to ",arguments["To"] as? String ?? "no data")
@@ -316,7 +318,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["To": callTo,
-                              "from":callFrom,
+                              "From":callFrom,
                               "workspace_sid":workspaceSid,
                               "channel_sid":channelSid,
                               "agent_id": agentId ]
@@ -328,45 +330,45 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
     
     
-//    public func makeCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-//
-//        print("Inside makeCall")
-//        _result = result
-//
-//        let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
-//        callOutgoing = true;
-//        print("Arguments for makCall1")
-////        print(arguments)
-//
-//        guard let callTo = arguments["To"] as? String else {
-//            print("this is call to ",arguments["To"] as? String ?? "no data")
-//            return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
-//        print("Arguments for makCall2")
-//
-//        guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
-//
-//        print("Arguments for makCall3")
-//
-//        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
-//        print("Arguments for makCall4")
-//
-//
-//        guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
-//
-//        print("Arguments for makCall5")
-//
-//
-//        let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
-//            builder.params = ["To": callTo,
-//                              "from":callFrom,
-//                              "accessToken":accessToken,
-//                              "displayName":displayName ]
-//        }
-//
-//        print("this is formated data" ,connectOptions);
-//        activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
-//        print("call ",call)
-//    }
+    public func makeCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+
+        print("Inside makeCall")
+        _result = result
+
+        let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
+        callOutgoing = true;
+        print("Arguments for makCall1")
+//        print(arguments)
+
+        guard let callTo = arguments["To"] as? String else {
+            print("this is call to ",arguments["To"] as? String ?? "no data")
+            return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
+        print("Arguments for makCall2")
+
+        guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
+
+        print("Arguments for makCall3")
+
+        guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
+        print("Arguments for makCall4")
+
+
+        guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
+
+        print("Arguments for makCall5")
+
+
+        let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
+            builder.params = ["To": callTo,
+                              "from":callFrom,
+                              "accessToken":accessToken,
+                              "displayName":displayName ]
+        }
+
+        print("this is formated data" ,connectOptions);
+        activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
+        print("call ",call)
+    }
     
     
     public  func sendDigit(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -484,8 +486,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return
         }
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-
+        print("Inside Disconnect2")
         if(direction == "Incoming"){
+            print("Inside Disconnect3")
             callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
         }
 
