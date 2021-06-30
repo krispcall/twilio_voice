@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -308,7 +310,7 @@ class LoginState extends BaseState<LoginPresenter, LoginView> implements LoginVi
   configureNotification(String apiToken) async
   {
     voiceClient=VoiceClient(apiToken);
-    voiceClient.registerForNotification(apiToken,  Platform.isAndroid? await _fcm.getToken(): await _fcm.getAPNSToken()).then((value)
+    voiceClient.registerForNotification(apiToken,  Platform.isAndroid? await FirebaseMessaging.instance.getToken(): await FirebaseMessaging.instance.getAPNSToken()).then((value)
     {
       print("token register $value");
     });
