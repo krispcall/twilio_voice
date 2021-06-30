@@ -486,8 +486,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return
         }
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-
+        print("Inside Disconnect2")
         if(direction == "Incoming"){
+            print("Inside Disconnect3")
             callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
         }
 
