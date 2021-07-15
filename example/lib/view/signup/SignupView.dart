@@ -154,11 +154,13 @@ class SignUpState extends BaseState<SignUpPresenter, SignUpView> implements Sign
                           child: Text("Make Call"),
                           onPressed: () async
                           {
-                            await voiceClient.makeCall(
-                              await presenter.secureStorageRepo.getLoginId(),
-                              controllerFrom.text,
+                            voiceClient.makeCallWithSid(
                               controllerTo.text,
-                              "joshan",
+                              "+16502723865",
+                              "ai2Kto6firVXgYF7fd4R5M",
+                              "fkNxzMz8J6obqTyqUopcEs",
+                              "bp2yesERghPg96azG2ZWU9",
+                              "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzRiMjE0MDQ4OGFkZWY1NWU4MzU2ZTA0MTYxNzI5NTAzLTE2MjUwNDgyNDgiLCJncmFudHMiOnsidm9pY2UiOnsiaW5jb21pbmciOnsiYWxsb3ciOnRydWV9LCJvdXRnb2luZyI6eyJhcHBsaWNhdGlvbl9zaWQiOiJBUGExNjU0NzNhOTk0NmE4YjM3NjhkNzQ4NDI4YTQ3NzA2In0sInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUjVlMzRjNzY5NDgwYTlmNmY2ZTNjMmFhOTZkZGI2N2FiIn0sImlkZW50aXR5IjoiYnAyeWVzRVJnaFBnOTZhekcyWldVOSJ9LCJpc3MiOiJTSzRiMjE0MDQ4OGFkZWY1NWU4MzU2ZTA0MTYxNzI5NTAzIiwiZXhwIjoxNjI1MTM0NjQ4LCJuYmYiOjE2MjUwNDgyNDgsInN1YiI6IkFDNDRjOTRiZWUwNjgxZDUwNmFkYTg3MWU4YjRiMjRhM2YifQ.WpXhtSemGhUeUkNQQYZfak7fsM5Nm9ObYmG2jQhDpts",
                             );
                           },
                         ),
