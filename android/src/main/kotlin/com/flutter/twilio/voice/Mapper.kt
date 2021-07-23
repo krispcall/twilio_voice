@@ -92,6 +92,7 @@ object Mapper
 
     fun callToMap(message: Call): Map<String, Any?> {
         return mapOf(
+                "callSid" to message.getSid(),
                 "from" to message.from,
                 "to" to message.to,
                 "isOnHold" to message.isOnHold,

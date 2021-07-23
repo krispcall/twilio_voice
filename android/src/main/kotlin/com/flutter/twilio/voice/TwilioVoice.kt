@@ -287,6 +287,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 }
 
                 override fun onRinging(call: Call) {
+                    Log.d(TAG, "onRinging sid ${call.getSid()}")
                     Log.d(TAG, "onRinging ${call.from}")
                     Log.d(TAG, "onRinging ${call.to}")
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
@@ -457,6 +458,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.toString())
             activeCallInvite?.accept(applicationContext, object : Listener {
                 override fun onConnectFailure(call: Call, callException: CallException) {
+                    Log.d(TAG, "onConnectFailure sid2 ${call.getSid()}")
                     Log.d(TAG, "onConnectFailure ${callException.message}")
                     sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
                 }
