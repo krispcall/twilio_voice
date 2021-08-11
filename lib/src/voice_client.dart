@@ -326,12 +326,13 @@ class VoiceClient {
     }
   }
 
-  Future<void> handleMessage(Map<String, dynamic> message) async
+  Future<Map<String, dynamic>> handleMessage(Map<String, dynamic> message) async
   {
     try
     {
       final args = {'notification': message['data']};
-      await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
+      final data = await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
+      return data["result"];
     }
     on PlatformException catch (err)
     {
