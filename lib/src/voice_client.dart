@@ -328,7 +328,7 @@ class VoiceClient {
     }
   }
 
-  Future<Map<String, dynamic>> handleMessage(Map<String, dynamic> message) async
+  Future<dynamic> handleMessage(Map<String, dynamic> message) async
   {
     try
     {
