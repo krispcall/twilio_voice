@@ -36,6 +36,8 @@ class CallInvite {
 }
 
 class Call {
+  final String callSid;
+
   final String to;
 
   final String from;
@@ -44,7 +46,7 @@ class Call {
 
   final bool isMuted;
 
-  Call(this.to, this.from, this.isOnHold, this.isMuted);
+  Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid);
 }
 //#endregion
 
@@ -472,7 +474,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onRinging':
         print("$TAG onRinging ${data.toString()}");
@@ -480,7 +482,9 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted));
+        var callSid = data['data']['callSid'] as String;
+
+        _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted, callSid));
         break;
       case 'onConnected':
         print("$TAG onConnected ${data.toString()}");
@@ -488,7 +492,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
         print("$TAG onReconnecting ${data.toString()}");
@@ -496,7 +500,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnected':
         print("$TAG onReconnected ${data.toString()}");
@@ -504,7 +508,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
         print("this is data ${data.toString()}");
@@ -513,7 +517,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onCallQualityWarningsChanged':
         print("$TAG onCallQualityWarningsChanged ${data.toString()}");
@@ -521,7 +525,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
+        _outGoingCallCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted,null));
         break;
       default:
         print("$TAG event '$eventName' not yet implemented");
@@ -548,7 +552,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingConnectFailure.add(Call(to,from,isOnHold, isMuted));
+        _incomingConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onRinging':
         print("$TAG onRinging ${data.toString()}");
@@ -556,7 +560,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingRinging.add(Call(to,from,isOnHold, isMuted));
+        _incomingRinging.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onConnected':
         print("$TAG onConnected ${data.toString()}");
@@ -564,7 +568,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingConnected.add(Call(to,from,isOnHold, isMuted));
+        _incomingConnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
         print("$TAG onReconnecting ${data.toString()}");
@@ -572,7 +576,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingReconnecting.add(Call(to,from,isOnHold, isMuted));
+        _incomingReconnecting.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnected':
         print("$TAG onReconnected ${data.toString()}");
@@ -580,7 +584,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingReconnected.add(Call(to,from,isOnHold, isMuted));
+        _incomingReconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
         print("$TAG onDisconnected ${data.toString()}");
@@ -588,7 +592,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingDisconnected.add(Call(to,from,isOnHold, isMuted));
+        _incomingDisconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onCallQualityWarningsChanged':
         print("$TAG onCallQualityWarningsChanged ${data.toString()}");
@@ -596,7 +600,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _incomingCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted));
+        _incomingCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted, null));
         break;
       default:
         print("$TAG event '$eventName' not yet implemented");
