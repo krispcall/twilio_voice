@@ -27,7 +27,7 @@ class PluginHandler : MethodCallHandler
 
             "sendDigit"->TwilioVoice.instance.sendDigit(call, result)
 
-            "handleMessage"->TwilioVoice.instance.handleMessage(call)
+            "handleMessage"->TwilioVoice.instance.handleMessage(call, result)
 
             else -> result.notImplemented()
         }

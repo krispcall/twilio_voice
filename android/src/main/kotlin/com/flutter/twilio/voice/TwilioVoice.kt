@@ -399,7 +399,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         }
     }
 
-    fun handleMessage(call: MethodCall)
+    fun handleMessage(call: MethodCall, result: MethodChannel.Result)
     {
         val notification = call.argument("notification") as? Map<String, Any>
 
