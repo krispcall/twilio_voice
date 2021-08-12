@@ -424,9 +424,9 @@ class VoiceClient {
     {
       case 'onCallInvite':
         print("$TAG onCallInvite ${data.toString()}");
-        var callSid = data['data']['callSid'] as String;
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
+        var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
@@ -436,9 +436,9 @@ class VoiceClient {
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
-        var callSid = data['data']['callSid'] as String;
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
+        var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
