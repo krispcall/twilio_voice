@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/parts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/parts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

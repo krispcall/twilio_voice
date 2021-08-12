@@ -428,6 +428,7 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        print("$TAG onCallInvite "+json.encode(customParameters));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -440,6 +441,7 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        print("$TAG onCancelledCallInvite "+json.encode(customParameters));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
