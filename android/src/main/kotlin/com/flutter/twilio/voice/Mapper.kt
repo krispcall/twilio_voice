@@ -102,18 +102,18 @@ object Mapper
 
     fun callInviteToMap(message: CallInvite): Map<String, Any?> {
         return mapOf(
-                "callSid" to message.callSid,
-                "to" to message.to,
-                "from" to message.from,
+                "twi_call_sid" to message.callSid,
+                "twi_to" to message.to,
+                "twi_from" to message.from,
                 "customParameters" to message.customParameters.toMap()
         )
     }
 
     fun cancelledCallInviteToMap(message: CancelledCallInvite): Map<String, Any?> {
         return mapOf(
-                "callSid" to message.callSid,
-                "to" to message.to,
-                "from" to message.from,
+                "twi_call_sid" to message.callSid,
+                "twi_to" to message.to,
+                "twi_from" to message.from,
                 "customParameters" to message.customParameters.toMap()
         )
     }
