@@ -105,7 +105,7 @@ object Mapper
                 "twi_call_sid" to message.callSid,
                 "twi_to" to message.to,
                 "twi_from" to message.from,
-                "customParameters" to message.customParameters.toMap()
+                "customParameters" to message.customParameters
         )
     }
 
@@ -114,7 +114,7 @@ object Mapper
                 "twi_call_sid" to message.callSid,
                 "twi_to" to message.to,
                 "twi_from" to message.from,
-                "customParameters" to message.customParameters.toMap()
+                "customParameters" to message.customParameters
         )
     }
 }
