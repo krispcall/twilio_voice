@@ -433,7 +433,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         String temp = data['data']['customParameters']['channel_info'] as String;
         temp.replaceAll("'","\"");
-        var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         print("$TAG onCallInvite "+json.encode(customParameters));
         print("$TAG onCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
@@ -451,7 +451,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
         String temp = data['data']['customParameters']['channel_info'] as String;
         temp.replaceAll("'","\"");
-        var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         print("$TAG onCancelledCallInvite "+json.encode(customParameters));
         print("$TAG onCancelledCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
