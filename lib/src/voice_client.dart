@@ -428,11 +428,14 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var channelInfo = data['data']['customParameters']['channel_info'] as Map<dynamic, dynamic>;
         print("$TAG onCallInvite "+json.encode(customParameters));
+        print("$TAG onCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
+        assert(channelInfo != null);
         _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
       case 'onCancelledCallInvite':
@@ -441,11 +444,14 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var channelInfo = data['data']['customParameters']['channel_info'] as Map<dynamic, dynamic>;
         print("$TAG onCancelledCallInvite "+json.encode(customParameters));
+        print("$TAG onCancelledCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
+        assert(channelInfo != null);
         _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
         break;
 

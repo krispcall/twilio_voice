@@ -9,14 +9,20 @@ object Mapper
     fun jsonObjectToMap(jsonObject: JSONObject): Map<String, Any?> {
         val result = mutableMapOf<String, Any?>()
         jsonObject.keys().forEach {
-            if (jsonObject[it] == null || JSONObject.NULL == jsonObject[it]) {
-                result[it] = null
-            } else if (jsonObject[it] is JSONObject) {
-                result[it] = jsonObjectToMap(jsonObject[it] as JSONObject)
-            } else if (jsonObject[it] is JSONArray) {
-                result[it] = jsonArrayToList(jsonObject[it] as JSONArray)
-            } else {
-                result[it] = jsonObject[it]
+            when {
+                JSONObject.NULL == jsonObject[it] ->
+                {
+                    result[it] = null
+                }
+                jsonObject[it] is JSONObject -> {
+                    result[it] = jsonObjectToMap(jsonObject[it] as JSONObject)
+                }
+                jsonObject[it] is JSONArray -> {
+                    result[it] = jsonArrayToList(jsonObject[it] as JSONArray)
+                }
+                else -> {
+                    result[it] = jsonObject[it]
+                }
             }
         }
         return result
@@ -101,6 +107,16 @@ object Mapper
     }
 
     fun callInviteToMap(message: CallInvite): Map<String, Any?> {
+        return mapOf(
+                "twi_call_sid" to message.callSid,
+                "twi_to" to message.to,
+                "twi_from" to message.from,
+                "customParameters" to message.customParameters,
+                "channelInfo" to message.customParameters["channel_info"]
+        )
+    }
+
+    fun customParamsToMap(message: CallInvite): Map<String, Any?> {
         return mapOf(
                 "twi_call_sid" to message.callSid,
                 "twi_to" to message.to,
