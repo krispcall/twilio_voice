@@ -428,7 +428,9 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        var channelInfo = json.decode(data['data']['customParameters']['channel_info']) as Map<dynamic, dynamic>;
+        var temp = data['data']['customParameters']['channel_info'];
+        temp.replace("'","\"");
+        var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
         print("$TAG onCallInvite "+json.encode(customParameters));
         print("$TAG onCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
@@ -444,7 +446,9 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        var channelInfo = json.decode(data['data']['customParameters']['channel_info']) as Map<dynamic, dynamic>;
+        var temp = data['data']['customParameters']['channel_info'];
+        temp.replace("'","\"");
+        var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
         print("$TAG onCancelledCallInvite "+json.encode(customParameters));
         print("$TAG onCancelledCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
