@@ -32,7 +32,10 @@ class CallInvite {
 
   final Map<dynamic, dynamic> customParameters;
 
-  CallInvite(this.callSid, this.to, this.from, this.customParameters);
+  final Map<dynamic, dynamic> channelInfo;
+
+
+  CallInvite(this.callSid, this.to, this.from, this.customParameters, this.channelInfo);
 }
 
 class Call {
@@ -428,8 +431,8 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        var temp = data['data']['customParameters']['channel_info'];
-        temp.replace("'","\"");
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp.replaceAll("'","\"");
         var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
         print("$TAG onCallInvite "+json.encode(customParameters));
         print("$TAG onCallInvite "+json.encode(channelInfo));
@@ -438,7 +441,7 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        _onCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCancelledCallInvite':
         print("$TAG onCancelledCallInvite ${data.toString()}");
@@ -446,8 +449,8 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        var temp = data['data']['customParameters']['channel_info'];
-        temp.replace("'","\"");
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp.replaceAll("'","\"");
         var channelInfo = json.encode(temp) as Map<dynamic, dynamic>;
         print("$TAG onCancelledCallInvite "+json.encode(customParameters));
         print("$TAG onCancelledCallInvite "+json.encode(channelInfo));
@@ -456,7 +459,7 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCancelledCallInvite.add(CallInvite(callSid,to,from,customParameters));
+        _onCancelledCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
 
       default:
