@@ -7,77 +7,6 @@ import org.json.JSONObject
 
 object Mapper
 {
-    fun jsonObjectToMap(jsonObject: JSONObject): Map<String, Any?> {
-        val result = mutableMapOf<String, Any?>()
-        jsonObject.keys().forEach {
-            when {
-                JSONObject.NULL == jsonObject[it] ->
-                {
-                    result[it] = null
-                }
-                jsonObject[it] is JSONObject -> {
-                    result[it] = jsonObjectToMap(jsonObject[it] as JSONObject)
-                }
-                jsonObject[it] is JSONArray -> {
-                    result[it] = jsonArrayToList(jsonObject[it] as JSONArray)
-                }
-                else -> {
-                    result[it] = jsonObject[it]
-                }
-            }
-        }
-        return result
-    }
-
-    fun jsonArrayToList(jsonArray: JSONArray): List<Any?> {
-        val result = mutableListOf<Any?>()
-        for (i in 0 until jsonArray.length()) {
-            if (jsonArray[i] == null || JSONObject.NULL == jsonArray[i]) {
-                result[i] = null
-            } else if (jsonArray[i] is JSONObject) {
-                result[i] = jsonObjectToMap(jsonArray[i] as JSONObject)
-            } else if (jsonArray[i] is JSONArray) {
-                result[i] = jsonArrayToList(jsonArray[i] as JSONArray)
-            } else {
-                result[i] = jsonArray[i]
-            }
-        }
-        return result
-    }
-
-    fun mapToJSONObject(map: Map<String, Any>?): JSONObject? {
-        if (map == null) {
-            return null
-        }
-        val result = JSONObject()
-        map.keys.forEach {
-            if (map[it] == null) {
-                result.put(it, null)
-            } else if (map[it] is Map<*, *>) {
-                result.put(it, mapToJSONObject(map[it] as Map<String, Any>))
-            } else if (map[it] is List<*>) {
-                result.put(it, listToJSONArray(map[it] as List<Any>))
-            } else {
-                result.put(it, map[it])
-            }
-        }
-        return result
-    }
-
-    fun listToJSONArray(list: List<Any>): JSONArray {
-        val result = JSONArray()
-        list.forEach {
-            if (it is Map<*, *>) {
-                result.put(mapToJSONObject(it as Map<String, Any>))
-            } else if (it is List<*>) {
-                result.put(listToJSONArray(it as List<Any>))
-            } else {
-                result.put(it)
-            }
-        }
-        return result
-    }
-
     fun errorInfoToMap(e: RegistrationException?): Map<String, Any?>? {
         if (e == null)
             return null
@@ -122,7 +51,8 @@ object Mapper
     }
 
     @Throws(JSONException::class)
-    fun toMap(jsonobj: JSONObject): Map<String, Any> {
+    fun toMap(jsonobj: JSONObject): Map<String, Any>
+    {
         val map: MutableMap<String, Any> = HashMap()
         val keys = jsonobj.keys()
         while (keys.hasNext()) {

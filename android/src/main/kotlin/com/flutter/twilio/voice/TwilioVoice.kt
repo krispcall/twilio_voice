@@ -274,6 +274,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             params["workspace_sid"] = workspaceSid
             params["channel_sid"] = channelSid
             params["agent_id"] = agentId
+            params["platform"] = "mobile"
 
             val connectOptions = ConnectOptions.Builder(accessToken)
                     .params(params)
