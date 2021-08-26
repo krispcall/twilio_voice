@@ -157,26 +157,26 @@ class VoiceClient {
   final StreamController<Call> _outGoingCallCallQualityWarningsChanged = StreamController<Call>.broadcast();
 
   //Incoming
-  Stream<Call> incomingConnectFailure;
-  final StreamController<Call> _incomingConnectFailure = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingConnectFailure;
+  final StreamController<CallInvite> _incomingConnectFailure = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingRinging;
-  final StreamController<Call> _incomingRinging = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingRinging;
+  final StreamController<CallInvite> _incomingRinging = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingConnected;
-  final StreamController<Call> _incomingConnected = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingConnected;
+  final StreamController<CallInvite> _incomingConnected = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingReconnecting;
-  final StreamController<Call> _incomingReconnecting = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingReconnecting;
+  final StreamController<CallInvite> _incomingReconnecting = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingReconnected;
-  final StreamController<Call> _incomingReconnected = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingReconnected;
+  final StreamController<CallInvite> _incomingReconnected = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingDisconnected;
-  final StreamController<Call> _incomingDisconnected = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingDisconnected;
+  final StreamController<CallInvite> _incomingDisconnected = StreamController<CallInvite>.broadcast();
 
-  Stream<Call> incomingCallQualityWarningsChanged;
-  final StreamController<Call> _incomingCallQualityWarningsChanged = StreamController<Call>.broadcast();
+  Stream<CallInvite> incomingCallQualityWarningsChanged;
+  final StreamController<CallInvite> _incomingCallQualityWarningsChanged = StreamController<CallInvite>.broadcast();
 
 
   /// Called when token has expired.
@@ -565,59 +565,87 @@ class VoiceClient {
     {
       case 'onConnectFailure':
         print("$TAG onConnectFailure ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
+       var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingConnectFailure.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onRinging':
         print("$TAG onRinging ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingRinging.add(Call(to,from,isOnHold, isMuted, null));
+       var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingRinging.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onConnected':
         print("$TAG onConnected ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingConnected.add(Call(to,from,isOnHold, isMuted, null));
+      var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingConnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnecting':
         print("$TAG onReconnecting ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingReconnecting.add(Call(to,from,isOnHold, isMuted, null));
+      var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingReconnecting.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnected':
         print("$TAG onReconnected ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingReconnected.add(Call(to,from,isOnHold, isMuted, null));
+        var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingReconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onDisconnected':
         print("$TAG onDisconnected ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingDisconnected.add(Call(to,from,isOnHold, isMuted, null));
+        var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingDisconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCallQualityWarningsChanged':
         print("$TAG onCallQualityWarningsChanged ${data.toString()}");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        _incomingCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted, null));
+        var callSid = data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'","\"");
+        temp = temp.replaceAll("None","null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        _incomingCallQualityWarningsChanged.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       default:
         print("$TAG event '$eventName' not yet implemented");
