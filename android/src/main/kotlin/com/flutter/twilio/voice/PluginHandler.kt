@@ -23,7 +23,7 @@ class PluginHandler : MethodCallHandler
 
             "hold"->TwilioVoice.instance.hold()
 
-            "acceptCall"->TwilioVoice.instance.acceptCall()
+            "acceptCall"->TwilioVoice.instance.acceptCall(call,result)
 
             "sendDigit"->TwilioVoice.instance.sendDigit(call, result)
 
