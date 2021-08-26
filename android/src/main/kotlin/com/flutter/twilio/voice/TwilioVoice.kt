@@ -464,8 +464,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure sid2 ${call.getSid()}")
                     Log.d(TAG, "onConnectFailure ${callException.message}")
-                    sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onRinging(call: Call) {
@@ -474,8 +473,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
                     Log.d(TAG, "onRinging ${call.isOnHold}")
                     Log.d(TAG, "onRinging ${call.isMuted}")
-                    sendEventIncomingCall("onRinging", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onRinging", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onConnected(call: Call) {
@@ -485,8 +483,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onConnected ${call.isOnHold}")
                     Log.d(TAG, "onConnected ${call.isMuted}")
                     activeCall = call
-                    sendEventIncomingCall("onConnected", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onConnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onReconnecting(call: Call, callException: CallException) {
@@ -496,8 +493,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnecting ${call.isOnHold}")
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
-                    sendEventIncomingCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onReconnecting", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onReconnected(call: Call) {
@@ -506,8 +502,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onReconnected ${call.isOnHold}")
                     Log.d(TAG, "onReconnected ${call.isMuted}")
-                    sendEventIncomingCall("onReconnected", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onReconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onDisconnected(call: Call, callException: CallException?) {
@@ -515,8 +510,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onDisconnected ${call.to}")
                     Log.d(TAG, "onDisconnected ${call.isOnHold}")
                     Log.d(TAG, "onDisconnected ${call.isMuted}")
-                    sendEventIncomingCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onDisconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
                 override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
@@ -532,8 +526,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                         intersection.retainAll(previousWarnings)
                         previousWarnings.removeAll(intersection)
                     }
-                    sendEventIncomingCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)))
-                    result.success(mapOf("result" to Mapper.callInviteToMap(activeCallInvite!!)))
+                    sendEventIncomingCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
             })
         }
