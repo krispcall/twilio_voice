@@ -70,8 +70,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         private var activeCallInvite: CallInvite? = null
 
         private var cancelledCallInvites: CancelledCallInvite? = null
-
-        private var isCallAccepted: Boolean = false
     }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -423,15 +421,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, callException: CallException?)
             {
                 Log.d(TAG, "onCancelledCallInvite: " + mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                Timer().schedule(2000)
-                {
-                    if(!isCallAccepted)
-                    {
-                        isCallAccepted = false
-                        cancelledCallInvites = cancelledCallInvite
-                        sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                    }
-                }
+                cancelledCallInvites = cancelledCallInvite
+                sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
             }
         })
     }
@@ -466,7 +457,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     fun acceptCall(call: MethodCall, result: MethodChannel.Result)
     {
-        isCallAccepted = true
         try
         {
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
@@ -476,7 +466,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure sid2 ${call.getSid()}")
                     Log.d(TAG, "onConnectFailure ${callException.message}")
-                    isCallAccepted = false
                     sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -486,7 +475,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
                     Log.d(TAG, "onRinging ${call.isOnHold}")
                     Log.d(TAG, "onRinging ${call.isMuted}")
-                    isCallAccepted = true
                     sendEventIncomingCall("onRinging", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -496,7 +484,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onConnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onConnected ${call.isOnHold}")
                     Log.d(TAG, "onConnected ${call.isMuted}")
-                    isCallAccepted = true
                     activeCall = call
                     sendEventIncomingCall("onConnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
@@ -508,7 +495,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnecting ${call.isOnHold}")
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
-                    isCallAccepted = true
                     sendEventIncomingCall("onReconnecting", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -518,7 +504,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onReconnected ${call.isOnHold}")
                     Log.d(TAG, "onReconnected ${call.isMuted}")
-                    isCallAccepted = true
                     sendEventIncomingCall("onReconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -527,7 +512,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onDisconnected ${call.to}")
                     Log.d(TAG, "onDisconnected ${call.isOnHold}")
                     Log.d(TAG, "onDisconnected ${call.isMuted}")
-                    isCallAccepted = false
                     sendEventIncomingCall("onDisconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -538,7 +522,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
-                    isCallAccepted = true
                     if (previousWarnings.size > 1) {
                         val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
                         currentWarnings.removeAll(previousWarnings)
