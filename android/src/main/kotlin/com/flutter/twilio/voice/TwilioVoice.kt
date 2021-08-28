@@ -2,6 +2,7 @@ package com.flutter.twilio.voice
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import com.twilio.voice.*
@@ -11,6 +12,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
 import java.util.*
+import kotlin.concurrent.schedule
 
 /** TwilioVoice */
 
@@ -68,6 +70,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         private var activeCallInvite: CallInvite? = null
 
         private var cancelledCallInvites: CancelledCallInvite? = null
+
+        private var isCallAccepted: Boolean = false
     }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -419,8 +423,15 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             override fun onCancelledCallInvite(cancelledCallInvite: CancelledCallInvite, callException: CallException?)
             {
                 Log.d(TAG, "onCancelledCallInvite: " + mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
-                cancelledCallInvites = cancelledCallInvite
-                sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                Timer().schedule(2000)
+                {
+                    if(!isCallAccepted)
+                    {
+                        isCallAccepted = false
+                        cancelledCallInvites = cancelledCallInvite
+                        sendEventHandleMessage("onCancelledCallInvite", mapOf("data" to Mapper.cancelledCallInviteToMap(cancelledCallInvite)))
+                    }
+                }
             }
         })
     }
@@ -455,6 +466,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     fun acceptCall(call: MethodCall, result: MethodChannel.Result)
     {
+        isCallAccepted = true
         try
         {
             Log.d(TAG, "acceptCall: " + activeCallInvite!!.from)
@@ -464,6 +476,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 override fun onConnectFailure(call: Call, callException: CallException) {
                     Log.d(TAG, "onConnectFailure sid2 ${call.getSid()}")
                     Log.d(TAG, "onConnectFailure ${callException.message}")
+                    isCallAccepted = false
                     sendEventIncomingCall("onConnectFailure", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -510,6 +523,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onDisconnected ${call.to}")
                     Log.d(TAG, "onDisconnected ${call.isOnHold}")
                     Log.d(TAG, "onDisconnected ${call.isMuted}")
+                    isCallAccepted = false
                     sendEventIncomingCall("onDisconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
