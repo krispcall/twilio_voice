@@ -486,6 +486,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onRinging ${call.callQualityWarnings}")
                     Log.d(TAG, "onRinging ${call.isOnHold}")
                     Log.d(TAG, "onRinging ${call.isMuted}")
+                    isCallAccepted = true
                     sendEventIncomingCall("onRinging", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -495,6 +496,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onConnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onConnected ${call.isOnHold}")
                     Log.d(TAG, "onConnected ${call.isMuted}")
+                    isCallAccepted = true
                     activeCall = call
                     sendEventIncomingCall("onConnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
@@ -506,6 +508,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnecting ${call.isOnHold}")
                     Log.d(TAG, "onReconnecting ${call.isMuted}")
                     Log.d(TAG, "onReconnecting ${callException.message}")
+                    isCallAccepted = true
                     sendEventIncomingCall("onReconnecting", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -515,6 +518,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onReconnected ${call.callQualityWarnings}")
                     Log.d(TAG, "onReconnected ${call.isOnHold}")
                     Log.d(TAG, "onReconnected ${call.isMuted}")
+                    isCallAccepted = true
                     sendEventIncomingCall("onReconnected", mapOf("data" to Mapper.callInviteToMap(activeCallInvite!!)))
                 }
 
@@ -534,6 +538,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isOnHold}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${call.isMuted}")
                     Log.d(TAG, "onCallQualityWarningsChanged ${currentWarnings.toString()}")
+                    isCallAccepted = true
                     if (previousWarnings.size > 1) {
                         val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
                         currentWarnings.removeAll(previousWarnings)
