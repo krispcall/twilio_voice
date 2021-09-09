@@ -20,7 +20,741 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/assets/audio/beep.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/audio/incoming.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/audio/new_sms.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ad.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ae.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/af.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ag.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ai.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/al.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/am.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/an.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/aq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/as.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/at.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/au.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/aw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ax.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/az.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ba.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/be.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/br.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/by.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/bz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ca.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ci.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ck.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/co.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/cz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/de.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/dj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/dk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/dm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/do.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/dz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ec.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ee.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/eg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/eh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/er.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/es.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/et.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/eu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/fr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ga.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gb-eng.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gb-nir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gb-sct.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gb-wls.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ge.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/gy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/hk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/hm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/hn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/hr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ht.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/hu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/id.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/il.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/im.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/in.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/io.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/iq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/is.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/it.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/je.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/jm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/jo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/jp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ke.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ki.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/km.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ky.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/kz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/la.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/li.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ls.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/lv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ly.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ma.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/md.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/me.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ml.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ms.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/my.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/mz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/na.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ne.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ng.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ni.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/no.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/np.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/nz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/om.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ph.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ps.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/pw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/py.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/qa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/re.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/rs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ru.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/rw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/se.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/si.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/so.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/st.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/sz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/td.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/th.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tj.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/to.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/tz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ua.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ug.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/um.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/us.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/uy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/uz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/va.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/vc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/vg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/vi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/vn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/vu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/wf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ws.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/xk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/ye.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/yt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/za.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/zm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/flags/zw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/CustomIcon.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Black.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-ExtraBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/Heebo-Thin.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-bold.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-extrabold.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-light.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-medium.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-regular.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-semibold.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/fonts/manrope-thin.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/add_member.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/block_contact.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/delete_contact.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/deleted_workspace.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_call.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_contact.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_member.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_message.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_notes.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_numbers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_tags.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/empty_teams.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/girl_background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/icon_admin_setting.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/icon_call.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/image_credit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/invitation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/logoText.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/member_setting_icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/no_conversation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/no_recording.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/private_number.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/smartphone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/ApiService.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/LoggerHttpClient.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/StreamBase.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/Url.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/common/Api.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/common/Resources.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/api/common/Status.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/config/Config.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/config/CustomColors.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/config/Router.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/config/ThemeData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/constant/Constants.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/constant/Dimens.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/constant/RoutePaths.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/custom_icon/CustomIcon.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/CallLogDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/CallRecordingDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/ContactDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/ContactDetailDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/CountryDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/LoginWorkSpaceDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/MemberDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/MessageDetailsDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/NotesDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/NumberDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/RecentSearchDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/TagsDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/TeamDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/UserDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/WorkSpaceDetailDao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/common/Dao.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/db/common/ps_shared_preferences.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/graph_ql/GraphQLConfiguration.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/app_info/AppInfoProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/call_log/CallLogProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/call_record/CallRecordProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/call_transfer/CallTransferProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/common/ThemeProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/common/ps_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/contacts/ContactsProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/country/CountryListProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/language/LanguageProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/login_workspace/LoginWorkspaceProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/memberProvider/MemberProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/messages/MessageDetailsProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/notification_provider/NotificationProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/numbers/MyNumberProviders.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/ps_provider_dependencies.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/recentSearch/RecentSearchProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/recording/RecordingProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/team/TeamProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/provider/user/UserProvider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/query/QueryMutation.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/AppInfoRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/CallLogRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/CallRecordRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/CallTransferRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/Common/NotificationRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/Common/Respository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/ContactRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/CountryListRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/LanguageRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/LoginWorkspaceRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/MemberRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/MessageDetailsRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/MyNumberRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/RecentSearchRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/RecordingRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/TeamsRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/ThemeRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/repository/UserRepository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/socket/SocketIoManager.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/app_info/AppInfoView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/call_logs/CallLogListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/call_logs/CallLogsView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/call_logs/all/AllCallsLogsView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/call_logs/missed/AllMissedCallLogsView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/call_logs/new/AllNewCallLogsView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/ButtonWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/ChatTextFiledWidgetWithIcon.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/CustomImageHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/CustomTabWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/CustomTextField.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/DateTimeTextWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/EmptyViewUiWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/NoLeadingSpaceFormatter.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/RecentSearchItemWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/RoundRectanglularWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/TagsItemWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/ZoomScaffold.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/base/CustomAppBar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/BalanceDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/BlockContactDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/CallOnProgressMoreOptionDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ChannelSelectionDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ClientDndMuteDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ClientDndUnMuteDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ColorPickerDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ConfirmDialogView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ConfirmTransferCall.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ContactDeleteBlockDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ContactDetailDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ContactListNewMessageDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ContactListOnlyDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/CountryCodeSelectorDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/DeleteContactDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/DeleteDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ErrorDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/ImagePickerDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/KeyPadDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/NavigationSearchContactDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/NavigationSearchDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/NavigationSearchMemberDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/SaveNumberPrivatelyDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/SoundSelectionDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/SuccessDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/TransferCallDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/WarningDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/WorkSpaceDeleteDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/incoming_call_dialog/IncomingCallDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/info_dialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/dialog/outgoing_call_dialog/OutgoingCallDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/indicator/CustomLinearProgressIndicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/indicator/linear_percent_indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/indicator/percent_indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/common/ps_dropdown_base_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/contacts/contact_add/ContactAddView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/contacts/contact_individual_detail_edit/ContactIndivdualDetailEdit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/contacts/contact_view/ContactListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/contacts/contact_view/ContactListView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/dashboard/DashboardView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/dialer/DialerView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/get_started/GetStarted.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/invite/dialog/InviteMemberDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/invite/dialog/RoleSelectionDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/members/MemberListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/members/MemberListView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/members/MemberListViewWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/members/add/AddMemberItemWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/members/add/AddNewMemberView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/message/conversation_search/ConversationSearchView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/message/message_detail/MessageDetailView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/message/message_detail/SideMenuWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/notes/AddNotesView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/notes/NotesListView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/number/NumberListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/number/NumberListView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/number_setting/NumberSettingView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/overview/OverViewWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/recording/RecordingView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/AddGlobalTag.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/AddNewTagView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/TagListView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/TagsVerticalItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/edit/EditTagContainerView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/edit/EditTagWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/edit/UserVerticalListViewItem.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/tag/edit/UserViewWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/teams/TeamVerticalListItem.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/teams/TeamsListWidget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/teams/create/CreateNewTeamView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/user/edit_profile/EditProfileView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/user/login/LoginView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/user/profile/UserProfile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/workspace/WorkspaceListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/workspace/WorkspaceNumberListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/workspace/WorkspaceTeamListItemView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/workspace/create/CreateNewWorkSpaceView.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/workspace/dialog/WorkSpaceDetailsDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/DeBouncer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/HexToColor.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/PsProgressDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/SoundMapperUtils.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/Validation.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/utils/extension.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/ApiStatus.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/Empty.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/ResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/Holder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/Language.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/LanguageValueHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/MapObject.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/Object.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/common/ValueHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddContactIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddGlobalTagViewHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddNewMemberIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddNotesIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddTagIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/AddWorkSpaceIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/CreateNewTeamIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/EditContactIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/EditProfileIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/MemberListIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/MessageDetailIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/NumberListIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/SearchConversationIntenHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/TagIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/intent_holder/TeamListIntentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/ChangePasswordParameterHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/ColorHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/CommonRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/ContactsAddParamsHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/InviteMemberParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/ProfileUpdateParameterHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/TeamInputDataParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/UserLoginParameterHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/UserNameUpdateParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/VoiceTokenPlatformParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/WorkSpaceRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/WorkspaceInputDataHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/WorkspaceSwitchParameterHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addContactRequestParamHolder/AddContactRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addNoteByNumberRequestParamHolder/AddNoteByNumberRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addNotesToContactRequestParamHolder/AddNoteToContactRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addNotesToContactRequestParamHolder/AddNoteToContactRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addTagRequestParamHolder/AddTagRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addTagsToContactRequestParamHolder/AddTagsToContactRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/addTagsToContactRequestParamHolder/AddTagsToContactRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/allContactRequestParamHolder/AllContactRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/allContactRequestParamHolder/AllContactRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/blockContactResponse/BlockContactResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/callLogsRequestParamHolder/CallLogParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/callLogsRequestParamHolder/PageRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/callLogsRequestParamHolder/SearchInputRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/contactDetailRequestParamHolder/ContactDetailRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/contactPinUnpinRequestParamHolder/ContactPinUnpinRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/contactPinUnpinRequestParamHolder/ContactPinUnpinRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailRequestParamHolder/ConversationDetailRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailRequestParamHolder/ConversationDetailRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailRequestParamHolder/SearchConversationRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailRequestParamHolder/SearchConversationRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailUsingCursorRequestParamHolder/ConversationDetailUsingCursorRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/conversationDetailUsingCursorRequestParamHolder/SearchConversationRequestUsingCursorParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/createDeviceInfo/RegisterFcmParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/editContactRequestHolder/EditContactRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/editContactRequestParamHolder/EditContactRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/editTagRequestParamHolder/EditTagRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/pageRequestParamHolder/PageRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/recentConversationRequestParamHolder/RecentConversationRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/recentConversationRequestParamHolder/RecentConverstaionRequestParamHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/sendMessageRequestParamHolder/SendMessageRequestContentHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/sendMessageRequestParamHolder/SendMessageRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/subscriptionConversationDetailRequestHolder/SubscriptionUpdateConversationDetailRequestHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/holder/request_holder/updateClientDNDRequestParamHolder/UpdateClientDndHolder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addContact/AddContactResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addContact/AddContactResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNoteByNumber/AddNoteByNumber.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNoteByNumber/AddNoteByNumberResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNoteByNumber/AddNoteByNumberResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNotes/AddNoteResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNotes/AddNoteResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addNotes/NoteTitle.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addTag/AddTagResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/addTag/AddTagResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/AllContactData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/AllContactEdges.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/AllContactResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/AllContactResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/Contact.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allContact/Tags.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allNotes/AllNotesResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allNotes/AllNotesResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allNotes/Notes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allTags/AllTagsResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allTags/AllTagsResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allTags/EditTagResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/allTags/EditTagTitleData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/appInfo/AppInfo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/appInfo/AppInfoData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/appInfo/AppVersion.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/blockContact/BlockContactData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/NewCountResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversation.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationClientInfo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationContent.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationEdges.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationNodes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/call/RecentConversationResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/channel/ChannelData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/channel/ChannelResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/checkDuplicateLogin/CheckDuplicateLogin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/clientDndResponse/ClientDndResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/clientDndResponse/ClientDndResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/contactDetail/ContactDetailResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/contactDetail/ContactDetailResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/conversation_detail/ConversationDetailResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/country/CountryCode.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/country/CountryList.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/country/CountryListData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/deviceInfo/DeviceInfo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/deviceInfo/DeviceInfoData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/deviceInfo/DeviceInfoResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/editContact/EditContactResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/editContact/EditContactResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/error/ResponseError.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/invite/InviteMemberData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/invite/InviteMemberResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/CallAccessToken.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/CallRefreshToken.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/Login.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/LoginData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/LoginDataDetails.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/LoginWorkspace.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/User.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/login/UserProfile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/memberLogin/Member.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/memberLogin/MemberLogin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/memberLogin/MemberLoginData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MemberData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MemberEdges.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MemberNumber.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MemberStatus.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/Members.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MembersResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/MembersResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/members/SubscriptionOnlineMemberStatus.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/message/MessageDetails.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/notification/NotificationMessage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/numbers/Agents.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/numbers/NumberData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/numbers/NumberResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/numbers/Numbers.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/onlineStatus/onlineStatusResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/onlineStatus/onlineStatusResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/Card.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/Credit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/OverViewResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/OverviewData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/OverviewResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/overview/Plan.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/pagination/PageInfo.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/pinContact/PinContact.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/pinContact/PinContactData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/pinContact/PinContactResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/profile/Profile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/profile/ProfileData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/recentSearch/RecentSearch.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/record/recordCall.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/recording/Json.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/recording/callRecord.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/recording/callRecords.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/refreshToken/RefreshToken.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/refreshToken/RefreshTokenResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/refreshToken/RefreshTokenResponseData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/sendMessage/Messages.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/sendMessage/SendMessageData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/sendMessage/SendMessageResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/sound/Sound.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/sound/Sounds.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/subscriptionConversationDetail/SubscriptionConversationDetailResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/Members.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/TeamData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/Teams.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/TeamsResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/addTeams/AddTeamData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/teams/addTeams/AddTeamResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/voiceToken/VoiceToken.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/voiceToken/VoiceTokenData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/voiceToken/VoiceTokenResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/addWorkspace/AddWorkSpaceData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/addWorkspace/AddWorkSpaceResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/archive/ArchiveWorkSpaceData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/archive/ArchiveWorkSpaceResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/plan/WorkSpacePlan.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/restore/RestoreWorkspaceData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/restore/RestoreWorkspaceResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/uploadImage/UploadWorkSpaceImageResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/uploadImage/UploadWorkspaceImageData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/Workspace.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceChannel.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceDetail.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceMember.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceTag.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspace_detail/WorkspaceTeam.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspacelist/WorkspaceListData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace/workspacelist/WorkspaceListResponse.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace_switch/WorkspaceSwitch.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/viewobject/model/workspace_switch/WorkspaceSwitchData.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/en-US.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/en-US.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/AppInjector.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/Constants/Constants.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/base/BasePresenter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/base/BaseView.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/base/BaseViewCallback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/colors/colors.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/db/Dao.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/db/DaoDatabase.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/db/common/AppDatabase.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/db/DaoLogin.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/enum/StatusEnum.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/icons/CustomIcon.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/pages/CallIncoming.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/pages/CallOutgoing.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/pages/notification_examples_page.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/provider/Notifier.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/AuthRepository.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/AuthRepositoryImpl.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/ContentRepository.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/ContentRepositoryImpl.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/NetworkRepository.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/NetworkRepositoryImpl.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/SecureStorageRepository.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/repository/SecureStorageRepositoryImpl.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/request/RequestLogin.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/request/RequestUni.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/response/ResponseApi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/api/common/ApiResponse.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/response/ResponseCallAccessToken.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/response/ResponseFormat.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/response/ResponseLogin.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/response/ResponseUni.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/routes.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/string/Strings.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/styles/CustomStyles.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/utils/CommonFunctions.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/utils/Utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/utils/Utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/validator/Validator.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/incoming/IncomingPresenter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/incoming/IncomingView.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/incoming/IncomingViewCallback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginPresenter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginView.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/login/LoginViewCallback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/signup/SignupPresenter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/signup/SignupView.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/signup/SignupViewCallback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/splash/SplashPresenter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/splash/SplashView.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/view/splash/SplashViewCallback.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +780,7 @@
     <property name="android.sdk.path" value="D:/SDK" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -54,6 +788,10 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\flutter.twilio\voice\example" />
+      <recent name="E:\flutter.twilio\voice\example\lib" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ios/Classes" />
     </key>
@@ -447,22 +1185,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1628678861094" />
-    <state width="1323" height="249" key="GridCell.Tab.0.bottom" timestamp="1623822335385">
+    <state width="1323" height="360" key="GridCell.Tab.0.bottom" timestamp="1631170472641">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="249" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1623822335385" />
-    <state width="1323" height="249" key="GridCell.Tab.0.center" timestamp="1623822335384">
+    <state width="1323" height="360" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1631170472641" />
+    <state width="1323" height="360" key="GridCell.Tab.0.center" timestamp="1631170472640">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="249" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
-    <state width="1323" height="249" key="GridCell.Tab.0.left" timestamp="1623822335384">
+    <state width="1323" height="360" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1631170472640" />
+    <state width="1323" height="360" key="GridCell.Tab.0.left" timestamp="1631170472640">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="249" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
-    <state width="1323" height="249" key="GridCell.Tab.0.right" timestamp="1623822335384">
+    <state width="1323" height="360" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1631170472640" />
+    <state width="1323" height="360" key="GridCell.Tab.0.right" timestamp="1631170472640">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="249" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1623822335384" />
+    <state width="1323" height="360" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1631170472640" />
     <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1628677152502">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -471,24 +1209,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623811454838" />
-    <state x="153" y="25" width="997" height="715" key="SettingsEditor/0.25.1280.715@0.25.1280.715" timestamp="1621329894916" />
-    <state x="490" y="307" key="VCS.ChangelistChooser" timestamp="1621333004182">
-      <screen x="0" y="25" width="1280" height="715" />
-    </state>
-    <state x="490" y="307" key="VCS.ChangelistChooser/0.25.1280.715@0.25.1280.715" timestamp="1621333004182" />
     <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1629960133372">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1629960133372" />
-    <state x="390" y="97" width="596" height="534" key="find.popup" timestamp="1623821921772">
+    <state x="390" y="97" width="619" height="592" key="find.popup" timestamp="1631169043090">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="97" width="596" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1623821921772" />
+    <state x="390" y="97" width="619" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1631169043090" />
     <state x="384" y="152" key="git4idea.merge.GitPullDialog" timestamp="1628677143277">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="384" y="152" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1628677143277" />
-    <state x="360" y="174" key="git4idea.merge.GitPullDialog/0.25.1280.715@0.25.1280.715" timestamp="1621329863377" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

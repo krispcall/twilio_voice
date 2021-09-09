@@ -208,7 +208,6 @@ class VoiceClient {
 
   VoiceClient(this.accessToken) : assert(accessToken != null)
   {
-    print('this is accesstoekn $accessToken');
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
 
@@ -316,7 +315,6 @@ class VoiceClient {
 
   Future<void> hold() async {
     try {
-      print("this is hold 1");
       await TwilioVoice._methodChannel.invokeMethod('hold');
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
@@ -387,7 +385,6 @@ class VoiceClient {
   void _parseNotificationEvents(dynamic event)
   {
     final String eventName = event['name'];
-    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -406,7 +403,6 @@ class VoiceClient {
         _onNotificationDeregisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
         break;
       default:
-        print("$TAG Notification event '$eventName' not yet implemented");
         break;
     }
   }
@@ -414,7 +410,6 @@ class VoiceClient {
   void _parseHandleMessage(dynamic event)
   {
     final String eventName = event['name'];
-    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -426,7 +421,6 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onCallInvite':
-        print("$TAG onCallInvite ${data.toString()}");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -435,8 +429,6 @@ class VoiceClient {
         temp = temp.replaceAll("'","\"");
         temp = temp.replaceAll("None","null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        print("$TAG onCallInvite "+json.encode(customParameters));
-        print("$TAG onCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -445,7 +437,6 @@ class VoiceClient {
         _onCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCancelledCallInvite':
-        print("$TAG onCancelledCallInvite ${data.toString()}");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -454,8 +445,6 @@ class VoiceClient {
         temp = temp.replaceAll("'","\"");
         temp = temp.replaceAll("None","null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        print("$TAG onCancelledCallInvite "+json.encode(customParameters));
-        print("$TAG onCancelledCallInvite "+json.encode(channelInfo));
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -465,7 +454,6 @@ class VoiceClient {
         break;
 
       default:
-        print("$TAG Notification event '$eventName' not yet implemented");
         break;
     }
   }
@@ -473,7 +461,6 @@ class VoiceClient {
   void _parseOutGoingCallEvent(dynamic event)
   {
     final String eventName = event['name'];
-    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -486,7 +473,6 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onConnectFailure':
-        print("$TAG onConnectFailure ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -494,7 +480,6 @@ class VoiceClient {
         _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onRinging':
-        print("$TAG onRinging ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -504,7 +489,6 @@ class VoiceClient {
         _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted, callSid));
         break;
       case 'onConnected':
-        print("$TAG onConnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -512,7 +496,6 @@ class VoiceClient {
         _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
-        print("$TAG onReconnecting ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -520,7 +503,6 @@ class VoiceClient {
         _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnected':
-        print("$TAG onReconnected ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -528,8 +510,6 @@ class VoiceClient {
         _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
-        print("this is data ${data.toString()}");
-        print("$TAG onDisconnected test ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -537,7 +517,6 @@ class VoiceClient {
         _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onCallQualityWarningsChanged':
-        print("$TAG onCallQualityWarningsChanged ${data.toString()}");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -545,14 +524,12 @@ class VoiceClient {
         _outGoingCallCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted,null));
         break;
       default:
-        print("$TAG event '$eventName' not yet implemented");
         break;
     }
   }
 
   void _parseIncomingCallEvents(dynamic event) {
     final String eventName = event['name'];
-    print("$TAG => Event '$eventName' => ${event["data"]}, error: ${event["error"]}");
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
@@ -564,7 +541,6 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onConnectFailure':
-        print("$TAG onConnectFailure ${data.toString()}");
        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -576,7 +552,6 @@ class VoiceClient {
         _incomingConnectFailure.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onRinging':
-        print("$TAG onRinging ${data.toString()}");
        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -588,7 +563,6 @@ class VoiceClient {
         _incomingRinging.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onConnected':
-        print("$TAG onConnected ${data.toString()}");
       var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -600,7 +574,6 @@ class VoiceClient {
         _incomingConnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnecting':
-        print("$TAG onReconnecting ${data.toString()}");
       var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -612,7 +585,6 @@ class VoiceClient {
         _incomingReconnecting.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnected':
-        print("$TAG onReconnected ${data.toString()}");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -624,7 +596,6 @@ class VoiceClient {
         _incomingReconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onDisconnected':
-        print("$TAG onDisconnected ${data.toString()}");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -636,7 +607,6 @@ class VoiceClient {
         _incomingDisconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCallQualityWarningsChanged':
-        print("$TAG onCallQualityWarningsChanged ${data.toString()}");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -648,7 +618,6 @@ class VoiceClient {
         _incomingCallQualityWarningsChanged.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       default:
-        print("$TAG event '$eventName' not yet implemented");
         break;
     }
   }

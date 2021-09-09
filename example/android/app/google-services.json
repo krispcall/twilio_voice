@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:736681501686:android:4fd643ce5ceff11ac31dd7",
         "android_client_info": {
-          "package_name": "com.codavatar.mvp"
+          "package_name": "com.codavatar.voice_example"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "736681501686-lcusk4q719ramjd3h7ka5fk05h7g5b2u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codavatar.mvp",
+            "package_name": "com.codavatar.voice_example",
             "certificate_hash": "0187822198455c3a12e9ac0c7e3c9f10183ff060"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "736681501686-399j1sd5c13lrs8bc5t4pu6v7ouph65v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.krispcall.mvp"
+                "bundle_id": "com.krispcall.voice_example"
               }
             }
           ]
@@ -86,7 +86,7 @@
               "client_id": "736681501686-399j1sd5c13lrs8bc5t4pu6v7ouph65v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.krispcall.mvp"
+                "bundle_id": "com.krispcall.voice_example"
               }
             }
           ]
@@ -122,7 +122,7 @@
               "client_id": "736681501686-399j1sd5c13lrs8bc5t4pu6v7ouph65v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.krispcall.mvp"
+                "bundle_id": "com.krispcall.voice_example"
               }
             }
           ]
@@ -133,7 +133,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:736681501686:android:e027b03b17face73c31dd7",
         "android_client_info": {
-          "package_name": "com.krispcall.mvp"
+          "package_name": "com.krispcall.voice_example"
         }
       },
       "oauth_client": [
@@ -158,7 +158,7 @@
               "client_id": "736681501686-399j1sd5c13lrs8bc5t4pu6v7ouph65v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.krispcall.mvp"
+                "bundle_id": "com.krispcall.voice_example"
               }
             }
           ]
