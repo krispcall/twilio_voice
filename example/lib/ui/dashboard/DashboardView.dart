@@ -157,11 +157,9 @@ class DashboardView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<DashboardView>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+class _HomeViewState extends State<DashboardView> with TickerProviderStateMixin, WidgetsBindingObserver {
   AnimationController animationController;
-  bool isFirstTime = true;
-  int currentIndex = Const.REQUEST_CODE_MENU_GET_STARTED_FRAGMENT;
+  int currentIndex = Const.REQUEST_CODE_MENU_CALLS_FRAGMENT;
   bool bottomAppBarToggleVisibility = true;
   MenuController menuController;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -244,23 +242,24 @@ class _HomeViewState extends State<DashboardView>
   DateTime notificationTiming;
 
   @override
-  void initState() {
+  void initState()
+  {
     super.initState();
+    requestRecordPermission();
     valueHolder = Provider.of<ValueHolder>(context, listen: false);
 
     userRepository = Provider.of<UserRepository>(context, listen: false);
-    userProvider =
-        UserProvider(userRepository: userRepository, valueHolder: valueHolder);
+    userProvider = UserProvider(userRepository: userRepository, valueHolder: valueHolder);
 
-    loginWorkspaceRepository =
-        Provider.of<LoginWorkspaceRepository>(context, listen: false);
+    loginWorkspaceRepository = Provider.of<LoginWorkspaceRepository>(context, listen: false);
     loginWorkspaceProvider = LoginWorkspaceProvider(
         loginWorkspaceRepository: loginWorkspaceRepository,
         valueHolder: valueHolder);
 
     countryRepository = Provider.of<CountryRepository>(context, listen: false);
-    countryListProvider =
-        CountryListProvider(countryListRepository: countryRepository);
+    countryListProvider = CountryListProvider(countryListRepository: countryRepository);
+
+    refreshVoiceToken();
 
     Workmanager().initialize(
       callbackDispatcher,
@@ -376,9 +375,11 @@ class _HomeViewState extends State<DashboardView>
   }
 
   ///Refresh voice according to ttl
-  void refreshVoiceToken() {
+  void refreshVoiceToken()
+  {
     fcmConfigure();
-    timerFcmConfigure = Timer.periodic(Duration(minutes: 15), (Timer t) {
+    timerFcmConfigure = Timer.periodic(Duration(minutes: 15), (Timer t)
+    {
       fcmConfigure();
     });
   }
@@ -603,27 +604,16 @@ class _HomeViewState extends State<DashboardView>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     timeDilation = 1.0;
 
-    if (isFirstTime) {
-      isFirstTime = false;
-      requestRecordPermission();
-      if (valueHolder != null &&
-          valueHolder.loginUserId != null &&
-          valueHolder.loginUserId != "") {
-        currentIndex = Const.REQUEST_CODE_MENU_CALLS_FRAGMENT;
-        getCountryCodeListFromDB();
-        userProvider.replaceIncomingCallNotificationSetting(true);
-        userProvider.replaceSmsNotificationSetting(true);
-        refreshVoiceToken();
-      } else {
-        if (timerFcmConfigure != null) {
-          timerFcmConfigure.cancel();
-        }
-
-        currentIndex = Const.REQUEST_CODE_MENU_GET_STARTED_FRAGMENT;
-      }
+    if (valueHolder != null && valueHolder.loginUserId != null && valueHolder.loginUserId != "")
+    {
+      currentIndex = Const.REQUEST_CODE_MENU_CALLS_FRAGMENT;
+      getCountryCodeListFromDB();
+      userProvider.replaceIncomingCallNotificationSetting(true);
+      userProvider.replaceSmsNotificationSetting(true);
     }
 
     Future<void> updateSelectedIndexWithAnimation(
@@ -1155,8 +1145,16 @@ class _HomeViewState extends State<DashboardView>
   }
 
   void fcmConfigure() async {
+    print("Configuring FCM");
     await Firebase.initializeApp();
     final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    if(loginWorkspaceProvider.getVoiceToken()!=null && loginWorkspaceProvider.getVoiceToken().isNotEmpty)
+    {
+      voiceClient.unregisterForNotification(loginWorkspaceProvider.getVoiceToken(), Platform.isIOS
+          ? await FirebaseMessaging.instance.getAPNSToken()
+          : await FirebaseMessaging.instance.getToken());
+    }
+    FirebaseMessaging.instance.deleteToken();
     //Refetch access Token
     Resources<String> refreshAccessToken =
         await loginWorkspaceProvider.doRefreshTokenApiCall();
@@ -1179,8 +1177,10 @@ class _HomeViewState extends State<DashboardView>
                 Platform.isIOS
                     ? await FirebaseMessaging.instance.getAPNSToken()
                     : await FirebaseMessaging.instance.getToken())
-            .then((value) async {
-          if (value) {
+            .then((value) async
+        {
+          if (value)
+          {
             loginWorkspaceProvider.replaceVoiceToken(voiceToken.data);
             RegisterFcmParamHolder registerFcmParamHolder =
                 RegisterFcmParamHolder(
@@ -1212,9 +1212,13 @@ class _HomeViewState extends State<DashboardView>
               badge: true,
               sound: false,
             );
-
-            FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
+            int messageCount = 0;
+            FirebaseMessaging.onMessage.listen((RemoteMessage message)
+            {
+              setState(() {
+                messageCount+=1;
+              });
+              print("Message Count Foreground "+messageCount.toString());
               if (message.data.containsKey("twi_account_sid")) {
                 Map<String, dynamic> map = Map();
                 map["data"] = message.data;
@@ -1240,7 +1244,9 @@ class _HomeViewState extends State<DashboardView>
             });
 
             FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
-          } else {
+          }
+          else
+          {
             fcmConfigure();
           }
         });
@@ -1286,35 +1292,6 @@ class _HomeViewState extends State<DashboardView>
       });
     });
 
-    voiceClient.outGoingCallDisconnected.listen((event) {
-      Utils.showToastMessage("Disconnected");
-      Wakelock.disable();
-      timerOutgoing?.cancel();
-      secondsPassedOutgoing = 0;
-      secondsOutgoing = 0;
-      minutesOutgoing = 0;
-      outgoingIsCallConnected = false;
-      outgoingIsMuted = false;
-      outgoingIsOnHold = false;
-      outgoingDigits = "";
-      inCallManager.setSpeakerphoneOn(false);
-      outgoingIsSpeakerOn = false;
-      outgoingIsRecord = false;
-      Utils.stopRingTone();
-      Future.delayed(Duration(seconds: 1)).then((value) {
-        Utils.cancelNotification();
-      });
-      DashboardView.outgoingEvent.fire({
-        "outgoingEvent": "outGoingCallDisconnected",
-        "state": Utils.getString("disconnected")
-      });
-      setState(() {
-        outgoingIsShowing = false;
-        outgoingIsCallConnected = false;
-        Navigator.popUntil(context, ModalRoute.withName(RoutePaths.home));
-      });
-    });
-
     voiceClient.outGoingCallConnected.listen((event) {
       Wakelock.enable();
       Utils.showToastMessage("Connected");
@@ -1352,6 +1329,36 @@ class _HomeViewState extends State<DashboardView>
           "minutes": minutesOutgoing,
           "state": Utils.getString("connected")
         });
+      });
+    });
+
+    voiceClient.outGoingCallDisconnected.listen((event) {
+      Utils.showToastMessage("Disconnected");
+      Wakelock.disable();
+      timerOutgoing?.cancel();
+      secondsPassedOutgoing = 0;
+      secondsOutgoing = 0;
+      minutesOutgoing = 0;
+      outgoingIsCallConnected = false;
+      outgoingIsMuted = false;
+      outgoingIsOnHold = false;
+      outgoingDigits = "";
+      inCallManager.setSpeakerphoneOn(false);
+      outgoingIsSpeakerOn = false;
+      outgoingIsRecord = false;
+      Utils.stopRingTone();
+      Future.delayed(Duration(seconds: 1)).then((value)
+      {
+        Utils.cancelNotification();
+      });
+      DashboardView.outgoingEvent.fire({
+        "outgoingEvent": "outGoingCallDisconnected",
+        "state": Utils.getString("disconnected")
+      });
+      setState(() {
+        outgoingIsShowing = false;
+        outgoingIsCallConnected = false;
+        Navigator.popUntil(context, ModalRoute.withName(RoutePaths.home));
       });
     });
 

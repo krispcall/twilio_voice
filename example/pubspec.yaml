@@ -80,7 +80,7 @@ dependencies:
   voice:
     git:
       url: git://github.com/JoshanTandukar/twilio_voice.git
-  #    path: ../twilio_voice
+#      path: ../twilio_voice
 
 
   audio_manager:

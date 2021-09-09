@@ -1178,7 +1178,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1c4f96ffce905ad0a87005f25fa7b26a4bc6a435"
+      resolved-ref: "3a3db57bf981ca247d3e435fe7be7939156fe6c1"
       url: "git://github.com/JoshanTandukar/twilio_voice.git"
     source: git
     version: "0.0.1"
