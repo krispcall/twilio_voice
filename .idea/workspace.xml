@@ -21,10 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/constant/Constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/constant/Constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/dashboard/DashboardView.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/dashboard/DashboardView.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +46,7 @@
     <property name="android.sdk.path" value="D:/SDK" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../codavatar/krispcall.mobile" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -419,7 +415,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631170851895</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Fcm Configure Single Hit fixing">
+      <created>1631177043834</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1631177043834</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -447,37 +450,38 @@
     <MESSAGE value="Hold" />
     <MESSAGE value="Make Call With Sid" />
     <MESSAGE value="Data return from handle message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data return from handle message" />
+    <MESSAGE value="Fcm Configure Single Hit fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fcm Configure Single Hit fixing" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="116" y="0" key="CommitChangelistDialog2" timestamp="1631170847622">
+    <state x="116" y="0" key="CommitChangelistDialog2" timestamp="1631177042625">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="116" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1631170847622" />
+    <state x="116" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1631177042625" />
     <state x="129" y="55" width="1092" height="610" key="DiffContextDialog" timestamp="1624604306867">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="129" y="55" width="1092" height="610" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1624604306867" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1628678861094">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1631177164598">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1628678861094" />
-    <state width="1323" height="349" key="GridCell.Tab.0.bottom" timestamp="1631176997692">
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1631177164598" />
+    <state width="1323" height="349" key="GridCell.Tab.0.bottom" timestamp="1631191996646">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="349" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1631176997692" />
-    <state width="1323" height="349" key="GridCell.Tab.0.center" timestamp="1631176997692">
+    <state width="1323" height="349" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1631191996646" />
+    <state width="1323" height="349" key="GridCell.Tab.0.center" timestamp="1631191996646">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="349" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1631176997692" />
-    <state width="1323" height="349" key="GridCell.Tab.0.left" timestamp="1631176997692">
+    <state width="1323" height="349" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1631191996646" />
+    <state width="1323" height="349" key="GridCell.Tab.0.left" timestamp="1631191996646">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="349" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1631176997692" />
-    <state width="1323" height="349" key="GridCell.Tab.0.right" timestamp="1631176997692">
+    <state width="1323" height="349" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1631191996646" />
+    <state width="1323" height="349" key="GridCell.Tab.0.right" timestamp="1631191996646">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="349" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1631176997692" />
+    <state width="1323" height="349" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1631191996646" />
     <state x="321" y="125" key="MultipleFileMergeDialog" timestamp="1628677152502">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -486,10 +490,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623811454838" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1631170858426">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1631177108724">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1631170858426" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1631177108724" />
     <state x="390" y="97" width="619" height="592" key="find.popup" timestamp="1631169043090">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

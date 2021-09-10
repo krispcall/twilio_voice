@@ -608,7 +608,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     private fun sendEventIncomingCall(name: String, data: Any?, e: CallException? = null)
     {
-        Log.d(TAG, "sendEventHandleMessage: " + data.toString())
+        Log.d(TAG, "sendEventIncomingCall: " + data.toString())
         val eventData = mapOf("name" to name, "data" to data, "error" to Mapper.errorInfoToMap(e))
         callIncomingSink?.success(eventData)
     }
