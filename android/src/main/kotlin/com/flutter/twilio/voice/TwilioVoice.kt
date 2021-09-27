@@ -620,6 +620,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     override fun onDetachedFromActivityForConfigChanges()
     {
+        Log.d(TAG, "onDetachedFromActivityForConfigChanges: TwilioVoice.onDetachedFromActivityForConfigChanges")
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
@@ -628,5 +629,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
     override fun onDetachedFromActivity()
     {
+        Log.d(TAG, "onDetachedFromActivity: TwilioVoice.onDetachedFromActivity")
     }
 }
