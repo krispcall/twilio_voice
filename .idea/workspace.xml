@@ -19,12 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/example/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" />
-    </list>
+    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,27 +76,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617868628125</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Handling registration event response">
-      <created>1617881181995</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1617881181995</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Handling OutGoing Events">
-      <created>1617950363200</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1617950363200</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Handling OutGoing Events">
-      <created>1617951642451</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1617951642451</updated>
     </task>
     <task id="LOCAL-00004" summary="Handling OutGoing Events">
       <created>1617952007194</created>
@@ -425,7 +399,28 @@
       <option name="project" value="LOCAL" />
       <updated>1631177043834</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Fcm Configure Single Hit fixing">
+      <created>1632732882792</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1632732882793</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Fcm Configure Single Hit fixing">
+      <created>1632733039527</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1632733039527</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Fcm Configure Single Hit fixing">
+      <created>1632733085800</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1632733085800</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -457,14 +452,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fcm Configure Single Hit fixing" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="116" y="0" key="CommitChangelistDialog2" timestamp="1631177042625">
+    <state x="116" y="0" key="CommitChangelistDialog2" timestamp="1632733084926">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="116" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1631177042625" />
-    <state x="129" y="55" width="1092" height="610" key="DiffContextDialog" timestamp="1624604306867">
+    <state x="116" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1632733084926" />
+    <state x="129" y="55" width="1092" height="610" key="DiffContextDialog" timestamp="1632732917151">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="129" y="55" width="1092" height="610" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1624604306867" />
+    <state x="129" y="55" width="1092" height="610" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1632732917151" />
     <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1631177164598">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -489,14 +484,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="321" y="125" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1628677152502" />
-    <state x="163" y="0" width="997" height="715" key="SettingsEditor" timestamp="1623811454838">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1632733105659">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1623811454838" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1631177108724">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1631177108724" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1632733105659" />
     <state x="390" y="97" width="619" height="592" key="find.popup" timestamp="1631169043090">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
