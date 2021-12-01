@@ -480,7 +480,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     public func disConnect(){
         print("Inside Disconnect")
-        callOutgoing = false;
+               if(self.callOutgoing){
+               self.callOutgoing = true;
+              }else{
+                self.callOutgoing = false;
+                }
+
         activeCall?.disconnect()
         guard let id = activeCall?.uuid else {
             return
