@@ -28,6 +28,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     private var cancelledCallInvites: CancelledCallInvite?
     var callKitCompletionCallback: ((Bool)->Swift.Void?)? = nil
     var incomingPushCompletionCallback: (()->Swift.Void?)? = nil
+    var accessToken:String?
+    let kRegistrationTTLInDays = 365
 
     var _result: FlutterResult?
     public static var loggingSink: FlutterEventSink?
@@ -129,7 +131,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         
         callKitProvider.reportNewIncomingCall(with: uuid, update: callUpdate) { error in
             if let error = error {
-                print("this is error",error.localizedDescription)
+                print("Twilio Voice: this is error",error.localizedDescription)
 //                self.sendPhoneCallEvents(description: "LOG|Failed to report incoming call successfully: \(error.localizedDescription).", isError: false)
             } else {
 //                self.sendPhoneCallEvents(description: "LOG|Incoming call successfully reported.", isError: false)
@@ -161,9 +163,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         
         callKitCallController.request(transaction) { error in
             if let error = error {
-                print("this is error",error.localizedDescription)
+                print("Twilio Voice: this is error",error.localizedDescription)
             } else {
-                print("this is performEndCallAction")
+                print("Twilio Voice: this is performEndCallAction")
             }
         }
     }
@@ -196,11 +198,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     public func onRegister(_ registrar: FlutterPluginRegistrar) {
         
-        print("Inside onRegister")
+        print("Twilio Voice: Inside onRegister")
         
         SwiftTwilioVoice.messenger = registrar.messenger()
         let pluginHandler = PluginHandler()
-        
+
         methodChannel = FlutterMethodChannel(name: "TwilioVoice", binaryMessenger: registrar.messenger())
         methodChannel?.setMethodCallHandler(pluginHandler.handle)
         
@@ -223,97 +225,74 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     
     public func registerForNotification(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("Inside Registration")
+        print("Twilio Voice: Inside Registration")
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
-        print("Argments for Registation")
-        print("Arguments",arguments)
+        print("Twilio Voice: Argments for Registation")
+        print("Twilio Voice: Arguments",arguments)
         
-        
-        guard let token = self.deviceToken as NSData? else {
-            print("Missing 'deviceToken' parameter")
-            return result (["result": true])
-        }
         
         guard let accessToken = arguments["accessToken"] as? String else {
             
-            print("Missing 'accessToken' parameter")
+            print("Twilio Voice: Missing 'accessToken' parameter")
         
             return result (["result": true])
         
         }
-        
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
-                SwiftTwilioVoice.debug("User responded to permissions request: \(granted)")
-                if granted {
-                    DispatchQueue.main.async {
-                        SwiftTwilioVoice.debug("Requesting APNS token")
                         SwiftTwilioVoice.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
-            
-                        
-                        TwilioVoiceSDK.register(accessToken: accessToken,
-                                                deviceToken: token as Data) { (error) in
-                            if let error = error {
-                                print("error")
-                                print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken")
-                                
-                                self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
-                               return result( ["result" : true])
-                                
-                            }
-                            else {
-                                print("Successfully registered accessToken $accessToken fcmToken $fcmToken")
-                                print("this is access token", accessToken)
-                                print("this is device token", token)
-                                
-                                self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
-                                
-                               return result (["result": true])
-                            }
-                        }
-                        
-                    }
-                }
-            }
+    
+                        if let deviceToken = self.deviceToken, let token = accessToken as? String {
+                                    TwilioVoiceSDK.register(accessToken: token, deviceToken: deviceToken) { (error) in
+                                        if let error = error {
+                                        print("Twilio Voice: error")
+                                        self.sendNotificationEvent("registerForNotification", data: ["result": false], error: error)
+                                        return result( ["result" : true])
+                                        }
+                                        else {
+                                            print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken from registerNotification")
 
-        }
-        
+                                        print("Twilio Voice: this is access token", accessToken)
+                                        print("Twilio Voice: this is device token", deviceToken)
+                                        self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
+                                        }
+                                    }
+                                }
+
     }
     
     public func makeCallWithSid(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     
-        print("Inside makeCall")
+        print("Twilio Voice: Inside makeCall")
         _result = result
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
         callOutgoing = true;
-        print("Arguments for makCall1")
+        print("Twilio Voice: Arguments for makCall1")
 //        print(arguments)
         
         guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
 
         guard let callTo = arguments["To"] as? String else {
-            print("this is call to ",arguments["To"] as? String ?? "no data")
+            print("Twilio Voice: this is call to ",arguments["To"] as? String ?? "no data")
             return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
-        print("Arguments for makCall2")
+        print("Twilio Voice: Arguments for makCall2")
 
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
 
-        print("Arguments for makCall3")
+        print("Twilio Voice: Arguments for makCall3")
 
         guard let workspaceSid = arguments["workspaceSid"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'workspaceSid' parameter", details: nil))}
-        print("Arguments for makCall4")
+        print("Twilio Voice: Arguments for makCall4")
 
 
         guard  let  channelSid = arguments["channelSid"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
         
-        print("Arguments for makCall5")
+        print("Twilio Voice: Arguments for makCall5")
         
         guard  let  agentId = arguments["agentId"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
         
-        print("Arguments for makCall6")
+        print("Twilio Voice: Arguments for makCall6")
 
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
@@ -324,38 +303,38 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                               "agent_id": agentId ]
         }
         
-        print("this is formated data" ,connectOptions);
+        print("Twilio Voice: this is formated data" ,connectOptions);
         activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
-        print("call ",call)
+        print("Twilio Voice: call ",call)
     }
     
     
     public func makeCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 
-        print("Inside makeCall")
+        print("Twilio Voice: Inside makeCall")
         _result = result
 
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String, AnyObject>;
         callOutgoing = true;
-        print("Arguments for makCall1")
+        print("Twilio Voice: Arguments for makCall1")
 //        print(arguments)
 
         guard let callTo = arguments["To"] as? String else {
-            print("this is call to ",arguments["To"] as? String ?? "no data")
+            print("Twilio Voice: this is call to ",arguments["To"] as? String ?? "no data")
             return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
-        print("Arguments for makCall2")
+        print("Twilio Voice: Arguments for makCall2")
 
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
 
-        print("Arguments for makCall3")
+        print("Twilio Voice: Arguments for makCall3")
 
         guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
-        print("Arguments for makCall4")
+        print("Twilio Voice: Arguments for makCall4")
 
 
         guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
 
-        print("Arguments for makCall5")
+        print("Twilio Voice: Arguments for makCall5")
 
 
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
@@ -365,19 +344,19 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                               "displayName":displayName ]
         }
 
-        print("this is formated data" ,connectOptions);
+        print("Twilio Voice: this is formated data" ,connectOptions);
         activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
-        print("call ",call)
+        print("Twilio Voice: call ",call)
     }
     
     
     public  func sendDigit(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         
-        print("Inside SendDigit")
+        print("Twilio Voice: Inside SendDigit")
         
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
-        print("Arguments for sendDigit")
+        print("Twilio Voice: Arguments for sendDigit")
         print(arguments)
         
         guard let digit = arguments["digit"] as? String
@@ -392,9 +371,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     
     public func handleMessage(_ message: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("Indise Handle Message")
+        print("Twilio Voice: Indise Handle Message")
         let arguments:Dictionary<String, AnyObject> = message.arguments as! Dictionary<String,   AnyObject>;
-        print("arguments for handleMessage")
+        print("Twilio Voice: arguments for handleMessage")
         print(arguments)
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted: Bool, _: Error?) in
@@ -404,7 +383,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                         SwiftTwilioVoice.debug("Requesting APNS token")
                         SwiftTwilioVoice.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
-                        print("TwilioVoiceSDK initialize")
+                        print("Twilio Voice: TwilioVoiceSDK initialize")
                         TwilioVoiceSDK.handleNotification(arguments, delegate:self, delegateQueue:nil)
                     }
                 }
@@ -434,24 +413,24 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                         print(jsonString)
                         content.userInfo["body"] = jsonString
                         userName = self.clients[from]
-                        print("this is notification username",userName ?? "null")
+                        print("Twilio Voice: this is notification username",userName ?? "null")
                     }
                 }
                 
             }
             let title = userName ?? self.clients["defaultCaller"] ?? self.defaultCaller
-            print("this is notification username",title )
+            print("Twilio Voice: this is notification username",title )
             content.title = String(format:  NSLocalizedString("Missed Call", comment: ""),title)
-            print("this is notification username",content.title )
+            print("Twilio Voice: this is notification username",content.title )
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-            print("this is notification trigger",trigger)
+            print("Twilio Voice: this is notification trigger",trigger)
             let request = UNNotificationRequest(identifier: UUID().uuidString,
                                                 content: content,
                                                 trigger: trigger)
-            print("this is notification request",request)
+            print("Twilio Voice: this is notification request",request)
                 notificationCenter.add(request) { (error) in
                     if let error = error {
-                        print("Notification Error: ", error)
+                        print("Twilio Voice: Notification Error: ", error)
                     }
                 }
             
@@ -464,11 +443,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     
     public func rejectCall(){
-        print("Inside rejectCall")
+        print("Twilio Voice: Inside rejectCall")
         
         if(activeCallInvite != nil)
         {
-            print("activeCallInvite?.reject() called")
+            print("Twilio Voice: activeCallInvite?.reject() called")
             
             activeCallInvite?.reject()
         }
@@ -479,7 +458,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
     
     public func disConnect(){
-        print("Inside Disconnect")
+        print("Twilio Voice: Inside Disconnect")
                if(self.callOutgoing){
                self.callOutgoing = true;
               }else{
@@ -491,37 +470,37 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return
         }
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        print("Inside Disconnect2")
+        print("Twilio Voice: Inside Disconnect2")
         if(direction == "Incoming"){
-            print("Inside Disconnect3")
+            print("Twilio Voice: Inside Disconnect3")
             callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
         }
 
     }
     
     public func hold(){
-        print("this is hold 2")
+        print("Twilio Voice: this is hold 2")
         if(activeCall != nil){
             let hold = !(activeCall?.isOnHold ?? false) as Bool
             activeCall?.isOnHold = hold
-            print("hold:",hold)
+            print("Twilio Voice: hold:",hold)
         }
     }
     
     public func mute(){
-        print("Inside Mute")
+        print("Twilio Voice: Inside Mute")
         
         if (activeCall != nil)
         {
-            print("this is activeCall");
+            print("Twilio Voice: this is activeCall");
             if((activeCall?.isMuted == false)){
                 //TODO: unable to find the mute method
-                print("call is mute");
+                print("Twilio Voice: call is mute");
                 //activeCall.mute()
                 activeCall?.isMuted = true;
             }else {
-                print("this is activeCall");
-                print("call is unmute");
+                print("Twilio Voice: this is activeCall");
+                print("Twilio Voice: call is unmute");
                 activeCall?.isMuted = false;
             }
         }
@@ -530,9 +509,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     
     public func acceptCall(){
-        print("Inside AcceptCall")
+        print("Twilio Voice: Inside AcceptCall")
         if(activeCall != nil){
-            print("activeCallInvite?.accept(with: IncomingCallDelegate()) iniated")
+            print("Twilio Voice: activeCallInvite?.accept(with: IncomingCallDelegate()) iniated")
             activeCallInvite?.accept(with: self)
         }
     }
@@ -543,10 +522,9 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     
     public func unregisterForNotification(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        print("Inside unRegisterForNotification")
+        print("Twilio Voice: Inside unRegisterForNotification")
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
-        print("Arguments for registration");
-        print(arguments)
+        print("Arguments for registration",arguments)
         guard let token = deviceToken as NSData? else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'deviceToken' parameter", details: nil))}
         guard let accessToken = arguments["accessToken"] as? String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         if #available(iOS 10.0, *) {
@@ -556,12 +534,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                 UIApplication.shared.registerForRemoteNotifications()
                 TwilioVoiceSDK.unregister(accessToken: accessToken, deviceToken: token as Data) { (error) in
                     if let error = error {
-                        print ("Successfully Un-Registered accessToken $accessToken fcmToken $fcmToken")
+                        print ("Twilio Voice:Successfully Un-Registered accessToken $accessToken fcmToken $fcmToken")
                         self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: error as NSError)
                        return result( ["result" : true])
                     }
                     else {
-                        print("Successfully Unregistered accessToken $accessToken fcmToken $fcmToken")
+                        print("Twilio Voice: Successfully Unregistered accessToken $accessToken fcmToken $fcmToken")
                         self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: nil)
                         
                        return result (["result": true])
@@ -574,18 +552,18 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
     
     
-    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Inside get device Token")
-        self.deviceToken = deviceToken
-    }
+//    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        print("Twilio Voice: Inside get device Token")
+//        self.deviceToken = deviceToken
+//    }
     
     
-    public func application(_ application:UIApplication,didFailToRegisterForRemoteNotificationsWithError
-                                error: Error) {
-        print("Inside application")
-        SwiftTwilioVoice.debug("didFailToRegisterForRemoteNotificationsWithError => onFail")
-        sendNotificationEvent("registered", data: ["result": false], error: error)
-    }
+//    public func application(_ application:UIApplication,didFailToRegisterForRemoteNotificationsWithError
+//                                error: Error) {
+//        print("Twilio Voice: Inside application")
+//        SwiftTwilioVoice.debug("didFailToRegisterForRemoteNotificationsWithError => onFail")
+//        sendNotificationEvent("registered", data: ["result": false], error: error)
+//    }
 
     
     
@@ -703,23 +681,111 @@ extension SwiftTwilioVoice: PKPushRegistryDelegate {
     
     public func pushRegistry(_ registry: PKPushRegistry, didUpdate
                                 pushCredentials: PKPushCredentials, for type: PKPushType) {
-        if type == PKPushType.voIP {
-            print("Inside pushRegistry")
+        if type != PKPushType.voIP {
+            print("Twilio Voice: Inside pushRegistry")
             self.deviceToken = pushCredentials.token as Data;
 
-            print("deviceToken")
+            print("Twilio Voice: deviceToken")
             print(deviceToken! as Data);
+            return
+        }
+
+        print("Twilio Voice: pushRegistry PKPushRegistry")
+
+        
+        guard registrationRequired() || deviceToken != pushCredentials.token else { return }
+
+        let deviceToken = pushCredentials.token
+        if  let token = self.accessToken as? String {
+            TwilioVoiceSDK.register(accessToken: token, deviceToken: deviceToken) { (error) in
+                if let error = error {
+                print("Twilio Voice: error")
+
+                self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
+                }
+                else {
+                    print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken from push registry")
+                print("Twilio Voice: this is access token", token)
+                print("Twilio Voice: this is device token", deviceToken)
+                self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
+                }
+            }
+        }
+        self.deviceToken = deviceToken
+        UserDefaults.standard.set(Date(), forKey: kCachedBindingDate)
+    }
+    
+    /**
+      * The TTL of a registration is 1 year. The TTL for registration for this device/identity pair is reset to
+      * 1 year whenever a new registration occurs or a push notification is sent to this device/identity pair.
+      * This method checks if binding exists in UserDefaults, and if half of TTL has been passed then the method
+      * will return true, else false.
+      */
+     func registrationRequired() -> Bool {
+         guard
+             let lastBindingCreated = UserDefaults.standard.object(forKey: kCachedBindingDate)
+         else { return true }
+
+         let date = Date()
+         var components = DateComponents()
+         components.setValue(kRegistrationTTLInDays/2, for: .day)
+         let expirationDate = Calendar.current.date(byAdding: components, to: lastBindingCreated as! Date)!
+
+         if expirationDate.compare(date) == ComparisonResult.orderedDescending {
+             return false
+         }
+         return true;
+     }
+    
+//    public func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+//        print("Twilio Voice: this is payload",payload);
+//        // Save for later when the notification is properly handled.
+////        self.incomingPushCompletionCallback = completion
+//        if (type == PKPushType.voIP) {
+//            print("Twilio Voice: this is incoming call");
+//            TwilioVoiceSDK.handleNotification(payload.dictionaryPayload, delegate: self, delegateQueue: nil)
+//        }
+//        if let version = Float(UIDevice.current.systemVersion), version < 13.0 {
+//            // Save for later when the notification is properly handled.
+//            self.incomingPushCompletionCallback = completion
+//        } else {
+//            /**
+//             * The Voice SDK processes the call notification and returns the call invite synchronously. Report the incoming call to
+//             * CallKit and fulfill the completion before exiting this callback method.
+//             */
+//            print("Twilio Voice: version greater than 13")
+//            completion()
+//        }
+//    }
+    
+    /**
+     * Try using the `pushRegistry:didReceiveIncomingPushWithPayload:forType:withCompletionHandler:` method if
+     * your application is targeting iOS 11. According to the docs, this delegate method is deprecated by Apple.
+     */
+    public func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+//        self.sendPhoneCallEvents(description: "LOG|pushRegistry:didReceiveIncomingPushWithPayload:forType:", isError: false)
+                print("Twilio Voice: pushRegistry didReceiveIncomingPushWith")
+        if (type == PKPushType.voIP) {
+            TwilioVoiceSDK.handleNotification(payload.dictionaryPayload, delegate: self, delegateQueue: nil)
         }
     }
     
+    /**
+     * This delegate method is available on iOS 11 and above. Call the completion handler once the
+     * notification payload is passed to the `TwilioVoice.handleNotification()` method.
+     */
     public func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        print("this is payload",payload);
+//        self.sendPhoneCallEvents(description: "LOG|pushRegistry:didReceiveIncomingPushWithPayload:forType:completion:", isError: false)
         // Save for later when the notification is properly handled.
 //        self.incomingPushCompletionCallback = completion
+
+        print("Twilio Voice: pushRegistry didReceiveIncomingPushWith")
+
+        
         if (type == PKPushType.voIP) {
-            print("this is incoming call");
             TwilioVoiceSDK.handleNotification(payload.dictionaryPayload, delegate: self, delegateQueue: nil)
         }
+        
         if let version = Float(UIDevice.current.systemVersion), version < 13.0 {
             // Save for later when the notification is properly handled.
             self.incomingPushCompletionCallback = completion
@@ -728,39 +794,38 @@ extension SwiftTwilioVoice: PKPushRegistryDelegate {
              * The Voice SDK processes the call notification and returns the call invite synchronously. Report the incoming call to
              * CallKit and fulfill the completion before exiting this callback method.
              */
-            print("version greater than 13")
             completion()
         }
     }
     
     public func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
-        print("Failed to get notificatin Push Registary")
+        print("Twilio Voice: Failed to get notificatin Push Registary")
     }
 }
 
 extension SwiftTwilioVoice: CXProviderDelegate{
     // MARK: CXProviderDelegate
     public func providerDidReset(_ provider: CXProvider) {
-        print("This is CXProviderDelegate DidReset")
+        print("Twilio Voice: This is CXProviderDelegate DidReset")
         audioDevice.isEnabled = false
     }
     
     public func providerDidBegin(_ provider: CXProvider) {
-        print("This is CXProviderDelegate DidBegin")
+        print("Twilio Voice: This is CXProviderDelegate DidBegin")
     }
     
     public func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
-        print("This is CXProviderDelegate isEnabled true")
+        print("Twilio Voice: This is CXProviderDelegate isEnabled true")
         audioDevice.isEnabled = true
     }
     
     public func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
-        print("This is CXProviderDelegate isEnabled false")
+        print("Twilio Voice: This is CXProviderDelegate isEnabled false")
         audioDevice.isEnabled = false
     }
     
     public func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
-        print("This is CXProviderDelegate timedOutPerformingAction")
+        print("Twilio Voice: This is CXProviderDelegate timedOutPerformingAction")
     }
     
     public func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
@@ -771,7 +836,7 @@ extension SwiftTwilioVoice: CXProviderDelegate{
     public func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         self.performAnswerVoiceCall(uuid: action.callUUID) { (success) in
             if success {
-                print("Answer Call Success")
+                print("Twilio Voice: Answer Call Success")
             } else {
                 self.sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(self.activeCall), error: nil)
             }
@@ -818,7 +883,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
     // Call
     
     public func callInviteReceived(callInvite: CallInvite) {
-        print("This is incoming event callDidDisconnect",callInvite.callSid)
+        print("Twilio Voice: This is incoming event",callInvite.callSid)
         activeCallInvite = callInvite
         sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
         reportIncomingCall(from: callInvite.from! as String, uuid: callInvite.uuid)
@@ -829,7 +894,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
     
     
     public func cancelledCallInviteReceived(cancelledCallInvite: CancelledCallInvite,error:Error) {
-        print("this is cancelledCallInviteReceived",error)
+        print("Twilio Voice: this is cancelledCallInviteReceived",error)
         cancelledCallInvites = cancelledCallInvite
         sendEventHandleCall("onCancelledCallInvite", data:Mapper.cancelledCallInviteToDict(cancelledCallInvite),error:nil)
         self.showMissedCallNotification(from: cancelledCallInvite.from, to: cancelledCallInvite.to)
@@ -842,30 +907,50 @@ extension SwiftTwilioVoice: NotificationDelegate{
 
 extension SwiftTwilioVoice: CallDelegate{
     public func callDidReconnect(call: Call) {
-        print("This is outgoing event onReconnected")
-        sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        print("Twilio Voice: This is outgoing event onReconnected")
+        if(direction == "Outgoing"){
+            sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
+        }else {
+            sendEventIncomingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
+        }
     }
          
     public func callDidStartRinging(call: Call) {
-        print("This is outgoing event callDidStartRinging")
-        sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+        print("Twilio Voice: This is outgoing event callDidStartRinging")
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+        }else {
+            sendEventIncomingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+        }
     }
     
     public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
-        print("This is outgoing event callDidReceivedQualityWarning")
-        sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+        print("Twilio Voice: This is outgoing event callDidReceivedQualityWarning")
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+        }else {
+            sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+        }
     }
     
     public func callIsReconnecting(call: Call, error: Error) {
-        print("This is outgoing event callIsIsReconnecting")
-        sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
+        print("Twilio Voice: This is outgoing event callIsIsReconnecting")
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
+        }else {
+            sendEventIncomingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
+        }
     }
     
     
     public func callDidConnect(call: Call) {
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
-            print("This is outgoing event callDidConnect")
+            print("Twilio Voice: This is outgoing event callDidConnect")
             sendEventOutGoingCall("onConnected",data:Mapper.callToDict(call), error: nil)
         }else {
             sendEventIncomingCall("onConnected",data:Mapper.callToDict(call), error: nil)
@@ -873,15 +958,20 @@ extension SwiftTwilioVoice: CallDelegate{
     }
     
     public func callDidFailToConnect(call: Call, error: Error) {
-        print("This is outgoing event callDidFailToConnect")
-        sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
+        print("Twilio Voice: This is outgoing event callDidFailToConnect")
+        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
+        if(direction == "Outgoing"){
+            sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
+        }else {
+            sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
+        }
     }
     
     public func callDidDisconnect(call: Call, error: Error?) {
-        print("This is outgoing event callDidDisconnect")
+        print("Twilio Voice: This is outgoing event callDidDisconnect")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
-            print("This is outgoing event callDidConnect")
+            print("Twilio Voice: This is outgoing event callDidConnect")
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
         }else {
             sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
@@ -900,7 +990,7 @@ extension SwiftTwilioVoice: CallDelegate{
     
     func sendEventOutGoingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
         let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-        print("This is outgoing event",name)
+        print("Twilio Voice: This is outgoing event",name)
         if let outgoingCallEventSink = SwiftTwilioVoice.callOutGoingSink {
             outgoingCallEventSink(eventData)
         }
@@ -909,7 +999,7 @@ extension SwiftTwilioVoice: CallDelegate{
     
     func sendEventHandleCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
         let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-        print("This is handle event",name)
+        print("Twilio Voice: This is handle event",name)
         if let incomingCallEventSink = SwiftTwilioVoice.handleMessageSink {
             incomingCallEventSink(eventData)
         }
@@ -917,7 +1007,7 @@ extension SwiftTwilioVoice: CallDelegate{
     
     func sendEventIncomingCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
         let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]
-        print("This is incoming event",name)
+        print("Twilio Voice: This is incoming event",name)
         if let incomingCallEventSink = SwiftTwilioVoice.callIncomingSink {
             incomingCallEventSink(eventData)
         }

@@ -55,6 +55,8 @@ class Call {
 
 class VoiceClient {
 
+  var customParameters;
+
   /// Stream for the notification events.
   StreamSubscription<dynamic> registrationStream;
 
@@ -421,11 +423,12 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onCallInvite':
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
+        print("this is data onCallInvite $data");
+        var callSid = Platform.isIOS?data['data']['callSid'] as String: data['data']['twi_call_sid'] as String;
+        var to = Platform.isIOS?data['data']['to'] as String: data['data']['twi_to'] as String;
+        var from = Platform.isIOS?data['data']['from'] as String: data['data']['twi_from'] as String;
+        this.customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = this.customParameters['channel_info'] as String;
         temp = temp.replaceAll("'","\"");
         temp = temp.replaceAll("None","null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
@@ -437,6 +440,7 @@ class VoiceClient {
         _onCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCancelledCallInvite':
+        print("this is data onCancelledCallInvite $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -473,6 +477,7 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onConnectFailure':
+        print("this is data onConnectFailure $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -480,6 +485,7 @@ class VoiceClient {
         _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onRinging':
+        print("this is data onRinging $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -489,6 +495,7 @@ class VoiceClient {
         _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted, callSid));
         break;
       case 'onConnected':
+        print("this is data onConnected $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -496,6 +503,7 @@ class VoiceClient {
         _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
+        print("this is data onReconnecting $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -503,6 +511,7 @@ class VoiceClient {
         _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onReconnected':
+        print("this is data onReconnected $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -510,6 +519,7 @@ class VoiceClient {
         _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
+        print("this is data onDisconnected $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -517,6 +527,7 @@ class VoiceClient {
         _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted, null));
         break;
       case 'onCallQualityWarningsChanged':
+        print("this is data onCallQualityWarningsChanged $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
@@ -541,7 +552,8 @@ class VoiceClient {
     switch (eventName)
     {
       case 'onConnectFailure':
-       var callSid = data['data']['twi_call_sid'] as String;
+        print("this is data onConnectFailure $data");
+        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
@@ -552,7 +564,8 @@ class VoiceClient {
         _incomingConnectFailure.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onRinging':
-       var callSid = data['data']['twi_call_sid'] as String;
+        print("this is data onRinging $data");
+        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
@@ -563,18 +576,20 @@ class VoiceClient {
         _incomingRinging.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onConnected':
-      var callSid = data['data']['twi_call_sid'] as String;
+        print("this is data onConnected $data");
+        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
+        var customParameters = this.customParameters;
+        String temp = this.customParameters['channel_info'] as String;
         temp = temp.replaceAll("'","\"");
         temp = temp.replaceAll("None","null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         _incomingConnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnecting':
-      var callSid = data['data']['twi_call_sid'] as String;
+        print("this is data onReconnecting $data");
+        var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
@@ -585,6 +600,7 @@ class VoiceClient {
         _incomingReconnecting.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnected':
+        print("this is data onReconnected $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -596,17 +612,19 @@ class VoiceClient {
         _incomingReconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onDisconnected':
+        print("this is data onDisconnected $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        String temp =Platform.isIOS?"{}": data['data']['customParameters']['channel_info'] as String;
+        temp = Platform.isIOS?"{}": temp.replaceAll("'","\"");
+        temp = Platform.isIOS?"{}": temp.replaceAll("None","null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         _incomingDisconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCallQualityWarningsChanged':
+        print("this is data onCallQualityWarningsChanged $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
