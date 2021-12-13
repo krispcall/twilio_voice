@@ -470,10 +470,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return
         }
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        print("Twilio Voice: Inside Disconnect2")
+        print("Twilio Voice: Inside Disconnect2",direction)
         if(direction == "Incoming"){
             print("Twilio Voice: Inside Disconnect3")
             callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
+        }else{
+                    callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
         }
 
     }
@@ -968,10 +970,10 @@ extension SwiftTwilioVoice: CallDelegate{
     }
     
     public func callDidDisconnect(call: Call, error: Error?) {
-        print("Twilio Voice: This is outgoing event callDidDisconnect")
+        print("Twilio Voice: This is event callDidDisconnect")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
-            print("Twilio Voice: This is outgoing event callDidConnect")
+            print("Twilio Voice: This is outgoing event callDidDisconnect")
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
         }else {
             sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
@@ -982,6 +984,9 @@ extension SwiftTwilioVoice: CallDelegate{
 
             if(direction == "Incoming"){
                 callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
+            }else{
+                callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
+
             }
         }
     }
