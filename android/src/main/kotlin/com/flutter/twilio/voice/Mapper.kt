@@ -26,7 +26,7 @@ object Mapper
         )
     }
 
-    fun callInviteToMap(message: Call): Map<String, Any?> {
+    fun callToMap(message: Call): Map<String, Any?> {
         return mapOf(
                 "callSid" to message.sid,
                 "from" to message.from,
