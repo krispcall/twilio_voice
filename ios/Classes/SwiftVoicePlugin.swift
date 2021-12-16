@@ -247,7 +247,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                                         if let error = error {
                                         print("Twilio Voice: error")
                                         self.sendNotificationEvent("registerForNotification", data: ["result": false], error: error)
-                                        return result( ["result" : true])
+                                        return result( ["result" : false])
                                         }
                                         else {
                                             print ("Successfully Registered accessToken $accessToken fcmToken $fcmToken from registerNotification")
@@ -256,6 +256,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                                         print("Twilio Voice: this is device token", deviceToken)
                                         self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
                                         }
+                                        return result( ["result" : true])
                                     }
                                 }
 

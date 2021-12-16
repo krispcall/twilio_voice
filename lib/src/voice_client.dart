@@ -362,6 +362,7 @@ class VoiceClient {
     try
     {
       final data = await TwilioVoice._methodChannel.invokeMethod('registerForNotification', <String, Object>{'accessToken':accessToken,'token': token});
+      print("this is register for notification data $data");
       return data["result"];
     }
     on PlatformException catch (err)
