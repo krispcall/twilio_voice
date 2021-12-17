@@ -80,6 +80,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         if let callKitIcon = UIImage(named: "logo_white") {
             configuration.iconTemplateImageData = callKitIcon.pngData()
         }
+        configuration.ringtoneSound = "callTone.caf"
         self.voipRegistry = PKPushRegistry.init(queue: DispatchQueue.main)
         callKitProvider = CXProvider(configuration: configuration)
         callKitCallController = CXCallController()
@@ -810,7 +811,7 @@ extension SwiftTwilioVoice: CXProviderDelegate{
     // MARK: CXProviderDelegate
     public func providerDidReset(_ provider: CXProvider) {
         print("Twilio Voice: This is CXProviderDelegate DidReset")
-        audioDevice.isEnabled = false
+//         audioDevice.isEnabled = false
     }
     
     public func providerDidBegin(_ provider: CXProvider) {
@@ -819,12 +820,12 @@ extension SwiftTwilioVoice: CXProviderDelegate{
     
     public func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         print("Twilio Voice: This is CXProviderDelegate isEnabled true")
-        audioDevice.isEnabled = true
+//         audioDevice.isEnabled = true
     }
     
     public func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
         print("Twilio Voice: This is CXProviderDelegate isEnabled false")
-        audioDevice.isEnabled = false
+//         audioDevice.isEnabled = false
     }
     
     public func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
