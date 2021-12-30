@@ -1,7 +1,7 @@
 part of flutter_twilio_voice;
 
+const String TAG = "VoiceClient Flutter";
 
-const String TAG="VoiceClient Flutter";
 class NewMessageNotificationEvent {
   final String channelSid;
 
@@ -9,14 +9,14 @@ class NewMessageNotificationEvent {
 
   final int messageIndex;
 
-  NewMessageNotificationEvent(this.channelSid, this.messageSid, this.messageIndex)
+  NewMessageNotificationEvent(
+      this.channelSid, this.messageSid, this.messageIndex)
       : assert(channelSid != null),
         assert(messageSid != null),
         assert(messageIndex != null);
 }
 
-class NotificationRegistrationEvent
-{
+class NotificationRegistrationEvent {
   final bool isSuccessful;
   final ErrorInfo error;
 
@@ -34,8 +34,8 @@ class CallInvite {
 
   final Map<dynamic, dynamic> channelInfo;
 
-
-  CallInvite(this.callSid, this.to, this.from, this.customParameters, this.channelInfo);
+  CallInvite(this.callSid, this.to, this.from, this.customParameters,
+      this.channelInfo);
 }
 
 class Call {
@@ -54,7 +54,6 @@ class Call {
 //#endregion
 
 class VoiceClient {
-
   var customParameters;
 
   /// Stream for the notification events.
@@ -80,16 +79,14 @@ class VoiceClient {
 
   /// Get [Users] interface.
   /// Get reachability service status.
-  bool get isReachAbilityEnabled{
+  bool get isReachAbilityEnabled {
     return _isReachAbilityEnabled;
   }
   //#endregion
 
   //#region Channel events
 
-
   /// Called when one of the channel of the current user is deleted.
-
 
   /// Called when the current user was invited to a channel, channel status is [ChannelStatus.INVITED].
 
@@ -98,7 +95,6 @@ class VoiceClient {
   /// Called when channel synchronization status changed.
   ///
   /// Use [Channel.synchronizationStatus] to obtain new channel status.
-
 
   /// Called when the channel is updated.
   ///
@@ -131,55 +127,70 @@ class VoiceClient {
   Stream<void> onTokenAboutToExpire;
 
   Stream<CallInvite> onCallInvite;
-  StreamController<CallInvite> _onCallInvite = StreamController<CallInvite>.broadcast();
+  StreamController<CallInvite> _onCallInvite =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> onCancelledCallInvite;
-  final StreamController<CallInvite> _onCancelledCallInvite = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _onCancelledCallInvite =
+      StreamController<CallInvite>.broadcast();
 
   //OUtGoing
   Stream<Call> outGoingCallConnectFailure;
-  final StreamController<Call> _outGoingCallConnectFailure = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallConnectFailure =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallRinging;
-  final StreamController<Call> _outGoingCallRinging = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallRinging =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallConnected;
-  final StreamController<Call> _outGoingCallConnected = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallConnected =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallReconnecting;
-  final StreamController<Call> _outGoingCallReconnecting = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallReconnecting =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallReconnected;
-  final StreamController<Call> _outGoingCallReconnected = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallReconnected =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallDisconnected;
-  final StreamController<Call> _outGoingCallDisconnected = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallDisconnected =
+      StreamController<Call>.broadcast();
 
   Stream<Call> outGoingCallCallQualityWarningsChanged;
-  final StreamController<Call> _outGoingCallCallQualityWarningsChanged = StreamController<Call>.broadcast();
+  final StreamController<Call> _outGoingCallCallQualityWarningsChanged =
+      StreamController<Call>.broadcast();
 
   //Incoming
   Stream<CallInvite> incomingConnectFailure;
-  final StreamController<CallInvite> _incomingConnectFailure = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingConnectFailure =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingRinging;
-  final StreamController<CallInvite> _incomingRinging = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingRinging =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingConnected;
-  final StreamController<CallInvite> _incomingConnected = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingConnected =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingReconnecting;
-  final StreamController<CallInvite> _incomingReconnecting = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingReconnecting =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingReconnected;
-  final StreamController<CallInvite> _incomingReconnected = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingReconnected =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingDisconnected;
-  final StreamController<CallInvite> _incomingDisconnected = StreamController<CallInvite>.broadcast();
+  final StreamController<CallInvite> _incomingDisconnected =
+      StreamController<CallInvite>.broadcast();
 
   Stream<CallInvite> incomingCallQualityWarningsChanged;
-  final StreamController<CallInvite> _incomingCallQualityWarningsChanged = StreamController<CallInvite>.broadcast();
-
+  final StreamController<CallInvite> _incomingCallQualityWarningsChanged =
+      StreamController<CallInvite>.broadcast();
 
   /// Called when token has expired.
   ///
@@ -191,30 +202,31 @@ class VoiceClient {
 
   /// Called when a user is subscribed to and will receive realtime state updates.
 
-
   /// Called when a user is unsubscribed from and will not receive realtime state updates anymore.
-
 
   /// Called when user info is updated for currently loaded users.
 
-  final StreamController<NotificationRegistrationEvent> _onNotificationRegisteredCtrl = StreamController<NotificationRegistrationEvent>.broadcast();
+  final StreamController<NotificationRegistrationEvent>
+      _onNotificationRegisteredCtrl =
+      StreamController<NotificationRegistrationEvent>.broadcast();
 
   /// Called when attempt to register device for notifications has completed.
   Stream<NotificationRegistrationEvent> onNotificationRegistered;
 
-  final StreamController<NotificationRegistrationEvent> _onNotificationDeregisteredCtrl = StreamController<NotificationRegistrationEvent>.broadcast();
+  final StreamController<NotificationRegistrationEvent>
+      _onNotificationDeregisteredCtrl =
+      StreamController<NotificationRegistrationEvent>.broadcast();
 
   /// Called when attempt to register device for notifications has completed.
   Stream<NotificationRegistrationEvent> onNotificationDeregistered;
   //#endregion
 
-  VoiceClient(this.accessToken) : assert(accessToken != null)
-  {
+  VoiceClient(this.accessToken) : assert(accessToken != null) {
     onNotificationRegistered = _onNotificationRegisteredCtrl.stream;
     onNotificationDeregistered = _onNotificationDeregisteredCtrl.stream;
 
-    onCallInvite=_onCallInvite.stream;
-    onCancelledCallInvite=_onCancelledCallInvite.stream;
+    onCallInvite = _onCallInvite.stream;
+    onCancelledCallInvite = _onCancelledCallInvite.stream;
 
     //OutGoing
     outGoingCallConnectFailure = _outGoingCallConnectFailure.stream;
@@ -223,7 +235,8 @@ class VoiceClient {
     outGoingCallReconnecting = _outGoingCallReconnecting.stream;
     outGoingCallReconnected = _outGoingCallReconnected.stream;
     outGoingCallDisconnected = _outGoingCallDisconnected.stream;
-    outGoingCallCallQualityWarningsChanged = _outGoingCallCallQualityWarningsChanged.stream;
+    outGoingCallCallQualityWarningsChanged =
+        _outGoingCallCallQualityWarningsChanged.stream;
 
     //Incoming
     incomingConnectFailure = _incomingConnectFailure.stream;
@@ -232,17 +245,25 @@ class VoiceClient {
     incomingReconnecting = _incomingReconnecting.stream;
     incomingReconnected = _incomingReconnected.stream;
     incomingDisconnected = _incomingDisconnected.stream;
-    incomingCallQualityWarningsChanged = _incomingCallQualityWarningsChanged.stream;
+    incomingCallQualityWarningsChanged =
+        _incomingCallQualityWarningsChanged.stream;
 
-    registrationStream = TwilioVoice.registrationChannel.receiveBroadcastStream(0).listen(_parseNotificationEvents);
-    handleMessageStream = TwilioVoice.handleMessageChannel.receiveBroadcastStream(0).listen(_parseHandleMessage);
-    callOutGoingStream = TwilioVoice.callOutGoingChannel.receiveBroadcastStream(0).listen(_parseOutGoingCallEvent);
-    callIncomingStream = TwilioVoice.callIncomingChannel.receiveBroadcastStream(0).listen(_parseIncomingCallEvents);
+    registrationStream = TwilioVoice.registrationChannel
+        .receiveBroadcastStream(0)
+        .listen(_parseNotificationEvents);
+    handleMessageStream = TwilioVoice.handleMessageChannel
+        .receiveBroadcastStream(0)
+        .listen(_parseHandleMessage);
+    callOutGoingStream = TwilioVoice.callOutGoingChannel
+        .receiveBroadcastStream(0)
+        .listen(_parseOutGoingCallEvent);
+    callIncomingStream = TwilioVoice.callIncomingChannel
+        .receiveBroadcastStream(0)
+        .listen(_parseIncomingCallEvents);
   }
 
   /// Construct from a map.
-  factory VoiceClient._fromMap(Map<String, dynamic> map)
-  {
+  factory VoiceClient._fromMap(Map<String, dynamic> map) {
     var chatClient = VoiceClient(map['accessToken']);
     return chatClient;
   }
@@ -251,7 +272,8 @@ class VoiceClient {
   /// Method to update the authentication token for this client.
   Future<void> updateToken(String token) async {
     try {
-      return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#updateToken', <String, Object>{'token': token});
+      return await TwilioVoice._methodChannel.invokeMethod(
+          'VoiceClient#updateToken', <String, Object>{'token': token});
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
@@ -260,32 +282,47 @@ class VoiceClient {
   /// Cleanly shuts down the messaging client when you are done with it.
   ///
   /// It will dispose() the client after shutdown, so it could not be reused.
-  Future<void> shutdown() async
-  {
-    try
-    {
+  Future<void> shutdown() async {
+    try {
       await registrationStream.cancel();
       await handleMessageStream.cancel();
       await callOutGoingStream.cancel();
       await callIncomingStream.cancel();
       TwilioVoice.voiceClient = null;
-      return await TwilioVoice._methodChannel.invokeMethod('VoiceClient#shutdown', null);
+      return await TwilioVoice._methodChannel
+          .invokeMethod('VoiceClient#shutdown', null);
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  Future<void> makeCall(String accessToken,String from,String to,String displayName) async {
+  Future<void> makeCall(
+      String accessToken, String from, String to, String displayName) async {
     try {
-      await TwilioVoice._methodChannel.invokeMethod('makeCall', <String, Object>{'To': to,'from':from,'accessToken':accessToken,'displayName':displayName});
+      await TwilioVoice._methodChannel.invokeMethod(
+          'makeCall', <String, Object>{
+        'To': to,
+        'from': from,
+        'accessToken': accessToken,
+        'displayName': displayName
+      });
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  Future<void> makeCallWithSid(String to,String from,String workspaceSid,String channelSid,String agentId,String token) async {
+  Future<void> makeCallWithSid(String to, String from, String workspaceSid,
+      String channelSid, String agentId, String token) async {
     try {
-      await TwilioVoice._methodChannel.invokeMethod('makeCallWithSid', <String, Object>{'To': to,'from':from,'workspaceSid':workspaceSid, 'channelSid':channelSid, 'agentId':agentId, 'accessToken':token});
+      await TwilioVoice._methodChannel
+          .invokeMethod('makeCallWithSid', <String, Object>{
+        'To': to,
+        'from': from,
+        'workspaceSid': workspaceSid,
+        'channelSid': channelSid,
+        'agentId': agentId,
+        'accessToken': token
+      });
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
@@ -331,131 +368,139 @@ class VoiceClient {
     }
   }
 
-  Future<dynamic> handleMessage(Map<String, dynamic> message) async
-  {
-    try
-    {
+  Future<dynamic> handleMessage(Map<String, dynamic> message) async {
+    try {
       final args = {'notification': message['data']};
-      final data = await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
+      final data =
+          await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
       return data["result"];
-    }
-    on PlatformException catch (err)
-    {
+    } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  Future<void> sendDigit(String digit) async
-  {
-    try
-    {
-      await TwilioVoice._methodChannel.invokeMethod('sendDigit', <String, Object>{'digit': digit});
-    }
-    on PlatformException catch (err)
-    {
+  Future<void> sendDigit(String digit) async {
+    try {
+      await TwilioVoice._methodChannel
+          .invokeMethod('sendDigit', <String, Object>{'digit': digit});
+    } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  Future<bool> registerForNotification(String accessToken,String token) async
-  {
-    try
-    {
-      final data = await TwilioVoice._methodChannel.invokeMethod('registerForNotification', <String, Object>{'accessToken':accessToken,'token': token});
+  Future<bool> registerForNotification(String accessToken, String token) async {
+    try {
+      final data = await TwilioVoice._methodChannel.invokeMethod(
+          'registerForNotification',
+          <String, Object>{'accessToken': accessToken, 'token': token});
       print("this is register for notification data $data");
       return data["result"];
-    }
-    on PlatformException catch (err)
-    {
+    } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-
-  Future<bool> unregisterForNotification(String accessToken,String token) async
-  {
-    try
-    {
-      final data = await TwilioVoice._methodChannel.invokeMethod('unregisterForNotification', <String, Object>{'accessToken':accessToken,'token': token});
+  Future<bool> unregisterForNotification(
+      String accessToken, String token) async {
+    try {
+      final data = await TwilioVoice._methodChannel.invokeMethod(
+          'unregisterForNotification',
+          <String, Object>{'accessToken': accessToken, 'token': token});
       return data["result"];
-    }
-    on PlatformException catch (err)
-    {
+    } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
   }
 
-  void _parseNotificationEvents(dynamic event)
-  {
-    final String eventName = event['name'];
-    final data = Map<String, dynamic>.from(event['data']);
-
-    ErrorInfo exception;
-    if (event['error'] != null)
-    {
-      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
-    }
-
-    switch (eventName)
-    {
-      case 'registerForNotification':
-        _onNotificationRegisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
-        break;
-      case 'unregisterForNotification':
-        _onNotificationDeregisteredCtrl.add(NotificationRegistrationEvent(data['result'], exception));
-        break;
-      default:
-        break;
-    }
-  }
-
-  void _parseHandleMessage(dynamic event)
-  {
+  void _parseNotificationEvents(dynamic event) {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
     if (event['error'] != null) {
-      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+      final errorMap =
+          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
+          errorMap['status'] as int);
     }
 
-    switch (eventName)
-    {
+    switch (eventName) {
+      case 'registerForNotification':
+        _onNotificationRegisteredCtrl
+            .add(NotificationRegistrationEvent(data['result'], exception));
+        break;
+      case 'unregisterForNotification':
+        _onNotificationDeregisteredCtrl
+            .add(NotificationRegistrationEvent(data['result'], exception));
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _parseHandleMessage(dynamic event) {
+    final String eventName = event['name'];
+    final data = Map<String, dynamic>.from(event['data']);
+
+    ErrorInfo exception;
+    if (event['error'] != null) {
+      final errorMap =
+          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
+          errorMap['status'] as int);
+    }
+
+    switch (eventName) {
       case 'onCallInvite':
         print("this is data onCallInvite $data");
-        var callSid = Platform.isIOS?data['data']['callSid'] as String: data['data']['twi_call_sid'] as String;
-        var to = Platform.isIOS?data['data']['to'] as String: data['data']['twi_to'] as String;
-        var from = Platform.isIOS?data['data']['from'] as String: data['data']['twi_from'] as String;
-        this.customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = Platform.isIOS
+            ? data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] as String;
+        var to = Platform.isIOS
+            ? data['data']['to'] as String
+            : data['data']['twi_to'] as String;
+        var from = Platform.isIOS
+            ? data['data']['from'] as String
+            : data['data']['twi_from'] as String;
+        this.customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
         String temp = this.customParameters['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _onCallInvite
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCancelledCallInvite':
         print("this is data onCancelledCallInvite $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var callSid = Platform.isIOS
+            ? data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] as String;
+        var to = Platform.isIOS
+            ? data['data']['to'] as String
+            : data['data']['twi_to'] as String;
+        var from = Platform.isIOS
+            ? data['data']['from'] as String
+            : data['data']['twi_from'] as String;
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCancelledCallInvite.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _onCancelledCallInvite
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
 
       default:
@@ -463,27 +508,27 @@ class VoiceClient {
     }
   }
 
-  void _parseOutGoingCallEvent(dynamic event)
-  {
+  void _parseOutGoingCallEvent(dynamic event) {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
 
     ErrorInfo exception;
-    if (event['error'] != null)
-    {
-      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+    if (event['error'] != null) {
+      final errorMap =
+          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'] ?? "",
+          errorMap['status'] ?? 403);
     }
 
-    switch (eventName)
-    {
+    switch (eventName) {
       case 'onConnectFailure':
         print("this is data onConnectFailure $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallConnectFailure.add(Call(to,from,isOnHold, isMuted, null));
+        _outGoingCallConnectFailure
+            .add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onRinging':
         print("this is data onRinging $data");
@@ -493,7 +538,7 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] as bool;
         var callSid = data['data']['callSid'] as String;
 
-        _outGoingCallRinging.add(Call(to,from,isOnHold, isMuted, callSid));
+        _outGoingCallRinging.add(Call(to, from, isOnHold, isMuted, callSid));
         break;
       case 'onConnected':
         print("this is data onConnected $data");
@@ -501,7 +546,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallConnected.add(Call(to,from,isOnHold, isMuted, null));
+        _outGoingCallConnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
@@ -509,7 +554,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallReconnecting.add(Call(to,from,isOnHold, isMuted, null));
+        _outGoingCallReconnecting.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
@@ -517,7 +562,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallReconnected.add(Call(to,from,isOnHold, isMuted, null));
+        _outGoingCallReconnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
         print("this is data onDisconnected $data");
@@ -525,7 +570,7 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallDisconnected.add(Call(to,from,isOnHold, isMuted, null));
+        _outGoingCallDisconnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onCallQualityWarningsChanged':
         print("this is data onCallQualityWarningsChanged $data");
@@ -533,7 +578,8 @@ class VoiceClient {
         var from = data['data']['from'] as String;
         var isOnHold = data['data']['isOnHold'] as bool;
         var isMuted = data['data']['isMuted'] as bool;
-        _outGoingCallCallQualityWarningsChanged.add(Call(to,from,isOnHold, isMuted,null));
+        _outGoingCallCallQualityWarningsChanged
+            .add(Call(to, from, isOnHold, isMuted, null));
         break;
       default:
         break;
@@ -546,35 +592,42 @@ class VoiceClient {
 
     ErrorInfo exception;
     if (event['error'] != null) {
-      final errorMap = Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], errorMap['status'] as int);
+      final errorMap =
+          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
+          errorMap['status'] as int);
     }
 
-    switch (eventName)
-    {
+    switch (eventName) {
       case 'onConnectFailure':
         print("this is data onConnectFailure $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingConnectFailure.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingConnectFailure
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onRinging':
         print("this is data onRinging $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingRinging.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingRinging
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onConnected':
         print("this is data onConnected $data");
@@ -583,58 +636,73 @@ class VoiceClient {
         var from = data['data']['twi_from'] as String;
         var customParameters = this.customParameters;
         String temp = this.customParameters['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingConnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingConnected
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingReconnecting.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingReconnecting
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingReconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingReconnected
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onDisconnected':
         print("this is data onDisconnected $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp =Platform.isIOS?"{}": data['data']['customParameters']['channel_info'] as String;
-        temp = Platform.isIOS?"{}": temp.replaceAll("'","\"");
-        temp = Platform.isIOS?"{}": temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = Platform.isIOS
+            ? "{}"
+            : data['data']['customParameters']['channel_info'] as String;
+        temp = Platform.isIOS ? "{}" : temp.replaceAll("'", "\"");
+        temp = Platform.isIOS ? "{}" : temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingDisconnected.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingDisconnected
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCallQualityWarningsChanged':
         print("this is data onCallQualityWarningsChanged $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
-        var customParameters = data['data']['customParameters'] as Map<dynamic, dynamic>;
-        String temp = data['data']['customParameters']['channel_info'] as String;
-        temp = temp.replaceAll("'","\"");
-        temp = temp.replaceAll("None","null");
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp = Platform.isIOS
+            ? "{}"
+            : data['data']['customParameters']['channel_info'] as String;
+        temp = Platform.isIOS ? "{}" : temp.replaceAll("'", "\"");
+        temp = Platform.isIOS ? "{}" : temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
-        _incomingCallQualityWarningsChanged.add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingCallQualityWarningsChanged
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       default:
         break;

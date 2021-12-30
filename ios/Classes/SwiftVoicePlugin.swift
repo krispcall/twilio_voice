@@ -912,40 +912,44 @@ extension SwiftTwilioVoice: NotificationDelegate{
 extension SwiftTwilioVoice: CallDelegate{
     public func callDidReconnect(call: Call) {
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        print("Twilio Voice: This is outgoing event onReconnected")
         if(direction == "Outgoing"){
+                print("Twilio Voice: This is outgoing event onReconnected")
             sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
         }else {
+                print("Twilio Voice: This is incoming event onReconnected")
             sendEventIncomingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
         }
     }
          
     public func callDidStartRinging(call: Call) {
-        print("Twilio Voice: This is outgoing event callDidStartRinging")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
+        print("Twilio Voice: This is outgoing event callDidStartRinging")
             sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
         }else {
+        print("Twilio Voice: This is incoming event callDidStartRinging")
             sendEventIncomingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
         }
     }
     
     public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
-        print("Twilio Voice: This is outgoing event callDidReceivedQualityWarning")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
+        print("Twilio Voice: This is outgoing event callDidReceivedQualityWarning")
             sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
         }else {
+        print("Twilio Voice: This is incoming event callDidReceivedQualityWarning")
             sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
         }
     }
     
     public func callIsReconnecting(call: Call, error: Error) {
-        print("Twilio Voice: This is outgoing event callIsIsReconnecting")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
+        print("Twilio Voice: This is outgoing event callIsIsReconnecting")
             sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
         }else {
+        print("Twilio Voice: This is outgoing event callIsIsReconnecting")
             sendEventIncomingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
         }
     }
@@ -957,16 +961,18 @@ extension SwiftTwilioVoice: CallDelegate{
             print("Twilio Voice: This is outgoing event callDidConnect")
             sendEventOutGoingCall("onConnected",data:Mapper.callToDict(call), error: nil)
         }else {
+        print("Twilio Voice: This is incoming event callDidConnect")
             sendEventIncomingCall("onConnected",data:Mapper.callToDict(call), error: nil)
         }
     }
     
     public func callDidFailToConnect(call: Call, error: Error) {
-        print("Twilio Voice: This is outgoing event callDidFailToConnect")
         let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
         if(direction == "Outgoing"){
+        print("Twilio Voice: This is outgoing event callDidFailToConnect")
             sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
         }else {
+        print("Twilio Voice: This is incoming event callDidFailToConnect")
             sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
         }
     }
@@ -978,6 +984,7 @@ extension SwiftTwilioVoice: CallDelegate{
             print("Twilio Voice: This is outgoing event callDidDisconnect")
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
         }else {
+        print("Twilio Voice: This is incoming event callDidDisconnect")
             sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
             guard let id = activeCall?.uuid else {
                 return
