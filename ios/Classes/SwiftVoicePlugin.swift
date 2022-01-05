@@ -901,7 +901,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
         print("Twilio Voice: this is cancelledCallInviteReceived",error)
         cancelledCallInvites = cancelledCallInvite
         sendEventHandleCall("onCancelledCallInvite", data:Mapper.cancelledCallInviteToDict(cancelledCallInvite),error:nil)
-        self.showMissedCallNotification(from: cancelledCallInvite.from, to: cancelledCallInvite.to)
+//         self.showMissedCallNotification(from: cancelledCallInvite.from, to: cancelledCallInvite.to)
         if let ci = self.activeCallInvite {
             performEndCallAction(uuid: ci.uuid)
         }
