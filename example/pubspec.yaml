@@ -16,7 +16,7 @@ dependencies:
   cached_network_image: 3.0.0
   flutter_cache_manager: 3.0.2
   http: 0.13.3
-  provider: 6.0.0
+  provider: 6.0.1
   internet_connection_checker: ^0.0.1
   easy_dynamic_theme: ^2.2.0
   sembast: 3.0.2
@@ -29,8 +29,7 @@ dependencies:
   package_info: 2.0.0
   fluttertoast: 8.0.7
   permission_handler: 7.1.0
-  flutter_incall: 1.0.0
-  shared_preferences: 2.0.5
+  shared_preferences: 2.0.9
   firebase_core: ^1.3.0
   azlistview: 1.1.1
   lpinyin: 2.0.3
@@ -70,7 +69,19 @@ dependencies:
   flutter_libphonenumber: ^1.2.0
   intl_phone_number_input: ^0.7.0+2
   fcm_unrealistic_heartbeat: ^0.0.3
+  device_preview: ^1.0.0
+  android_alarm_manager_plus: ^1.2.0
+  contacts_service: ^0.6.3
+  intercom_flutter: ^5.2.0
+  shimmer: ^2.0.0
+  sliding_up_panel: ^2.0.0+1
+  percent_indicator: ^2.1.7+2
+  encrypt: ^5.0.1
 
+  flutter_incall_manager:
+    git:
+      url: https://gitlab.com/dristisushan/flutter-incall-manager
+      ref: main
 
   flutter_stetho:
     git:
@@ -78,9 +89,9 @@ dependencies:
       ref: master
 
   voice:
-    git:
-      url: git://github.com/JoshanTandukar/twilio_voice.git
-#      path: ../twilio_voice
+    path: ../
+#    git:
+#      url: git://github.com/JoshanTandukar/twilio_voice.git
 
 
   audio_manager:
@@ -89,8 +100,8 @@ dependencies:
 
   awesome_notifications:
     git:
-      url: git://github.com/JoshanTandukar/android.git
-      ref: fork
+      url: https://gitlab.com/dristisushan/awesome_notification
+      ref: main
 
 dev_dependencies:
   flutter_test:
@@ -113,264 +124,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/audio/beep.mp3
+    - assets/audio/chime.mp3
+    - assets/audio/sms.mp3
+    - assets/audio/tone.mp3
     - assets/audio/incoming.wav
-    - assets/audio/new_sms.mp3
-    - assets/flags/ad.png
-    - assets/flags/ae.png
-    - assets/flags/af.png
-    - assets/flags/ag.png
-    - assets/flags/ai.png
-    - assets/flags/al.png
-    - assets/flags/am.png
-    - assets/flags/an.png
-    - assets/flags/ao.png
-    - assets/flags/aq.png
-    - assets/flags/ar.png
-    - assets/flags/as.png
-    - assets/flags/at.png
-    - assets/flags/au.png
-    - assets/flags/aw.png
-    - assets/flags/ax.png
-    - assets/flags/az.png
-    - assets/flags/ba.png
-    - assets/flags/bb.png
-    - assets/flags/bd.png
-    - assets/flags/be.png
-    - assets/flags/bf.png
-    - assets/flags/bg.png
-    - assets/flags/bh.png
-    - assets/flags/bi.png
-    - assets/flags/bj.png
-    - assets/flags/bl.png
-    - assets/flags/bm.png
-    - assets/flags/bn.png
-    - assets/flags/bo.png
-    - assets/flags/bq.png
-    - assets/flags/br.png
-    - assets/flags/bs.png
-    - assets/flags/bt.png
-    - assets/flags/bv.png
-    - assets/flags/bw.png
-    - assets/flags/by.png
-    - assets/flags/bz.png
-    - assets/flags/ca.png
-    - assets/flags/cc.png
-    - assets/flags/cd.png
-    - assets/flags/cf.png
-    - assets/flags/cg.png
-    - assets/flags/ch.png
-    - assets/flags/ci.png
-    - assets/flags/ck.png
-    - assets/flags/cl.png
-    - assets/flags/cm.png
-    - assets/flags/cn.png
-    - assets/flags/co.png
-    - assets/flags/cr.png
-    - assets/flags/cu.png
-    - assets/flags/cv.png
-    - assets/flags/cw.png
-    - assets/flags/cx.png
-    - assets/flags/cy.png
-    - assets/flags/cz.png
-    - assets/flags/de.png
-    - assets/flags/dj.png
-    - assets/flags/dk.png
-    - assets/flags/dm.png
-    - assets/flags/do.png
-    - assets/flags/dz.png
-    - assets/flags/ec.png
-    - assets/flags/ee.png
-    - assets/flags/eg.png
-    - assets/flags/eh.png
-    - assets/flags/er.png
-    - assets/flags/es.png
-    - assets/flags/et.png
-    - assets/flags/eu.png
-    - assets/flags/fi.png
-    - assets/flags/fj.png
-    - assets/flags/fk.png
-    - assets/flags/fm.png
-    - assets/flags/fo.png
-    - assets/flags/fr.png
-    - assets/flags/ga.png
-    - assets/flags/gb-eng.png
-    - assets/flags/gb-nir.png
-    - assets/flags/gb-sct.png
-    - assets/flags/gb-wls.png
-    - assets/flags/gb.png
-    - assets/flags/gd.png
-    - assets/flags/ge.png
-    - assets/flags/gf.png
-    - assets/flags/gg.png
-    - assets/flags/gh.png
-    - assets/flags/gi.png
-    - assets/flags/gl.png
-    - assets/flags/gm.png
-    - assets/flags/gn.png
-    - assets/flags/gp.png
-    - assets/flags/gq.png
-    - assets/flags/gr.png
-    - assets/flags/gs.png
-    - assets/flags/gt.png
-    - assets/flags/gu.png
-    - assets/flags/gw.png
-    - assets/flags/gy.png
-    - assets/flags/hk.png
-    - assets/flags/hm.png
-    - assets/flags/hn.png
-    - assets/flags/hr.png
-    - assets/flags/ht.png
-    - assets/flags/hu.png
-    - assets/flags/id.png
-    - assets/flags/ie.png
-    - assets/flags/il.png
-    - assets/flags/im.png
-    - assets/flags/in.png
-    - assets/flags/io.png
-    - assets/flags/iq.png
-    - assets/flags/ir.png
-    - assets/flags/is.png
-    - assets/flags/it.png
-    - assets/flags/je.png
-    - assets/flags/jm.png
-    - assets/flags/jo.png
-    - assets/flags/jp.png
-    - assets/flags/ke.png
-    - assets/flags/kg.png
-    - assets/flags/kh.png
-    - assets/flags/ki.png
-    - assets/flags/km.png
-    - assets/flags/kn.png
-    - assets/flags/kp.png
-    - assets/flags/kr.png
-    - assets/flags/kw.png
-    - assets/flags/ky.png
-    - assets/flags/kz.png
-    - assets/flags/la.png
-    - assets/flags/lb.png
-    - assets/flags/lc.png
-    - assets/flags/li.png
-    - assets/flags/lk.png
-    - assets/flags/lr.png
-    - assets/flags/ls.png
-    - assets/flags/lt.png
-    - assets/flags/lu.png
-    - assets/flags/lv.png
-    - assets/flags/ly.png
-    - assets/flags/ma.png
-    - assets/flags/mc.png
-    - assets/flags/md.png
-    - assets/flags/me.png
-    - assets/flags/mf.png
-    - assets/flags/mg.png
-    - assets/flags/mh.png
-    - assets/flags/mk.png
-    - assets/flags/ml.png
-    - assets/flags/mm.png
-    - assets/flags/mn.png
-    - assets/flags/mo.png
-    - assets/flags/mp.png
-    - assets/flags/mq.png
-    - assets/flags/mr.png
-    - assets/flags/ms.png
-    - assets/flags/mt.png
-    - assets/flags/mu.png
-    - assets/flags/mv.png
-    - assets/flags/mw.png
-    - assets/flags/mx.png
-    - assets/flags/my.png
-    - assets/flags/mz.png
-    - assets/flags/na.png
-    - assets/flags/nc.png
-    - assets/flags/ne.png
-    - assets/flags/nf.png
-    - assets/flags/ng.png
-    - assets/flags/ni.png
-    - assets/flags/nl.png
-    - assets/flags/no.png
-    - assets/flags/np.png
-    - assets/flags/nr.png
-    - assets/flags/nu.png
-    - assets/flags/nz.png
-    - assets/flags/om.png
-    - assets/flags/pa.png
-    - assets/flags/pe.png
-    - assets/flags/pf.png
-    - assets/flags/pg.png
-    - assets/flags/ph.png
-    - assets/flags/pk.png
-    - assets/flags/pl.png
-    - assets/flags/pm.png
-    - assets/flags/pn.png
-    - assets/flags/pr.png
-    - assets/flags/ps.png
-    - assets/flags/pt.png
-    - assets/flags/pw.png
-    - assets/flags/py.png
-    - assets/flags/qa.png
-    - assets/flags/re.png
-    - assets/flags/ro.png
-    - assets/flags/rs.png
-    - assets/flags/ru.png
-    - assets/flags/rw.png
-    - assets/flags/sa.png
-    - assets/flags/sb.png
-    - assets/flags/sc.png
-    - assets/flags/sd.png
-    - assets/flags/se.png
-    - assets/flags/sg.png
-    - assets/flags/sh.png
-    - assets/flags/si.png
-    - assets/flags/sj.png
-    - assets/flags/sk.png
-    - assets/flags/sl.png
-    - assets/flags/sm.png
-    - assets/flags/sn.png
-    - assets/flags/so.png
-    - assets/flags/sr.png
-    - assets/flags/ss.png
-    - assets/flags/st.png
-    - assets/flags/sv.png
-    - assets/flags/sx.png
-    - assets/flags/sy.png
-    - assets/flags/sz.png
-    - assets/flags/tc.png
-    - assets/flags/td.png
-    - assets/flags/tf.png
-    - assets/flags/tg.png
-    - assets/flags/th.png
-    - assets/flags/tj.png
-    - assets/flags/tk.png
-    - assets/flags/tl.png
-    - assets/flags/tm.png
-    - assets/flags/tn.png
-    - assets/flags/to.png
-    - assets/flags/tr.png
-    - assets/flags/tt.png
-    - assets/flags/tv.png
-    - assets/flags/tw.png
-    - assets/flags/tz.png
-    - assets/flags/ua.png
-    - assets/flags/ug.png
-    - assets/flags/um.png
-    - assets/flags/us.png
-    - assets/flags/uy.png
-    - assets/flags/uz.png
-    - assets/flags/va.png
-    - assets/flags/vc.png
-    - assets/flags/ve.png
-    - assets/flags/vg.png
-    - assets/flags/vi.png
-    - assets/flags/vn.png
-    - assets/flags/vu.png
-    - assets/flags/wf.png
-    - assets/flags/ws.png
-    - assets/flags/xk.png
-    - assets/flags/ye.png
-    - assets/flags/yt.png
-    - assets/flags/za.png
-    - assets/flags/zm.png
-    - assets/flags/zw.png
     - assets/fonts/CustomIcon.ttf
     - assets/fonts/Heebo-Black.ttf
     - assets/fonts/Heebo-Bold.ttf
@@ -398,20 +155,31 @@ flutter:
     - assets/images/empty_numbers.png
     - assets/images/empty_tags.png
     - assets/images/empty_teams.png
-    - assets/images/girl_background.png
-    - assets/images/icon_admin_setting.svg
+    - assets/images/get_started.png
     - assets/images/icon_call.svg
+    - assets/images/icon_switch.png
     - assets/images/image_credit.png
     - assets/images/invitation.png
     - assets/images/logo.png
-    - assets/images/logoText.png
-    - assets/images/member_setting_icon.svg
+    - assets/images/logo_maincolor.png
     - assets/images/no_conversation.png
+    - assets/images/no_internet.png
+    - assets/images/no_internet_icon.svg
     - assets/images/no_recording.svg
+    - assets/images/workspace.svg
     - assets/images/private_number.png
     - assets/images/smartphone.png
-    - assets/images/splash.png
+    - assets/images/icon_password_link.png
+    - assets/images/icon_cart.png
+    - assets/images/icon_no_search_results.png
+    - assets/images/image_card.png
+    - assets/images/icon_emergency.png
+    - assets/images/
+    - assets/langs/da-DK.json
+    - assets/langs/de-DE.json
     - assets/langs/en-US.json
+    - assets/langs/es-ES.json
+    - assets/langs/fr-FR.json
   fonts:
     - family: HeeboRegular
       fonts:
