@@ -42,7 +42,7 @@
               "client_id": "736681501686-399j1sd5c13lrs8bc5t4pu6v7ouph65v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.krispcall.voice_example"
+                "bundle_id": "com.krispcall.mvp"
               }
             }
           ]

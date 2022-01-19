@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp
 import io.flutter.app.FlutterApplication
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.view.FlutterMain
+import com.facebook.stetho.Stetho
 
 class Application : FlutterApplication(), PluginRegistry.PluginRegistrantCallback {
 
@@ -18,6 +19,8 @@ class Application : FlutterApplication(), PluginRegistry.PluginRegistrantCallbac
         FirebaseApp.initializeApp(this)
         FlutterMain.startInitialization(this)
         context = applicationContext
+        Stetho.initializeWithDefaults(this)
+
     }
 
     override fun registerWith(registry: PluginRegistry?) {
