@@ -430,12 +430,6 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     public func disConnect(){
         print("Twilio Voice: Inside Disconnect")
-        if(self.callOutgoing){
-            self.callOutgoing = true;
-        }else{
-            self.callOutgoing = false;
-        }
-        
         activeCall?.disconnect()
         guard let id = activeCall?.uuid else {
             return
@@ -808,7 +802,6 @@ extension SwiftTwilioVoice: CXProviderDelegate{
             self.activeCallInvite?.reject()
             self.activeCallInvite = nil
         }else if let call = self.activeCall {
-            callOutgoing = true;
             call.disconnect()
         }
         action.fulfill()
@@ -932,20 +925,14 @@ extension SwiftTwilioVoice: CallDelegate{
         if(direction == "Outgoing"){
             print("Twilio Voice: This is outgoing event callDidDisconnect")
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
+            self.callOutgoing = false;
         }else {
             print("Twilio Voice: This is incoming event callDidDisconnect")
             sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
             guard let id = activeCall?.uuid else {
                 return
             }
-            let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-            
-            if(direction == "Incoming"){
-                callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
-            }else{
-                callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
-                
-            }
+            callKitProvider.reportCall(with: id, endedAt: Date(), reason: .answeredElsewhere)
         }
     }
     
