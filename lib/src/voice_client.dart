@@ -38,6 +38,12 @@ class CallInvite {
       this.channelInfo);
 }
 
+class AnswerCall {
+  final String answerCall;
+
+  AnswerCall(this.answerCall);
+}
+
 class Call {
   final String callSid;
 
@@ -134,6 +140,10 @@ class VoiceClient {
   final StreamController<CallInvite> _onCancelledCallInvite =
       StreamController<CallInvite>.broadcast();
 
+  Stream<CallInvite> onAnswerCall;
+  final StreamController<CallInvite> _onAnswerCall =
+      StreamController<CallInvite>.broadcast();
+
   //OUtGoing
   Stream<Call> outGoingCallConnectFailure;
   final StreamController<Call> _outGoingCallConnectFailure =
@@ -227,6 +237,7 @@ class VoiceClient {
 
     onCallInvite = _onCallInvite.stream;
     onCancelledCallInvite = _onCancelledCallInvite.stream;
+    onAnswerCall = _onAnswerCall.stream;
 
     //OutGoing
     outGoingCallConnectFailure = _outGoingCallConnectFailure.stream;
@@ -501,6 +512,34 @@ class VoiceClient {
         assert(channelInfo != null);
         _onCancelledCallInvite
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        break;
+      case 'onAnswerCall':
+        print("this is data onAnswerCall $data");
+        var callSid = Platform.isIOS
+            ? data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] as String;
+        var to = Platform.isIOS
+            ? data['data']['to'] as String
+            : data['data']['twi_to'] as String;
+        var from = Platform.isIOS
+            ? data['data']['from'] as String
+            : data['data']['twi_from'] as String;
+        var customParameters =
+            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        temp = temp.replaceAll("'", "\"");
+        temp = temp.replaceAll("None", "null");
+        var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
+        assert(callSid != null);
+        assert(to != null);
+        assert(from != null);
+        assert(customParameters != null);
+        assert(channelInfo != null);
+        _onAnswerCall
+            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        // print("this is data onAnswerCall $data");
+        // _onAnswerCall.add(data.toString());
         break;
 
       default:
