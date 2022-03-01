@@ -674,7 +674,9 @@ class VoiceClient {
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
         var customParameters = this.customParameters;
-        String temp = this.customParameters['channel_info'] as String;
+        String temp =
+            data['data']['customParameters']['channel_info'] as String;
+        print("this is temp data $temp");
         temp = temp.replaceAll("'", "\"");
         temp = temp.replaceAll("None", "null");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
