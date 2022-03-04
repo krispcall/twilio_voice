@@ -22,7 +22,45 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Plugin Update" />
+    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Plugin Update">
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/auto_records.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/email.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/icon_admin.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/intl_call_messages.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/krispcall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/images/no_search_result.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/sounds/chime.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/sounds/incoming.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/sounds/sms.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/assets/sounds/tone.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/images/empty_contact.png" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/images/empty_contact.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/da-DK.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/da-DK.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/de-DE.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/de-DE.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/en-US.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/en-US.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/es-ES.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/es-ES.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/langs/fr-FR.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/fr-FR.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,20 +71,23 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ios/Classes/Mapper.swift" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/parts.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/programmable_voice.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.m" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/android/build.gradle" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/ios/Flutter/AppFrameworkInfo.plist" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/ios/Runner/Info.plist" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/voice_client.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/programmable_voice.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/src/parts.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/Mapper.swift" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1qsW9kQC6FfKccsCu5LRL8O9nYY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -66,8 +107,8 @@
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -75,8 +116,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/example/ios" />
       <recent name="$PROJECT_DIR$/example" />
+      <recent name="$PROJECT_DIR$/example/ios" />
       <recent name="E:\flutter.twilio\voice\example" />
       <recent name="E:\flutter.twilio\voice\example\lib" />
     </key>
@@ -109,13 +150,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617868628125</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Incoming Fixes">
-      <created>1618195807403</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1618195807403</updated>
     </task>
     <task id="LOCAL-00009" summary="Incoming Fixes">
       <created>1618216443704</created>
@@ -453,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646364856061</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Plugin Update">
+      <created>1646364989020</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1646364989020</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
