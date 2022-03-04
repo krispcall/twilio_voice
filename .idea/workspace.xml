@@ -22,9 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Fcm Configure Single Hit fixing">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Plugin Update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +70,7 @@
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -111,13 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617868628125</updated>
-    </task>
-    <task id="LOCAL-00006" summary="OutGoing events done preparing response">
-      <created>1617953625796</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1617953625796</updated>
     </task>
     <task id="LOCAL-00007" summary="Gradle Fixes">
       <created>1617956672112</created>
@@ -455,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641868953329</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Plugin Update">
+      <created>1646364731518</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1646364731518</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -488,7 +486,8 @@
     <MESSAGE value="Make Call With Sid" />
     <MESSAGE value="Data return from handle message" />
     <MESSAGE value="Fcm Configure Single Hit fixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fcm Configure Single Hit fixing" />
+    <MESSAGE value="Plugin Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Plugin Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
