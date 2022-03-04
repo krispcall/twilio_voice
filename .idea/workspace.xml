@@ -23,43 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Plugin Update">
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-11.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/050-goal-9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/auto_records.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/email.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/icon_admin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/intl_call_messages.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/krispcall.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/images/no_search_result.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/sounds/chime.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/sounds/incoming.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/sounds/sms.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/assets/sounds/tone.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/images/empty_contact.png" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/images/empty_contact.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/langs/da-DK.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/da-DK.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/langs/de-DE.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/de-DE.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/langs/en-US.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/en-US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/langs/es-ES.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/es-ES.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/langs/fr-FR.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/langs/fr-FR.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/voice.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/voice.podspec" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,17 +40,21 @@
     <setting file="file://$PROJECT_DIR$/lib/src/parts.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/programmable_voice.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.m" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/android/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.m" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/android/build.gradle" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/example/ios/Flutter/AppFrameworkInfo.plist" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/example/ios/Runner/Info.plist" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/voice_client.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/example/android/app/build.gradle" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/Classes/Mapper.swift" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.h" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/example/lib/ui/common/dialog/ConfirmTransferCall.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" root0="FORCE_HIGHLIGHTING" />
@@ -125,9 +95,13 @@
       <recent name="$PROJECT_DIR$/ios/Classes" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.mainQA.dart">
+  <component name="RunManager" selected="Flutter.mainRefactor.dart">
     <configuration name="mainQA.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/mainQA.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mainRefactor.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/mainRefactor.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
@@ -137,6 +111,7 @@
     <list>
       <item itemvalue="Flutter.main.dart" />
       <item itemvalue="Flutter.mainQA.dart" />
+      <item itemvalue="Flutter.mainRefactor.dart" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -150,13 +125,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617868628125</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Incoming Fixes">
-      <created>1618216443704</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1618216443704</updated>
     </task>
     <task id="LOCAL-00010" summary="Incoming Fixes">
       <created>1618217542752</created>
@@ -494,7 +462,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646364989020</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Plugin Update">
+      <created>1646370852134</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1646370852134</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -529,16 +504,5 @@
     <MESSAGE value="Fcm Configure Single Hit fixing" />
     <MESSAGE value="Plugin Update" />
     <option name="LAST_COMMIT_MESSAGE" value="Plugin Update" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ios/voice.podspec</url>
-          <line>5</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
