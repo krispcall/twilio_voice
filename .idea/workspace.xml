@@ -25,7 +25,8 @@
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Fcm Configure Single Hit fixing">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/voice.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/voice.podspec" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,17 +73,17 @@
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="dart.settings" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/example/ios" />
       <recent name="$PROJECT_DIR$/example" />
+      <recent name="$PROJECT_DIR$/example/ios" />
       <recent name="E:\flutter.twilio\voice\example" />
       <recent name="E:\flutter.twilio\voice\example\lib" />
     </key>
@@ -90,9 +91,13 @@
       <recent name="$PROJECT_DIR$/ios/Classes" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.mainQA.dart">
+  <component name="RunManager" selected="Flutter.mainRefactor.dart">
     <configuration name="mainQA.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/mainQA.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mainRefactor.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/mainRefactor.dart" />
       <method v="2" />
     </configuration>
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
@@ -102,6 +107,7 @@
     <list>
       <item itemvalue="Flutter.main.dart" />
       <item itemvalue="Flutter.mainQA.dart" />
+      <item itemvalue="Flutter.mainRefactor.dart" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -115,34 +121,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617868628125</updated>
-    </task>
-    <task id="LOCAL-00006" summary="OutGoing events done preparing response">
-      <created>1617953625796</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1617953625796</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Gradle Fixes">
-      <created>1617956672112</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1617956672112</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Incoming Fixes">
-      <created>1618195807403</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1618195807403</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Incoming Fixes">
-      <created>1618216443704</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1618216443704</updated>
     </task>
     <task id="LOCAL-00010" summary="Incoming Fixes">
       <created>1618217542752</created>
@@ -459,7 +437,35 @@
       <option name="project" value="LOCAL" />
       <updated>1641868953329</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Plugin Update">
+      <created>1646364731518</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1646364731518</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Plugin Update">
+      <created>1646364856061</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1646364856061</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Plugin Update">
+      <created>1646364989020</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1646364989020</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Plugin Update">
+      <created>1646370852134</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1646370852134</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -476,6 +482,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/example/ios/.symlinks/plugins/awesome_notifications" />
+      <path value="$PROJECT_DIR$/example/ios/.symlinks/plugins/voice" />
+    </ignored-roots>
     <MESSAGE value="Handling registration event response" />
     <MESSAGE value="Handling OutGoing Events" />
     <MESSAGE value="OutGoing events done preparing response" />
@@ -488,17 +498,7 @@
     <MESSAGE value="Make Call With Sid" />
     <MESSAGE value="Data return from handle message" />
     <MESSAGE value="Fcm Configure Single Hit fixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fcm Configure Single Hit fixing" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/ios/voice.podspec</url>
-          <line>5</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Plugin Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Plugin Update" />
   </component>
 </project>
