@@ -39,7 +39,12 @@ object Mapper
     fun callInviteToMap(message: CallInvite): Map<String, Any?>
     {
         var temp: String = message.customParameters["channel_info"] as String
-        temp = temp.replace("'", "\"")
+        temp = temp.replace("{'", "{\"");
+        temp = temp.replace("':", "\":");
+        temp = temp.replace(": '", ": \"");
+        temp = temp.replace("',", "\",");
+        temp = temp.replace(", '", ", \"");
+        temp = temp.replace("'}", "\"}");
         temp = temp.replace("None", "null")
         return mapOf(
                 "twi_call_sid" to message.callSid,
