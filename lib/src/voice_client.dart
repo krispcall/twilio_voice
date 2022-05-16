@@ -799,8 +799,7 @@ class VoiceClient {
         temp = Platform.isIOS ? "{}" : temp.replaceAll(", '", ", \"");
         temp = Platform.isIOS ? "{}" : temp.replaceAll("'}", "\"}");
         temp = Platform.isIOS ? "{}" : temp.replaceAll("None", "null");
-        print(
-            "this is channel info ${data['data']['customParameters']['channel_info']}");
+        print("this is channel info ${temp}");
         var channelInfo = (json.decode(temp)) as Map<dynamic, dynamic>;
         _incomingCallQualityWarningsChanged
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
