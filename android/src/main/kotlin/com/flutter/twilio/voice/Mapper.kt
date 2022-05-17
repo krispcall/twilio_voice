@@ -47,7 +47,6 @@ object Mapper
         temp = temp.replace(", '", ", \"");
         temp = temp.replace("'}", "\"}");
         temp = temp.replace("None", "null")
-        print("this is temp $temp 1");
         return mapOf(
                 "twi_call_sid" to message.callSid,
                 "twi_to" to message.to,
