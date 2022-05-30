@@ -510,7 +510,7 @@ class VoiceClient {
         var customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = this.customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
