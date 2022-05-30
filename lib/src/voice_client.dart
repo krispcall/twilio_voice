@@ -748,6 +748,15 @@ class VoiceClient {
         var from = data['data']['twi_from'] as String;
         var customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
+
+        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
             (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
