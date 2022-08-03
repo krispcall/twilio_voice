@@ -844,10 +844,10 @@ extension SwiftTwilioVoice: NotificationDelegate{
     // Call
 
     public func callInviteReceived(callInvite: CallInvite) {
-        print("Twilio Voice: This is incoming event",callInvite.callSid)
+        print("Twilio Voice: This is incoming event",(callInvite.customParameters?["from"]! ?? "") as String)
         activeCallInvite = callInvite
         sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
-        reportIncomingCall(from: callInvite.from! as String, uuid: callInvite.uuid)
+        reportIncomingCall(from: (callInvite.customParameters?["from"]! ?? "") as String, uuid: callInvite.uuid)
         self.activeCallInvite = callInvite
     }
 

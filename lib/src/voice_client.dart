@@ -473,7 +473,7 @@ class VoiceClient {
             ? data['data']['to'] as String
             : data['data']['twi_to'] as String;
         var from = Platform.isIOS
-            ? data['data']['from'] as String
+            ? data['data']['customParameters']['from'] as String
             : data['data']['twi_from'] as String;
         this.customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
