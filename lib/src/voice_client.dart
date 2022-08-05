@@ -809,20 +809,25 @@ class VoiceClient {
         var from = data['data']['twi_from'] as String;
         var customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
-
-        tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
-        print("this is channel info ${tempChannelInfo}");
-        var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
-        _incomingCallQualityWarningsChanged
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        print("this is data onCallQualityWarningsChanged $customParameters");
+        if (customParameters != null) {
+          tempChannelInfo = customParameters['channel_info'] as String;
+          tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
+          tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
+          tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
+          tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
+          tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
+          tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
+          tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+          print("this is channel info ${tempChannelInfo}");
+          var channelInfo =
+              (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+          _incomingCallQualityWarningsChanged.add(
+              CallInvite(callSid, to, from, customParameters, channelInfo));
+        } else {
+          _incomingCallQualityWarningsChanged
+              .add(CallInvite("", "", "", {}, {}));
+        }
         break;
       default:
         break;
