@@ -64,6 +64,8 @@ class VoiceClient {
 
   String tempChannelInfo;
 
+  bool _isOnCall = false;
+
   /// Stream for the notification events.
   StreamSubscription<dynamic> registrationStream;
 
@@ -83,6 +85,10 @@ class VoiceClient {
   /// Get user identity for the current user.
   String get myAccessToken {
     return accessToken;
+  }
+
+  bool get isOnCall {
+    return _isOnCall;
   }
 
   /// Get [Users] interface.
@@ -465,6 +471,7 @@ class VoiceClient {
 
     switch (eventName) {
       case 'onCallInvite':
+        _isOnCall = true;
         print("this is data onCallInvite $data");
         var callSid = Platform.isIOS
             ? data['data']['callSid'] as String
@@ -497,6 +504,7 @@ class VoiceClient {
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onCancelledCallInvite':
+        _isOnCall = false;
         print("this is data onCancelledCallInvite $data");
         var callSid = Platform.isIOS
             ? data['data']['callSid'] as String
@@ -531,6 +539,7 @@ class VoiceClient {
         tempChannelInfo = "";
         break;
       case 'onAnswerCall':
+        _isOnCall = true;
         print("this is data onAnswerCall $data");
         var callSid = Platform.isIOS
             ? data['data']['callSid'] as String
@@ -628,6 +637,7 @@ class VoiceClient {
         _outGoingCallReconnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
+        _isOnCall = false;
         print("this is data onDisconnected $data");
         var to = data['data']['to'] as String;
         var from = data['data']['from'] as String;
@@ -665,6 +675,7 @@ class VoiceClient {
     switch (eventName) {
       case 'onConnectFailure':
         print("this is data onConnectFailure $data");
+        _isOnCall = false;
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
         var from = data['data']['twi_from'] as String;
@@ -709,6 +720,7 @@ class VoiceClient {
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
       case 'onConnected':
+        _isOnCall = true;
         print("this is data onConnected $data");
         var callSid = data['data']['twi_call_sid'] as String;
         var to = data['data']['twi_to'] as String;
@@ -776,6 +788,7 @@ class VoiceClient {
         break;
       case 'onDisconnected':
         print("this is data onDisconnected $data");
+        _isOnCall = false;
         var callSid = Platform.isIOS
             ? data['data']['callSid'] as String
             : data['data']['twi_call_sid'] as String;
