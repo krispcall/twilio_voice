@@ -45,7 +45,7 @@ class AnswerCall {
 }
 
 class Call {
-  final String callSid;
+  final String? callSid;
 
   final String to;
 
@@ -62,24 +62,24 @@ class Call {
 class VoiceClient {
   var customParameters;
 
-  String tempChannelInfo;
+  String? tempChannelInfo;
 
   bool _isOnCall = false;
 
   /// Stream for the notification events.
-  StreamSubscription<dynamic> registrationStream;
+  StreamSubscription<dynamic>? registrationStream;
 
   /// Stream for the native chat events.
-  StreamSubscription<dynamic> handleMessageStream;
+  StreamSubscription<dynamic>? handleMessageStream;
 
-  StreamSubscription<dynamic> callOutGoingStream;
+  StreamSubscription<dynamic>? callOutGoingStream;
 
   /// Stream for the native chat events.
-  StreamSubscription<dynamic> callIncomingStream;
+  StreamSubscription<dynamic>? callIncomingStream;
 
   final String accessToken;
 
-  bool _isReachAbilityEnabled;
+  bool? _isReachAbilityEnabled;
   //#endregion
 
   /// Get user identity for the current user.
@@ -94,7 +94,7 @@ class VoiceClient {
   /// Get [Users] interface.
   /// Get reachability service status.
   bool get isReachAbilityEnabled {
-    return _isReachAbilityEnabled;
+    return _isReachAbilityEnabled!;
   }
   //#endregion
 
@@ -116,104 +116,104 @@ class VoiceClient {
   //#endregion
 
   /// Called when an error condition occurs.
-  Stream<ErrorInfo> onError;
+  Stream<ErrorInfo>? onError;
   //#endregion
 
   /// Called when client receives a push notification for added to channel event.
-  Stream<String> onAddedToChannelNotification;
+  Stream<String>? onAddedToChannelNotification;
 
   /// Called when client receives a push notification for invited to channel event.
-  Stream<String> onInvitedToChannelNotification;
+  Stream<String>? onInvitedToChannelNotification;
 
   /// Called when client receives a push notification for new message.
-  Stream<NewMessageNotificationEvent> onNewMessageNotification;
+  Stream<NewMessageNotificationEvent>? onNewMessageNotification;
 
   /// Called when registering for push notifications fails.
-  Stream<ErrorInfo> onNotificationFailed;
+  Stream<ErrorInfo>? onNotificationFailed;
 
   /// Called when client receives a push notification for removed from channel event.
-  Stream<String> onRemovedFromChannelNotification;
+  Stream<String>? onRemovedFromChannelNotification;
   //#endregion
 
   /// Called when token is about to expire soon.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
-  Stream<void> onTokenAboutToExpire;
+  Stream<void>? onTokenAboutToExpire;
 
-  Stream<CallInvite> onCallInvite;
+  Stream<CallInvite>? onCallInvite;
   StreamController<CallInvite> _onCallInvite =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> onCancelledCallInvite;
+  Stream<CallInvite>? onCancelledCallInvite;
   final StreamController<CallInvite> _onCancelledCallInvite =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> onAnswerCall;
+  Stream<CallInvite>? onAnswerCall;
   final StreamController<CallInvite> _onAnswerCall =
       StreamController<CallInvite>.broadcast();
 
   //OUtGoing
-  Stream<Call> outGoingCallConnectFailure;
+  Stream<Call>? outGoingCallConnectFailure;
   final StreamController<Call> _outGoingCallConnectFailure =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallRinging;
+  Stream<Call>? outGoingCallRinging;
   final StreamController<Call> _outGoingCallRinging =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallConnected;
+  Stream<Call>? outGoingCallConnected;
   final StreamController<Call> _outGoingCallConnected =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallReconnecting;
+  Stream<Call>? outGoingCallReconnecting;
   final StreamController<Call> _outGoingCallReconnecting =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallReconnected;
+  Stream<Call>? outGoingCallReconnected;
   final StreamController<Call> _outGoingCallReconnected =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallDisconnected;
+  Stream<Call>? outGoingCallDisconnected;
   final StreamController<Call> _outGoingCallDisconnected =
       StreamController<Call>.broadcast();
 
-  Stream<Call> outGoingCallCallQualityWarningsChanged;
+  Stream<Call>? outGoingCallCallQualityWarningsChanged;
   final StreamController<Call> _outGoingCallCallQualityWarningsChanged =
       StreamController<Call>.broadcast();
 
   //Incoming
-  Stream<CallInvite> incomingConnectFailure;
+  Stream<CallInvite>? incomingConnectFailure;
   final StreamController<CallInvite> _incomingConnectFailure =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingRinging;
+  Stream<CallInvite>? incomingRinging;
   final StreamController<CallInvite> _incomingRinging =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingConnected;
+  Stream<CallInvite>? incomingConnected;
   final StreamController<CallInvite> _incomingConnected =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingReconnecting;
+  Stream<CallInvite>? incomingReconnecting;
   final StreamController<CallInvite> _incomingReconnecting =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingReconnected;
+  Stream<CallInvite>? incomingReconnected;
   final StreamController<CallInvite> _incomingReconnected =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingDisconnected;
+  Stream<CallInvite>? incomingDisconnected;
   final StreamController<CallInvite> _incomingDisconnected =
       StreamController<CallInvite>.broadcast();
 
-  Stream<CallInvite> incomingCallQualityWarningsChanged;
+  Stream<CallInvite>? incomingCallQualityWarningsChanged;
   final StreamController<CallInvite> _incomingCallQualityWarningsChanged =
       StreamController<CallInvite>.broadcast();
 
   /// Called when token has expired.
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
-  Stream<void> onTokenExpired;
+  Stream<void>? onTokenExpired;
   //#endregion
 
   //#region User events
@@ -229,14 +229,14 @@ class VoiceClient {
       StreamController<NotificationRegistrationEvent>.broadcast();
 
   /// Called when attempt to register device for notifications has completed.
-  Stream<NotificationRegistrationEvent> onNotificationRegistered;
+  Stream<NotificationRegistrationEvent>? onNotificationRegistered;
 
   final StreamController<NotificationRegistrationEvent>
       _onNotificationDeregisteredCtrl =
       StreamController<NotificationRegistrationEvent>.broadcast();
 
   /// Called when attempt to register device for notifications has completed.
-  Stream<NotificationRegistrationEvent> onNotificationDeregistered;
+  Stream<NotificationRegistrationEvent>? onNotificationDeregistered;
   //#endregion
 
   VoiceClient(this.accessToken) : assert(accessToken != null) {
@@ -303,10 +303,10 @@ class VoiceClient {
   /// It will dispose() the client after shutdown, so it could not be reused.
   Future<void> shutdown() async {
     try {
-      await registrationStream.cancel();
-      await handleMessageStream.cancel();
-      await callOutGoingStream.cancel();
-      await callIncomingStream.cancel();
+      await registrationStream?.cancel();
+      await handleMessageStream?.cancel();
+      await callOutGoingStream?.cancel();
+      await callIncomingStream?.cancel();
       TwilioVoice.voiceClient = null;
       return await TwilioVoice._methodChannel
           .invokeMethod('VoiceClient#shutdown', null);
@@ -435,7 +435,7 @@ class VoiceClient {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
 
-    ErrorInfo exception;
+    ErrorInfo exception = ErrorInfo(200, "", 200);
     if (event['error'] != null) {
       final errorMap =
           Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
@@ -485,16 +485,16 @@ class VoiceClient {
         this.customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
         tempChannelInfo = this.customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -519,16 +519,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -554,16 +554,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
         tempChannelInfo =
             data['data']['customParameters']['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
@@ -683,16 +683,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         _incomingConnectFailure
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         tempChannelInfo = "";
@@ -706,16 +706,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         _incomingRinging
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
@@ -729,16 +729,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         _incomingConnected
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
@@ -751,16 +751,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         _incomingReconnecting
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
@@ -773,16 +773,16 @@ class VoiceClient {
             data['data']['customParameters'] as Map<dynamic, dynamic>;
 
         tempChannelInfo = customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
-            (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
         _incomingReconnected
             .add(CallInvite(callSid, to, from, customParameters, channelInfo));
         break;
@@ -825,16 +825,16 @@ class VoiceClient {
         print("this is data onCallQualityWarningsChanged $customParameters");
         if (customParameters != null) {
           tempChannelInfo = customParameters['channel_info'] as String;
-          tempChannelInfo = tempChannelInfo.replaceAll("{'", "{\"");
-          tempChannelInfo = tempChannelInfo.replaceAll("':", "\":");
-          tempChannelInfo = tempChannelInfo.replaceAll(": '", ": \"");
-          tempChannelInfo = tempChannelInfo.replaceAll("',", "\",");
-          tempChannelInfo = tempChannelInfo.replaceAll(", '", ", \"");
-          tempChannelInfo = tempChannelInfo.replaceAll("'}", "\"}");
-          tempChannelInfo = tempChannelInfo.replaceAll("None", "null");
+          tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+          tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+          tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+          tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
           print("this is channel info ${tempChannelInfo}");
           var channelInfo =
-              (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
+              (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
           _incomingCallQualityWarningsChanged.add(
               CallInvite(callSid, to, from, customParameters, channelInfo));
         } else {

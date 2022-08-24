@@ -4,21 +4,26 @@ part of flutter_twilio_voice;
 class TwilioVoice {
   static const MethodChannel _methodChannel = MethodChannel('TwilioVoice');
 
-  static const EventChannel registrationChannel = EventChannel('TwilioVoice/registrationChannel');
+  static const EventChannel registrationChannel =
+      EventChannel('TwilioVoice/registrationChannel');
 
-  static const EventChannel handleMessageChannel = EventChannel('TwilioVoice/handleMessage');
+  static const EventChannel handleMessageChannel =
+      EventChannel('TwilioVoice/handleMessage');
 
-  static const EventChannel callOutGoingChannel = EventChannel('TwilioVoice/callOutGoingChannel');
+  static const EventChannel callOutGoingChannel =
+      EventChannel('TwilioVoice/callOutGoingChannel');
 
-  static const EventChannel callIncomingChannel = EventChannel('TwilioVoice/callIncomingChannel');
+  static const EventChannel callIncomingChannel =
+      EventChannel('TwilioVoice/callIncomingChannel');
 
-  static VoiceClient voiceClient;
+  static VoiceClient? voiceClient;
 
   static Exception _convertException(PlatformException err) {
     var code = int.tryParse(err.code);
     // If code is an integer, then it is a Twilio ErrorInfo exception.
     if (code != null) {
-      return ErrorInfo(int.parse(err.code), err.message, err.details as int);
+      return ErrorInfo(
+          int.parse(err.code), err?.message ?? "", err.details as int);
     }
 
     // For now just rethrow the PlatformException. But we could make custom ones based on the code value.
@@ -36,15 +41,19 @@ class TwilioVoice {
     assert(accessToken != '');
 
     if (voiceClient != null) {
-      throw UnsupportedError('Instantiation of multiple chatClients is not supported.'
+      throw UnsupportedError(
+          'Instantiation of multiple chatClients is not supported.'
           ' Shutdown the existing chatClient before creating a new one');
     }
 
     try {
-      final methodData = await _methodChannel.invokeMethod('create', <String, Object>{'accessToken': accessToken,});
+      final methodData =
+          await _methodChannel.invokeMethod('create', <String, Object>{
+        'accessToken': accessToken,
+      });
       final chatClientMap = Map<String, dynamic>.from(methodData);
       voiceClient = VoiceClient._fromMap(chatClientMap);
-      return voiceClient;
+      return voiceClient!;
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
     }
