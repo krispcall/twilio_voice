@@ -54,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/.gitignore" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/src/error_info.dart" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1qsW9kQC6FfKccsCu5LRL8O9nYY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">

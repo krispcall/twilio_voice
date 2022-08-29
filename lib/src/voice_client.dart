@@ -24,15 +24,15 @@ class NotificationRegistrationEvent {
 }
 
 class CallInvite {
-  final String callSid;
+  final String? callSid;
 
-  final String to;
+  final String? to;
 
-  final String from;
+  final String? from;
 
-  final Map<dynamic, dynamic> customParameters;
+  final Map<dynamic, dynamic>? customParameters;
 
-  final Map<dynamic, dynamic> channelInfo;
+  final Map<dynamic, dynamic>? channelInfo;
 
   CallInvite(this.callSid, this.to, this.from, this.customParameters,
       this.channelInfo);
@@ -47,13 +47,13 @@ class AnswerCall {
 class Call {
   final String? callSid;
 
-  final String to;
+  final String? to;
 
-  final String from;
+  final String? from;
 
-  final bool isOnHold;
+  final bool? isOnHold;
 
-  final bool isMuted;
+  final bool? isMuted;
 
   Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid);
 }
@@ -474,14 +474,26 @@ class VoiceClient {
         _isOnCall = true;
         print("this is data onCallInvite $data");
         var callSid = Platform.isIOS
-            ? data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] as String;
+            ? data['data']['callSid'] == null
+                ? null
+                : data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] == null
+                ? null
+                : data['data']['twi_call_sid'] as String;
         var to = Platform.isIOS
-            ? data['data']['to'] as String
-            : data['data']['twi_to'] as String;
+            ? data['data']['to'] == null
+                ? null
+                : data['data']['to'] as String
+            : data['data']['twi_to'] == null
+                ? null
+                : data['data']['twi_to'] as String;
         var from = Platform.isIOS
-            ? data['data']['customParameters']['from'] as String
-            : data['data']['twi_from'] as String;
+            ? data['data']['customParameters']['from'] == null
+                ? null
+                : data['data']['customParameters']['from'] as String
+            : data['data']['twi_from'] == null
+                ? null
+                : data['data']['twi_from'] as String;
         this.customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
         tempChannelInfo = this.customParameters['channel_info'] as String;
@@ -507,18 +519,33 @@ class VoiceClient {
         _isOnCall = false;
         print("this is data onCancelledCallInvite $data");
         var callSid = Platform.isIOS
-            ? data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] as String;
+            ? data['data']['callSid'] == null
+                ? null
+                : data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] == null
+                ? null
+                : data['data']['twi_call_sid'] as String;
         var to = Platform.isIOS
-            ? data['data']['to'] as String
-            : data['data']['twi_to'] as String;
+            ? data['data']['to'] == null
+                ? null
+                : data['data']['to'] as String
+            : data['data']['twi_to'] == null
+                ? null
+                : data['data']['twi_to'] as String;
         var from = Platform.isIOS
-            ? data['data']['from'] as String
-            : data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+            ? data['data']['from'] == null
+                ? null
+                : data['data']['from'] as String
+            : data['data']['twi_from'] == null
+                ? null
+                : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -542,18 +569,33 @@ class VoiceClient {
         _isOnCall = true;
         print("this is data onAnswerCall $data");
         var callSid = Platform.isIOS
-            ? data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] as String;
+            ? data['data']['callSid'] == null
+                ? null
+                : data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] == null
+                ? null
+                : data['data']['twi_call_sid'] as String;
         var to = Platform.isIOS
-            ? data['data']['to'] as String
-            : data['data']['twi_to'] as String;
+            ? data['data']['to'] == null
+                ? null
+                : data['data']['to'] as String
+            : data['data']['twi_to'] == null
+                ? null
+                : data['data']['twi_to'] as String;
         var from = Platform.isIOS
-            ? data['data']['from'] as String
-            : data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+            ? data['data']['from'] == null
+                ? null
+                : data['data']['from'] as String
+            : data['data']['twi_from'] == null
+                ? null
+                : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
         tempChannelInfo =
-            data['data']['customParameters']['channel_info'] as String;
+            data['data']['customParameters']['channel_info'] == null
+                ? null
+                : data['data']['customParameters']['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -595,63 +637,114 @@ class VoiceClient {
     switch (eventName) {
       case 'onConnectFailure':
         print("this is data onConnectFailure $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallConnectFailure
             .add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onRinging':
         print("this is data onRinging $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
-        var callSid = data['data']['callSid'] as String;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
+        var callSid = data['data']['callSid'] == null
+            ? null
+            : data['data']['callSid'] as String;
 
         _outGoingCallRinging.add(Call(to, from, isOnHold, isMuted, callSid));
         break;
       case 'onConnected':
         print("this is data onConnected $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallConnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallReconnecting.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallReconnected.add(Call(to, from, isOnHold, isMuted, null));
         break;
       case 'onDisconnected':
         _isOnCall = false;
         print("this is data onDisconnected $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallDisconnected.add(Call(to, from, isOnHold, isMuted, null));
         tempChannelInfo = "";
         break;
       case 'onCallQualityWarningsChanged':
         print("this is data onCallQualityWarningsChanged $data");
-        var to = data['data']['to'] as String;
-        var from = data['data']['from'] as String;
-        var isOnHold = data['data']['isOnHold'] as bool;
-        var isMuted = data['data']['isMuted'] as bool;
+        var to =
+            data['data']['to'] == null ? null : data['data']['to'] as String;
+        var from = data['data']['from'] == null
+            ? null
+            : data['data']['from'] as String;
+        var isOnHold = data['data']['isOnHold'] == null
+            ? null
+            : data['data']['isOnHold'] as bool;
+        var isMuted = data['data']['isMuted'] == null
+            ? null
+            : data['data']['isMuted'] as bool;
         _outGoingCallCallQualityWarningsChanged
             .add(Call(to, from, isOnHold, isMuted, null));
         break;
@@ -676,13 +769,22 @@ class VoiceClient {
       case 'onConnectFailure':
         print("this is data onConnectFailure $data");
         _isOnCall = false;
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -699,13 +801,22 @@ class VoiceClient {
         break;
       case 'onRinging':
         print("this is data onRinging $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -722,13 +833,19 @@ class VoiceClient {
       case 'onConnected':
         _isOnCall = true;
         print("this is data onConnected $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
-
-        tempChannelInfo = customParameters['channel_info'] as String;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        tempChannelInfo = customParameters!['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -744,13 +861,22 @@ class VoiceClient {
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -766,13 +892,22 @@ class VoiceClient {
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
 
-        tempChannelInfo = customParameters['channel_info'] as String;
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -790,14 +925,26 @@ class VoiceClient {
         print("this is data onDisconnected $data");
         _isOnCall = false;
         var callSid = Platform.isIOS
-            ? data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] as String;
+            ? data['data']['callSid'] == null
+                ? null
+                : data['data']['callSid'] as String
+            : data['data']['twi_call_sid'] == null
+                ? null
+                : data['data']['twi_call_sid'] as String;
         var to = Platform.isIOS
-            ? data['data']['to'] as String
-            : data['data']['twi_to'] as String;
+            ? data['data']['to'] == null
+                ? null
+                : data['data']['to'] as String
+            : data['data']['twi_to'] == null
+                ? null
+                : data['data']['twi_to'] as String;
         var from = Platform.isIOS
-            ? data['data']['from'] as String
-            : data['data']['twi_from'] as String;
+            ? data['data']['from'] == null
+                ? null
+                : data['data']['from'] as String
+            : data['data']['twi_from'] == null
+                ? null
+                : data['data']['twi_from'] as String;
         // var customParameters =
         //     data['data']['customParameters'] as Map<dynamic, dynamic>;
         //
@@ -817,11 +964,18 @@ class VoiceClient {
         break;
       case 'onCallQualityWarningsChanged':
         print("this is data onCallQualityWarningsChanged $data");
-        var callSid = data['data']['twi_call_sid'] as String;
-        var to = data['data']['twi_to'] as String;
-        var from = data['data']['twi_from'] as String;
-        var customParameters =
-            data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
         print("this is data onCallQualityWarningsChanged $customParameters");
         if (customParameters != null) {
           tempChannelInfo = customParameters['channel_info'] as String;
@@ -836,7 +990,7 @@ class VoiceClient {
           var channelInfo =
               (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
           _incomingCallQualityWarningsChanged.add(
-              CallInvite(callSid, to, from, customParameters, channelInfo));
+              CallInvite(callSid!, to!, from!, customParameters, channelInfo));
         } else {
           _incomingCallQualityWarningsChanged
               .add(CallInvite("", "", "", {}, {}));
