@@ -80,9 +80,9 @@ dependencies:
       url: https://gitlab.com/dristisushan/flutter-incall-manager
       ref: main
 
-  flutter_stetho:
+  stetho_a1:
     git:
-      url: git://github.com/jasonlewicki/flutter_stetho.git
+      url: https://gitlab.com/bikrammhz1/flutter_stetho.git
       ref: master
 
   voice:

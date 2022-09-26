@@ -23,10 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9114e161-e3b3-40af-b525-0347f0db9acd" name="Default Changelist" comment="Fcm Configure Single Hit fixing">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/voice_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/voice_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,25 +40,25 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/lib/src/programmable_voice.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/PluginHandler.swift" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/.idea/workspace.xml" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.m" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/src/voice_client.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/PluginHandler.swift" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/twiliovoice.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/.idea/workspace.xml" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/lib/src/parts.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/.metadata" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/ios/Classes/Mapper.swift" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/VoicePlugin.m" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ios/Classes/SwiftVoicePlugin.swift" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/ios/.gitignore" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ios/voice.podspec" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/PluginHandler.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/.metadata" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/src/parts.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/src/programmable_voice.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/Mapper.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/android/src/main/kotlin/com/flutter/twilio/voice/TwilioVoice.kt" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/src/error_info.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ios/Classes/Mapper.swift" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1qsW9kQC6FfKccsCu5LRL8O9nYY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
