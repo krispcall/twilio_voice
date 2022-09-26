@@ -15,7 +15,7 @@ flutter twilio voice
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'TwilioVoice', '~> 6.3.0'
+  s.dependency 'TwilioVoice', '~> 6.4.3'
 
   s.platform = :ios, '9.0'
 
