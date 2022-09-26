@@ -471,7 +471,7 @@ class VoiceClient {
       final errorMap =
           Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
       exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
-          errorMap['status'] as int);
+          errorMap['status'] == null ? 0 : errorMap['status'] as int);
     }
 
     switch (eventName) {
@@ -639,7 +639,7 @@ class VoiceClient {
       final errorMap =
           Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
       exception = ErrorInfo(errorMap['code'] as int, errorMap['message'] ?? "",
-          errorMap['status'] ?? 403);
+          errorMap['status'] == null ? 0 : errorMap['status'] as int);
     }
 
     switch (eventName) {
