@@ -18,6 +18,7 @@ object Mapper
     }
 
     fun errorInfoToMap(e: CallException?): Map<String, Any?>? {
+
         if (e == null)
             return null
         return mapOf(

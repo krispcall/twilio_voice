@@ -34,8 +34,10 @@ class CallInvite {
 
   final Map<dynamic, dynamic>? channelInfo;
 
+  final Map<dynamic, dynamic>? error;
+
   CallInvite(this.callSid, this.to, this.from, this.customParameters,
-      this.channelInfo);
+      this.channelInfo, this.error);
 }
 
 class AnswerCall {
@@ -55,7 +57,10 @@ class Call {
 
   final bool? isMuted;
 
-  Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid);
+  final Map<dynamic, dynamic>? error;
+
+  Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid,
+      this.error);
 }
 //#endregion
 
@@ -107,7 +112,7 @@ class VoiceClient {
   /// Called when the current user either joined or was added into a channel, channel status is [ChannelStatus.JOINED].
 
   /// Called when channel synchronization status changed.
-  ///
+  ///+
   /// Use [Channel.synchronizationStatus] to obtain new channel status.
 
   /// Called when the channel is updated.
@@ -494,8 +499,10 @@ class VoiceClient {
             : data['data']['twi_from'] == null
                 ? null
                 : data['data']['twi_from'] as String;
+        var error = event['error'] != null ? event["error"] : null;
         this.customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
+
         tempChannelInfo = this.customParameters['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
@@ -512,8 +519,8 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCallInvite
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _onCallInvite.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         break;
       case 'onCancelledCallInvite':
         _isOnCall = false;
@@ -542,7 +549,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
-
+        var error = event['error'] != null ? event["error"] : null;
         tempChannelInfo = customParameters!['channel_info'] == null
             ? null
             : customParameters['channel_info'] as String;
@@ -561,8 +568,8 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onCancelledCallInvite
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _onCancelledCallInvite.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         tempChannelInfo = "";
         break;
       case 'onAnswerCall':
@@ -592,6 +599,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
         tempChannelInfo =
             data['data']['customParameters']['channel_info'] == null
                 ? null
@@ -611,8 +619,8 @@ class VoiceClient {
         assert(from != null);
         assert(customParameters != null);
         assert(channelInfo != null);
-        _onAnswerCall
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _onAnswerCall.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         // print("this is data onAnswerCall $data");
         // _onAnswerCall.add(data.toString());
         break;
@@ -648,8 +656,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
+        var error = event['error'] != null ? event["error"] : null;
         _outGoingCallConnectFailure
-            .add(Call(to, from, isOnHold, isMuted, null));
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         break;
       case 'onRinging':
         print("this is data onRinging $data");
@@ -667,8 +676,10 @@ class VoiceClient {
         var callSid = data['data']['callSid'] == null
             ? null
             : data['data']['callSid'] as String;
+        var error = event['error'] != null ? event["error"] : null;
 
-        _outGoingCallRinging.add(Call(to, from, isOnHold, isMuted, callSid));
+        _outGoingCallRinging
+            .add(Call(to, from, isOnHold, isMuted, callSid, error));
         break;
       case 'onConnected':
         print("this is data onConnected $data");
@@ -683,7 +694,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
-        _outGoingCallConnected.add(Call(to, from, isOnHold, isMuted, null));
+        var error = event['error'] != null ? event["error"] : null;
+        _outGoingCallConnected
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
@@ -698,7 +711,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
-        _outGoingCallReconnecting.add(Call(to, from, isOnHold, isMuted, null));
+        var error = event['error'] != null ? event["error"] : null;
+        _outGoingCallReconnecting
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
@@ -713,7 +728,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
-        _outGoingCallReconnected.add(Call(to, from, isOnHold, isMuted, null));
+        var error = event['error'] != null ? event["error"] : null;
+        _outGoingCallReconnected
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         break;
       case 'onDisconnected':
         _isOnCall = false;
@@ -729,7 +746,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
-        _outGoingCallDisconnected.add(Call(to, from, isOnHold, isMuted, null));
+        var error = event['error'] != null ? event["error"] : null;
+        _outGoingCallDisconnected
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         tempChannelInfo = "";
         break;
       case 'onCallQualityWarningsChanged':
@@ -745,8 +764,9 @@ class VoiceClient {
         var isMuted = data['data']['isMuted'] == null
             ? null
             : data['data']['isMuted'] as bool;
+        var error = event['error'] != null ? event["error"] : null;
         _outGoingCallCallQualityWarningsChanged
-            .add(Call(to, from, isOnHold, isMuted, null));
+            .add(Call(to, from, isOnHold, isMuted, null, error));
         break;
       default:
         break;
@@ -759,10 +779,10 @@ class VoiceClient {
 
     ErrorInfo exception;
     if (event['error'] != null) {
+      print("this is error ${event["error"]}");
       final errorMap =
           Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
-          errorMap['status'] as int);
+      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], 0);
     }
 
     switch (eventName) {
@@ -781,22 +801,25 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
-
-        tempChannelInfo = customParameters!['channel_info'] == null
-            ? null
-            : customParameters['channel_info'] as String;
-        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
-        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
-        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
-        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
-        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
-        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
-        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
+        var error = event['error'] != null ? event["error"] : null;
+        if (customParameters != null) {
+          tempChannelInfo = customParameters!['channel_info'] == null
+              ? null
+              : customParameters['channel_info'] as String;
+          tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+          tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+          tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+          tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+          tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
+        }
         print("this is channel info ${tempChannelInfo}");
-        var channelInfo =
-            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingConnectFailure
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        var channelInfo = tempChannelInfo == null
+            ? null
+            : (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
+        _incomingConnectFailure.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         tempChannelInfo = "";
         break;
       case 'onRinging':
@@ -813,6 +836,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
 
         tempChannelInfo = customParameters!['channel_info'] == null
             ? null
@@ -827,8 +851,8 @@ class VoiceClient {
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingRinging
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingRinging.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         break;
       case 'onConnected':
         _isOnCall = true;
@@ -845,6 +869,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
         tempChannelInfo = customParameters!['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
@@ -856,8 +881,8 @@ class VoiceClient {
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingConnected
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingConnected.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         break;
       case 'onReconnecting':
         print("this is data onReconnecting $data");
@@ -873,6 +898,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
 
         tempChannelInfo = customParameters!['channel_info'] == null
             ? null
@@ -887,8 +913,8 @@ class VoiceClient {
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingReconnecting
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingReconnecting.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         break;
       case 'onReconnected':
         print("this is data onReconnected $data");
@@ -904,6 +930,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
 
         tempChannelInfo = customParameters!['channel_info'] == null
             ? null
@@ -918,8 +945,8 @@ class VoiceClient {
         print("this is channel info ${tempChannelInfo}");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingReconnected
-            .add(CallInvite(callSid, to, from, customParameters, channelInfo));
+        _incomingReconnected.add(CallInvite(
+            callSid, to, from, customParameters, channelInfo, error));
         break;
       case 'onDisconnected':
         print("this is data onDisconnected $data");
@@ -945,6 +972,7 @@ class VoiceClient {
             : data['data']['twi_from'] == null
                 ? null
                 : data['data']['twi_from'] as String;
+        var error = event['error'] != null ? event["error"] : null;
         // var customParameters =
         //     data['data']['customParameters'] as Map<dynamic, dynamic>;
         //
@@ -959,7 +987,7 @@ class VoiceClient {
         // print("this is channel info ${tempChannelInfo}");
         // var channelInfo =
         //     (json.decode(tempChannelInfo)) as Map<dynamic, dynamic>;
-        _incomingDisconnected.add(CallInvite(callSid, to, from, {}, {}));
+        _incomingDisconnected.add(CallInvite(callSid, to, from, {}, {}, error));
         tempChannelInfo = "";
         break;
       case 'onCallQualityWarningsChanged':
@@ -976,6 +1004,7 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
+        var error = event['error'] != null ? event["error"] : null;
         print("this is data onCallQualityWarningsChanged $customParameters");
         if (customParameters != null) {
           tempChannelInfo = customParameters['channel_info'] as String;
@@ -989,11 +1018,11 @@ class VoiceClient {
           print("this is channel info ${tempChannelInfo}");
           var channelInfo =
               (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-          _incomingCallQualityWarningsChanged.add(
-              CallInvite(callSid!, to!, from!, customParameters, channelInfo));
+          _incomingCallQualityWarningsChanged.add(CallInvite(
+              callSid!, to!, from!, customParameters, channelInfo, error));
         } else {
           _incomingCallQualityWarningsChanged
-              .add(CallInvite("", "", "", {}, {}));
+              .add(CallInvite("", "", "", {}, {}, error));
         }
         break;
       default:
