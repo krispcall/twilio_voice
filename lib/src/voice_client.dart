@@ -46,21 +46,42 @@ class AnswerCall {
   AnswerCall(this.answerCall);
 }
 
-class Call {
-  final String? callSid;
+class Call  {
+   String? callSid;
 
-  final String? to;
+   String? to;
 
-  final String? from;
+   String? from;
 
-  final bool? isOnHold;
+   bool? isOnHold;
 
-  final bool? isMuted;
+   bool? isMuted;
 
-  final Map<dynamic, dynamic>? error;
+   Map<dynamic, dynamic>? error;
 
   Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid,
       this.error);
+  Call.fromJson(Map<String, dynamic> json, this.to, this.from, this.isOnHold, this.isMuted, this.callSid,
+      this.error) {
+      callSid = json["call_sid"].toString().trim();
+      to = json["to"].toString().trim();
+      from = json["from"].toString().trim();
+      isOnHold = json["is_on_hold"];
+      isMuted = json["is_Muted"];
+      error = json["error"];
+
+  }
+  Map<String, dynamic> toJson(Call? object) {
+    final Map<String, dynamic> data = <String, dynamic> {};
+    data["call_sid"] = callSid;
+    data["to"] = to;
+    data["from"] = from;
+    data["is_on_hold"] = isOnHold;
+    data["is_Muted"] = isMuted;
+    data["error"] = error;
+    return data;
+  }
+
 }
 //#endregion
 
