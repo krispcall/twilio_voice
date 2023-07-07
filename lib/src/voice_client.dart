@@ -232,6 +232,8 @@ class VoiceClient {
   final StreamController<CallInvite> _incomingDisconnected =
       StreamController<CallInvite>.broadcast();
 
+
+
   Stream<CallInvite>? incomingCallQualityWarningsChanged;
   final StreamController<CallInvite> _incomingCallQualityWarningsChanged =
       StreamController<CallInvite>.broadcast();
@@ -240,6 +242,9 @@ class VoiceClient {
   ///
   /// In response, [VoiceClient] should generate a new token and call [VoiceClient.updateToken] as soon as possible.
   Stream<void>? onTokenExpired;
+  final StreamController<void>? _onTokenExpired =
+         StreamController<void>.broadcast();
+
   //#endregion
 
   //#region User events
@@ -272,6 +277,10 @@ class VoiceClient {
     onCallInvite = _onCallInvite.stream;
     onCancelledCallInvite = _onCancelledCallInvite.stream;
     onAnswerCall = _onAnswerCall.stream;
+
+
+    // TokenExpired
+    onTokenExpired = _onTokenExpired?.stream;
 
     //OutGoing
     outGoingCallConnectFailure = _outGoingCallConnectFailure.stream;
