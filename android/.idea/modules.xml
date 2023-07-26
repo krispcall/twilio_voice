@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/voice.iml" filepath="$PROJECT_DIR$/.idea/modules/voice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/voice.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/voice.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/voice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/voice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/voice.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/voice.unitTest.iml" />
     </modules>
   </component>
 </project>

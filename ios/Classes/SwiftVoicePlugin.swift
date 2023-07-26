@@ -839,15 +839,14 @@ extension SwiftTwilioVoice: CXProviderDelegate{
 }
 
 extension SwiftTwilioVoice: NotificationDelegate{
-    // MARK: Call Receive
+    // MARK: Call Receive
 
     // Call
 
     public func callInviteReceived(callInvite: CallInvite) {
-        print("Twilio Voice: This is incoming event",(callInvite.customParameters?["from"]! ?? "") as String)
         activeCallInvite = callInvite
         sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
-        reportIncomingCall(from: (callInvite.customParameters?["from"]! ?? "") as String, uuid: callInvite.uuid)
+        reportIncomingCall(from: (((callInvite.customParameters?["contact_name"]?.lowercased() == "unknown") ? callInvite.customParameters?["from"] : callInvite.customParameters?["contact_name"]) ??  "") as String, uuid: callInvite.uuid)
         self.activeCallInvite = callInvite
     }
 
