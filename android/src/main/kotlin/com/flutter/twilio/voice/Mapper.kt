@@ -40,7 +40,6 @@ object Mapper
     fun callInviteToMap(message: CallInvite): Map<String, Any?>
     {
         var temp: String = message.customParameters["channel_info"] as String
-        print("this is temp $temp");
         temp = temp.replace("{'", "{\"");
         temp = temp.replace("':", "\":");
         temp = temp.replace(": '", ": \"");
