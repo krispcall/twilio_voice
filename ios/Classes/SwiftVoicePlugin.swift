@@ -210,8 +210,8 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     
     public func registerForNotification(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
-                
-
+        
+        
         guard let accessToken = arguments["accessToken"] as? String else {
             return result (["result": true])
         }
@@ -244,13 +244,13 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
         
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
-                
+        
         guard let workspaceSid = arguments["workspaceSid"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'workspaceSid' parameter", details: nil))}
         
         guard  let  channelSid = arguments["channelSid"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
-                
+        
         guard  let  agentId = arguments["agentId"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
-                
+        
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["To": callTo,
                               "From":callFrom,
@@ -272,11 +272,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             return  result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'callTo' parameter", details: nil))}
         
         guard let callFrom = arguments["from"] as? String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'from' parameter", details: nil))}
-                
+        
         guard let accessToken = arguments["accessToken"] as?String else { return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'accessToken' parameter", details: nil))}
         
         guard  let  displayName = arguments["displayName"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'displayName' parameter", details: nil))}
-                
+        
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["To": callTo,
                               "from":callFrom,
@@ -288,7 +288,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
     
     public  func sendDigit(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-                
+        
         let arguments:Dictionary<String, AnyObject> = call.arguments as! Dictionary<String,   AnyObject>;
         
         guard let digit = arguments["digit"] as? String
@@ -316,7 +316,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
     
     func showMissedCallNotification(from:String?, to:String?){
-        guard UserDefaults.standard.optionalBool(forKey: "show-notifications") ?? true else{return}
+        guard UserDefaults.standard.bool(forKey: "show-notifications") else{return}
         let notificationCenter = UNUserNotificationCenter.current()
         
         
@@ -533,7 +533,7 @@ extension SwiftTwilioVoice: PKPushRegistryDelegate {
             self.deviceToken = pushCredentials.token as Data;
             return
         }
-                
+        
         guard registrationRequired() || deviceToken != pushCredentials.token else { return }
         
         let deviceToken = pushCredentials.token
@@ -696,7 +696,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
         else{
             activeCallInvite = callInvite
             sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
-            let contactNumber:String? = "+\(callInvite.customParameters?["from"] ?? "")"
+            let contactNumber:String? = "+\(callInvite.customParameters?["from"]?.trimmingCharacters(in: .whitespaces) ?? "")"
             let contactName:String? = callInvite.customParameters?["contact_name"]
             reportIncomingCall(from: ((contactName != nil && contactName?.lowercased() != "null" || contactName?.lowercased() != "unknown") ? contactNumber:contactName) ??  "",  uuid: callInvite.uuid)
             self.activeCallInvite = callInvite
@@ -807,13 +807,3 @@ extension SwiftTwilioVoice: CallDelegate{
         }
     }
 }
-
-extension UserDefaults {
-    public func optionalBool(forKey defaultName: String) -> Bool? {
-        if let value = value(forKey: defaultName) {
-            return value as? Bool
-        }
-        return nil
-    }
-}
-
