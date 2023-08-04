@@ -144,11 +144,11 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
             sendEventHandleCall("onAnswerCall", data:Mapper.callInviteToDict(ci),error:nil)
             self.activeCall = theCall
             self.activeCallInvite = nil
-            
             guard #available(iOS 13, *) else {
                 self.incomingPushHandled()
                 return
             }
+            UserDefaults.standard.setValue(true, forKey: "flutter.VALUE_HOLDER_USER_INCOMING_CALL_IN_PROGRESS")
         } else {
             sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(activeCall), error: nil)
         }
