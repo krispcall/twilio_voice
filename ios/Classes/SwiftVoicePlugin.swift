@@ -698,7 +698,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
             sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
             let contactNumber:String? = "+\(callInvite.customParameters?["from"]?.trimmingCharacters(in: .whitespaces) ?? "")"
             let contactName:String? = callInvite.customParameters?["contact_name"]
-            reportIncomingCall(from: ((contactName != nil && contactName?.lowercased() != "null" || contactName?.lowercased() != "unknown") ? contactName:contactNumber) ??  "",  uuid: callInvite.uuid)
+            reportIncomingCall(from: ((contactName != nil && (contactName?.lowercased() != "null") && (contactName != nil && contactName?.lowercased() != "unknown")) ? contactName:contactNumber) ??  "",  uuid: callInvite.uuid)
             self.activeCallInvite = callInvite
         }
     }
