@@ -441,7 +441,7 @@ class VoiceClient {
       print("this is register for notification data $data");
       return data["result"];
     } on PlatformException catch (err) {
-      throw TwilioVoice._convertException(err);
+      return false;
     }
   }
 
