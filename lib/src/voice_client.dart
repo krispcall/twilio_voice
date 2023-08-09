@@ -46,33 +46,32 @@ class AnswerCall {
   AnswerCall(this.answerCall);
 }
 
-class Call  {
-   String? callSid;
+class Call {
+  String? callSid;
 
-   String? to;
+  String? to;
 
-   String? from;
+  String? from;
 
-   bool? isOnHold;
+  bool? isOnHold;
 
-   bool? isMuted;
+  bool? isMuted;
 
-   Map<dynamic, dynamic>? error;
+  Map<dynamic, dynamic>? error;
 
   Call(this.to, this.from, this.isOnHold, this.isMuted, this.callSid,
       this.error);
-  Call.fromJson(Map<String, dynamic> json, this.to, this.from, this.isOnHold, this.isMuted, this.callSid,
-      this.error) {
-      callSid = json["call_sid"].toString().trim();
-      to = json["to"].toString().trim();
-      from = json["from"].toString().trim();
-      isOnHold = json["is_on_hold"];
-      isMuted = json["is_Muted"];
-      error = json["error"];
-
+  Call.fromJson(Map<String, dynamic> json, this.to, this.from, this.isOnHold,
+      this.isMuted, this.callSid, this.error) {
+    callSid = json["call_sid"].toString().trim();
+    to = json["to"].toString().trim();
+    from = json["from"].toString().trim();
+    isOnHold = json["is_on_hold"];
+    isMuted = json["is_Muted"];
+    error = json["error"];
   }
   Map<String, dynamic> toJson(Call? object) {
-    final Map<String, dynamic> data = <String, dynamic> {};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["call_sid"] = callSid;
     data["to"] = to;
     data["from"] = from;
@@ -81,7 +80,6 @@ class Call  {
     data["error"] = error;
     return data;
   }
-
 }
 //#endregion
 
@@ -433,27 +431,35 @@ class VoiceClient {
     }
   }
 
-  Future<bool> registerForNotification(String accessToken, String token) async {
+  Future<dynamic> registerForNotification(
+      String accessToken, String token) async {
     try {
       final data = await TwilioVoice._methodChannel.invokeMethod(
           'registerForNotification',
           <String, Object>{'accessToken': accessToken, 'token': token});
-      print("this is register for notification data $data");
-      return data["result"];
+      return data;
     } on PlatformException catch (err) {
-      return false;
+      return {
+        "result": false,
+        "errorCode": err.code,
+        "errorMsg": "${err.message} ${err.details}"
+      };
     }
   }
 
-  Future<bool> unregisterForNotification(
+  Future<dynamic> unregisterForNotification(
       String accessToken, String token) async {
     try {
       final data = await TwilioVoice._methodChannel.invokeMethod(
           'unregisterForNotification',
           <String, Object>{'accessToken': accessToken, 'token': token});
-      return data["result"];
+      return data;
     } on PlatformException catch (err) {
-      throw TwilioVoice._convertException(err);
+      return {
+        "result": false,
+        "errorCode": err.code,
+        "errorMsg": "${err.message} ${err.details}"
+      };
     }
   }
 

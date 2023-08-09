@@ -421,13 +421,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
         Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener {
             override fun onRegistered(accessToken: String, fcmToken: String) {
-                sendEventRegistration("registerForNotification", mapOf("result" to true))
-                result.success(mapOf("result" to true))
+                sendEventRegistration("registerForNotification", mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to ""))
+                result.success(mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to ""))
             }
 
             override fun onError(registrationException: RegistrationException, accessToken: String, fcmToken: String) {
-                sendEventRegistration("registerForNotification", mapOf("result" to false), registrationException)
-                result.success(mapOf("result" to false))
+                sendEventRegistration("registerForNotification", mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message), registrationException)
+                result.success(mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message))
             }
         })
     }
@@ -439,13 +439,13 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
 
         Voice.unregister(accessToken, Voice.RegistrationChannel.FCM, token, object : UnregistrationListener {
             override fun onUnregistered(accessToken: String?, fcmToken: String?) {
-                sendEventRegistration("unregisterForNotification", mapOf("result" to true))
-                result.success(mapOf("result" to true))
+                sendEventRegistration("unregisterForNotification", mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to ""))
+                result.success(mapOf("result" to true , "errorCode" to "000000000", "errorMsg" to ""))
             }
 
             override fun onError(registrationException: RegistrationException, accessToken: String?, fcmToken: String?) {
-                sendEventRegistration("unregisterForNotification", mapOf("result" to false), registrationException)
-                result.success(mapOf("result" to false))
+                sendEventRegistration("unregisterForNotification", mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message), registrationException)
+                result.success(mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message))
             }
         })
     }
