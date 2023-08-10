@@ -221,13 +221,13 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         if let deviceToken = self.deviceToken, let token = accessToken as? String {
             TwilioVoiceSDK.register(accessToken: token, deviceToken: deviceToken) { (error) in
                 if let error = error {
-                    self.sendNotificationEvent("registerForNotification", data: ["result": false], error: error)
-                    return result( ["result" : false])
+                    self.sendNotificationEvent("registerForNotification", data: ["result": false, "errorCode": error._code, "errorMsg": error.localizedDescription], error: error)
+                    return result(["result" : false, "errorCode": error._code, "errorMsg": error.localizedDescription] as [String : Any])
                 }
                 else {
-                    self.sendNotificationEvent("registerForNotification", data: ["result": true], error: error)
+                    self.sendNotificationEvent("registerForNotification", data: ["result": true, "errorCode": "000000000", "errorMsg": ""], error: error)
                 }
-                return result( ["result" : true])
+                return result( ["result" : true, "errorCode": "000000000", "errorMsg": ""] as [String : Any])
             }
         }
     }
@@ -416,12 +416,12 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         if let deviceToken = self.deviceToken, let token = accessToken as? String {
             TwilioVoiceSDK.unregister(accessToken: token, deviceToken: deviceToken) { (error) in
                 if let error = error {
-                    self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: error as NSError)
-                    return result( ["result" : true])
+                    self.sendNotificationEvent("unregisterForNotification",data:["result": false, "errorCode": error._code, "errorMsg": error.localizedDescription],error: error as NSError)
+                    return result( ["result" : false, "errorCode": error._code, "errorMsg": error.localizedDescription] as [String : Any])
                 }
                 else {
-                    self.sendNotificationEvent("unregisterForNotification",data:["result": true],error: nil)
-                    return result (["result": true])
+                    self.sendNotificationEvent("unregisterForNotification",data:["result": true, "errorCode": "000000000", "errorMsg": ""],error: nil)
+                    return result (["result": true, "errorCode": "000000000", "errorMsg": ""] as [String : Any])
                 }
             }
         }
