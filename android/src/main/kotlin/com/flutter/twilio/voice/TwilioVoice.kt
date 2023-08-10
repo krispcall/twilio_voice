@@ -154,8 +154,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             params["accessToken"] = accessToken
             params["displayName"] = displayName
             val connectOptions = ConnectOptions.Builder(accessToken)
-                    .params(params)
-                    .build()
+                .params(params)
+                .build()
             activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
             {
                 override fun onConnectFailure(call: Call, callException: CallException)
@@ -224,8 +224,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             params["platform"] = "mobile"
 
             val connectOptions = ConnectOptions.Builder(accessToken)
-                    .params(params)
-                    .build()
+                .params(params)
+                .build()
             activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
             {
                 override fun onConnectFailure(call: Call, callException: CallException)
@@ -414,22 +414,61 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         activeCall?.sendDigits(digit)
     }
 
-    fun registerForNotification(call: MethodCall, result: MethodChannel.Result)
-    {
-        val token: String = call.argument<String>("token") ?: return result.error("MISSING_PARAMS", "The parameter 'token' was not given", null)
-        val accessToken: String = call.argument<String>("accessToken") ?: return result.error("MISSING_PARAMS", "The parameter 'accessToken' was not given", null)
+    fun registerForNotification(call: MethodCall, result: MethodChannel.Result) {
+        val token: String = call.argument<String>("token") ?: return result.error(
+            "MISSING_PARAMS",
+            "The parameter 'token' was not given",
+            null
+        )
+        val accessToken: String = call.argument<String>("accessToken") ?: return result.error(
+            "MISSING_PARAMS",
+            "The parameter 'accessToken' was not given",
+            null
+        )
 
-        Voice.register(accessToken, Voice.RegistrationChannel.FCM, token, object : RegistrationListener {
-            override fun onRegistered(accessToken: String, fcmToken: String) {
-                sendEventRegistration("registerForNotification", mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to ""))
-                result.success(mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to ""))
-            }
+        Voice.register(
+            accessToken,
+            Voice.RegistrationChannel.FCM,
+            token,
+            object : RegistrationListener {
+                override fun onRegistered(accessToken: String, fcmToken: String) {
+                    sendEventRegistration(
+                        "registerForNotification",
+                        mapOf("result" to true, "errorCode" to "000000000", "errorMsg" to "")
+                    )
+                    result.success(
+                        mapOf(
+                            "result" to true,
+                            "errorCode" to "000000000",
+                            "errorMsg" to ""
+                        )
+                    )
+                }
 
-            override fun onError(registrationException: RegistrationException, accessToken: String, fcmToken: String) {
-                sendEventRegistration("registerForNotification", mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message), registrationException)
-                result.success(mapOf("result" to false, "errorCode" to registrationException.errorCode, "errorMsg" to registrationException.message))
+                override fun onError(
+                    registrationException: RegistrationException,
+                    accessToken: String,
+                    fcmToken: String
+                ) {
+                    sendEventRegistration(
+                        "registerForNotification",
+                        mapOf(
+                            "result" to false,
+                            "errorCode" to registrationException.errorCode,
+                            "errorMsg" to registrationException.message
+                        ),
+                        registrationException
+                    )
+                    result.success(
+                        mapOf(
+                            "result" to false,
+                            "errorCode" to registrationException.errorCode,
+                            "errorMsg" to registrationException.message
+                        )
+                    )
+                }
             }
-        })
+        )
     }
 
     fun unregisterForNotification(call: MethodCall, result: MethodChannel.Result)
