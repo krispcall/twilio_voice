@@ -213,6 +213,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val workspaceSid: String = call.argument<String>("workspaceSid") ?: return result.error("ERROR", "Missing workspaceSid", null)
         val channelSid: String = call.argument<String>("channelSid") ?: return result.error("ERROR", "Missing channelSid", null)
         val agentId: String = call.argument<String>("agentId") ?: return result.error("ERROR", "Missing agentId", null)
+        val hubspotClient: String = call.argument<String>("hubspotClient") ?: return result.error("ERROR", "Missing hubspotClient", null)
+        val conversationSid: String = call.argument<String>("conversationSid") ?: return result.error("ERROR", "Missing conversationSid", null)
         try
         {
             val params = HashMap<String, String>()
@@ -222,7 +224,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             params["channel_sid"] = channelSid
             params["agent_id"] = agentId
             params["platform"] = "mobile"
-
+            params["hubspot_client"] = hubspotClient
+            params["conversation_sid"] = conversationSid
             val connectOptions = ConnectOptions.Builder(accessToken)
                 .params(params)
                 .build()

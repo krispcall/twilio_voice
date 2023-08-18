@@ -249,14 +249,21 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
         
         guard  let  channelSid = arguments["channelSid"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
         
-        guard  let  agentId = arguments["agentId"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'channelSid' parameter", details: nil))}
+        guard  let  agentId = arguments["agentId"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'agentId' parameter", details: nil))}
+        
+        guard  let  hubspotClient = arguments["hubspotClient"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'hubspotClient' parameter", details: nil))}
+        
+        guard  let  conversationSid = arguments["conversationSid"] as?String else{ return result(FlutterError(code: "MISSING_PARAMS", message: "Missing 'conversationSid' parameter", details: nil))}
         
         let connectOptions = ConnectOptions(accessToken: accessToken) { builder in
             builder.params = ["To": callTo,
                               "From":callFrom,
                               "workspace_sid":workspaceSid,
                               "channel_sid":channelSid,
-                              "agent_id": agentId ]
+                              "agent_id": agentId ,
+                              "platform": "mobile",
+                              "hubspot_client":hubspotClient,
+                              "conversationSid":conversationSid,]
         }
         
         activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)

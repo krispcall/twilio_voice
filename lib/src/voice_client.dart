@@ -354,8 +354,16 @@ class VoiceClient {
     }
   }
 
-  Future<void> makeCallWithSid(String to, String from, String workspaceSid,
-      String channelSid, String agentId, String token) async {
+  Future<void> makeCallWithSid(
+    String to,
+    String from,
+    String workspaceSid,
+    String channelSid,
+    String agentId,
+    String token,
+    String hubspotClient,
+    String conversationSid,
+  ) async {
     try {
       await TwilioVoice._methodChannel
           .invokeMethod('makeCallWithSid', <String, Object>{
@@ -364,7 +372,9 @@ class VoiceClient {
         'workspaceSid': workspaceSid,
         'channelSid': channelSid,
         'agentId': agentId,
-        'accessToken': token
+        'accessToken': token,
+        'hubspotClient': hubspotClient,
+        'conversationSid': conversationSid,
       });
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
