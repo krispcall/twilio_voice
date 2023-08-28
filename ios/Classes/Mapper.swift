@@ -55,39 +55,39 @@ public class Mapper {
             "twi_from" :"",
             "customParameters" :["":""],
             "channelInfo":["":""]]]
-        
         if(call != nil){
-            var temp: String = (call?.customParameters?["channel_info"] ?? "") as String
-            temp = temp.replacingOccurrences(of: "{'", with: "{\"")
-            temp = temp.replacingOccurrences(of: "':", with: "\":");
-            temp = temp.replacingOccurrences(of: ": '", with: ": \"");
-            temp = temp.replacingOccurrences(of: "',", with: "\",");
-            temp = temp.replacingOccurrences(of: ", '", with: ", \"");
-            temp = temp.replacingOccurrences(of: "'}", with: "\"}");
-            temp = temp.replacingOccurrences(of: "None", with: "null")
-            do{
-                let data = try JSONSerialization.jsonObject(with: temp.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>]
-                return [
-                    "data" :[
-                        "twi_call_sid" : checkStringNil(data: call?.callSid),
-                        "twi_from" :checkStringNil(data: call?.from),
-                        "twi_to" : checkStringNil(data: call?.to),
-                        "customParameters" : checkDicNil(data: call?.customParameters),
-                        "channelInfo": checkDicNil(data: )
-                    ]
+            return [
+                "data" :[
+                    "twi_call_sid" : checkStringNil(data: call?.callSid),
+                    "twi_from" :checkStringNil(data: call?.from),
+                    "twi_to" : checkStringNil(data: call?.to),
+                    "customParameters" : checkDicNil(data: call?.customParameters)
+                    
                 ]
-            }
-            catch{
-                return [
-                    "data" :[
-                        "twi_call_sid" : checkStringNil(data: call?.callSid),
-                        "twi_from" :checkStringNil(data: call?.from),
-                        "twi_to" : checkStringNil(data: call?.to),
-                        "customParameters" : checkDicNil(data: call?.customParameters)
-                        
-                    ]
-                ]
-            }
+            ]
+            //            var temp: String = (call?.customParameters?["channel_info"] ?? "") as String
+            //            temp = temp.replacingOccurrences(of: "{'", with: "{\"")
+            //            temp = temp.replacingOccurrences(of: "':", with: "\":");
+            //            temp = temp.replacingOccurrences(of: ": '", with: ": \"");
+            //            temp = temp.replacingOccurrences(of: "',", with: "\",");
+            //            temp = temp.replacingOccurrences(of: ", '", with: ", \"");
+            //            temp = temp.replacingOccurrences(of: "'}", with: "\"}");
+            //            temp = temp.replacingOccurrences(of: "None", with: "null")
+            //            do{
+            //                let data = try JSONSerialization.jsonObject(with: temp.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>]
+            //                return [
+            //                    "data" :[
+            //                        "twi_call_sid" : checkStringNil(data: call?.callSid),
+            //                        "twi_from" :checkStringNil(data: call?.from),
+            //                        "twi_to" : checkStringNil(data: call?.to),
+            //                        "customParameters" : checkDicNil(data: call?.customParameters),
+            //                        "channelInfo": checkDicNil(data: )
+            //                    ]
+            //                ]
+            //            }
+            //            catch{
+            //
+            //            }
             
         }
         return emptyData;

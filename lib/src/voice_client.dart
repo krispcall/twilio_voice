@@ -514,27 +514,15 @@ class VoiceClient {
     switch (eventName) {
       case 'onCallInvite':
         _isOnCall = true;
-        var callSid = Platform.isIOS
-            ? data['data']['callSid'] == null
-                ? null
-                : data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] == null
-                ? null
-                : data['data']['twi_call_sid'] as String;
-        var to = Platform.isIOS
-            ? data['data']['to'] == null
-                ? null
-                : data['data']['to'] as String
-            : data['data']['twi_to'] == null
-                ? null
-                : data['data']['twi_to'] as String;
-        var from = Platform.isIOS
-            ? data['data']['customParameters']['from'] == null
-                ? null
-                : data['data']['customParameters']['from'] as String
-            : data['data']['twi_from'] == null
-                ? null
-                : data['data']['twi_from'] as String;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
         var error = event['error'] != null ? event["error"] : null;
         this.customParameters =
             data['data']['customParameters'] as Map<dynamic, dynamic>;
@@ -559,27 +547,15 @@ class VoiceClient {
         break;
       case 'onCancelledCallInvite':
         _isOnCall = false;
-        var callSid = Platform.isIOS
-            ? data['data']['callSid'] == null
-                ? null
-                : data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] == null
-                ? null
-                : data['data']['twi_call_sid'] as String;
-        var to = Platform.isIOS
-            ? data['data']['to'] == null
-                ? null
-                : data['data']['to'] as String
-            : data['data']['twi_to'] == null
-                ? null
-                : data['data']['twi_to'] as String;
-        var from = Platform.isIOS
-            ? data['data']['from'] == null
-                ? null
-                : data['data']['from'] as String
-            : data['data']['twi_from'] == null
-                ? null
-                : data['data']['twi_from'] as String;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
@@ -607,27 +583,15 @@ class VoiceClient {
         break;
       case 'onAnswerCall':
         _isOnCall = true;
-        var callSid = Platform.isIOS
-            ? data['data']['callSid'] == null
-                ? null
-                : data['data']['callSid'] as String
-            : data['data']['twi_call_sid'] == null
-                ? null
-                : data['data']['twi_call_sid'] as String;
-        var to = Platform.isIOS
-            ? data['data']['to'] == null
-                ? null
-                : data['data']['to'] as String
-            : data['data']['twi_to'] == null
-                ? null
-                : data['data']['twi_to'] as String;
-        var from = Platform.isIOS
-            ? data['data']['from'] == null
-                ? null
-                : data['data']['from'] as String
-            : data['data']['twi_from'] == null
-                ? null
-                : data['data']['twi_from'] as String;
+        var callSid = data['data']['twi_call_sid'] == null
+            ? null
+            : data['data']['twi_call_sid'] as String;
+        var to = data['data']['twi_to'] == null
+            ? null
+            : data['data']['twi_to'] as String;
+        var from = data['data']['twi_from'] == null
+            ? null
+            : data['data']['twi_from'] as String;
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
