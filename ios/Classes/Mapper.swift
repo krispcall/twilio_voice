@@ -28,70 +28,90 @@ public class Mapper {
         }
     }
     
-    
     public static func callToDict(_ message: Call?) -> [String: Any] {
         let emptyData =  ["data" :[
-        "isOnHold" :false,
-        "to" :"",
-        "from" :"",
-        "isMuted" :false]]
+            "callSid": "",
+            "isOnHold" :false,
+            "to" :"",
+            "from" :"",
+            "isMuted" :false]]
         if(message != nil){
-
-        return [
-            "data" :[
-                "from" :checkStringNil(data: message?.from),
-                "to" : checkStringNil(data: message?.to),
-                "isOnHold" : checkBoolNil(data: message?.isOnHold),
-                "isMuted" :checkBoolNil(data: message?.isMuted)]
-        ]
+            return [
+                "data" :[
+                    "callSid": checkStringNil(data: message?.sid),
+                    "from" :checkStringNil(data: message?.from),
+                    "to" : checkStringNil(data: message?.to),
+                    "isOnHold" : checkBoolNil(data: message?.isOnHold),
+                    "isMuted" :checkBoolNil(data: message?.isMuted)]
+            ]
         }
         return emptyData
     }
     
-
-    
-    
     public static func callInviteToDict(_ call: CallInvite?) -> [String: Any] {
         let emptyData =  ["data" :[
-        "callSid" :"",
-        "to" :"",
-        "from" :"",
-        "customParameters" :["":""]]]
+            "twi_call_sid" :"",
+            "twi_to" :"",
+            "twi_from" :"",
+            "customParameters" :["":""],
+            "channelInfo":["":""]]]
         
         if(call != nil){
-            return [
-                "data" :[
-                    "callSid" : checkStringNil(data: call?.callSid),
-                    "from" :checkStringNil(data: call?.from),
-                    "to" : checkStringNil(data: call?.to),
-                    "customParameters" : checkDicNil(data: call?.customParameters)
-             ]
-            ]
+            var temp: String = (call?.customParameters?["channel_info"] ?? "") as String
+            temp = temp.replacingOccurrences(of: "{'", with: "{\"")
+            temp = temp.replacingOccurrences(of: "':", with: "\":");
+            temp = temp.replacingOccurrences(of: ": '", with: ": \"");
+            temp = temp.replacingOccurrences(of: "',", with: "\",");
+            temp = temp.replacingOccurrences(of: ", '", with: ", \"");
+            temp = temp.replacingOccurrences(of: "'}", with: "\"}");
+            temp = temp.replacingOccurrences(of: "None", with: "null")
+            do{
+                let data = try JSONSerialization.jsonObject(with: temp.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>]
+                return [
+                    "data" :[
+                        "twi_call_sid" : checkStringNil(data: call?.callSid),
+                        "twi_from" :checkStringNil(data: call?.from),
+                        "twi_to" : checkStringNil(data: call?.to),
+                        "customParameters" : checkDicNil(data: call?.customParameters),
+                        "channelInfo": checkDicNil(data: )
+                    ]
+                ]
+            }
+            catch{
+                return [
+                    "data" :[
+                        "twi_call_sid" : checkStringNil(data: call?.callSid),
+                        "twi_from" :checkStringNil(data: call?.from),
+                        "twi_to" : checkStringNil(data: call?.to),
+                        "customParameters" : checkDicNil(data: call?.customParameters)
+                        
+                    ]
+                ]
+            }
+            
         }
         return emptyData;
     }
-    
     
     public static func cancelledCallInviteToDict(_ call: CancelledCallInvite?) -> [String: Any] {
         let emptyData =  ["data" :[
-        "callSid" :"",
-        "to" :"",
-        "from" :"",
-        "customParameters" :["":""]]]
-        
+            "twi_call_sid" :"",
+            "twi_to" :"",
+            "twi_from" :"",
+            "customParameters" :["":""],
+        ]]
         if(call != nil){
             return [
                 "data" :[
-                    "callSid" : checkStringNil(data: call?.callSid),
-                    "from" :checkStringNil(data: call?.from),
-                    "to" : checkStringNil(data: call?.to),
+                    "twi_call_sid" : checkStringNil(data: call?.callSid),
+                    "twi_from" :checkStringNil(data: call?.from),
+                    "twi_to" : checkStringNil(data: call?.to),
                     "customParameters" : checkDicNil(data: call?.customParameters)
-             ]
+                ]
             ]
         }
         return emptyData;
     }
-    
     
     public static func errorToDict(_ error: Error?) -> [String: Any?]? {
         if let error = error as NSError? {
@@ -102,5 +122,4 @@ public class Mapper {
         }
         return nil
     }
-
 }

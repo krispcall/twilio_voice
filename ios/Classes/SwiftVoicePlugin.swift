@@ -17,7 +17,7 @@ var  TAG = "TwilioVoiceIOS";
 
 
 
-public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
+public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
     
     private var activeCall: Call?
     var callKitProvider: CXProvider
@@ -266,7 +266,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
                               "conversationSid":conversationSid,]
         }
         
-        activeCall  = TwilioVoiceSDK.connect(options: connectOptions,delegate: self)
+        activeCall  = TwilioVoiceSDK.connect(options: connectOptions, delegate: self)
     }
     
     public func makeCall(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -522,8 +522,6 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate{
     }
 }
 
-
-
 extension Data {
     var hexString: String {
         let hexString = map { String(format: "%02.2hhx", $0) }.joined()
@@ -719,70 +717,61 @@ extension SwiftTwilioVoice: NotificationDelegate{
     }
 }
 
-
 extension SwiftTwilioVoice: CallDelegate{
     public func callDidReconnect(call: Call) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
+        if(self.callOutgoing){
             sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
         }else {
-            sendEventIncomingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
+            sendEventIncomingCall("onReconnected",data:Mapper.callInviteToDict(self.activeCallInvite), error:nil)
         }
     }
     
     public func callDidStartRinging(call: Call) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
-            sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+        if(self.callOutgoing){
+            sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call), error: nil)
         }else {
-            sendEventIncomingCall("onRinging",data:Mapper.callToDict(call),  error: nil)
+            sendEventIncomingCall("onRinging",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
         }
     }
     
     public func callDidReceiveQualityWarnings(call: Call, currentWarnings: Set<NSNumber>, previousWarnings: Set<NSNumber>) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
-            sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+        if(self.callOutgoing){
+            sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call), error: nil)
         }else {
-            sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call),error: nil)
+            sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
         }
     }
     
     public func callIsReconnecting(call: Call, error: Error) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
+        if(self.callOutgoing){
             sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
         }else {
-            sendEventIncomingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
+            sendEventIncomingCall("onReconnecting",data:Mapper.callInviteToDict(self.activeCallInvite), error:error)
         }
     }
     
-    
     public func callDidConnect(call: Call) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
+        if(self.callOutgoing){
             sendEventOutGoingCall("onConnected",data:Mapper.callToDict(call), error: nil)
         }else {
-            //            sendEventIncomingCall("onConnected",data:Mapper.callToDict(call), error: nil)
+            sendEventIncomingCall("onConnected",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
         }
     }
     
     public func callDidFailToConnect(call: Call, error: Error) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
+        if(self.callOutgoing){
             sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
         }else {
-            sendEventIncomingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
+            sendEventIncomingCall("onConnectFailure",data:Mapper.callInviteToDict(self.activeCallInvite), error: error)
         }
     }
     
     public func callDidDisconnect(call: Call, error: Error?) {
-        let direction = (self.callOutgoing ? "Outgoing" : "Incoming")
-        if(direction == "Outgoing"){
+        if(self.callOutgoing){
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
             self.callOutgoing = false;
         }else {
-            sendEventIncomingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
+            sendEventIncomingCall("onDisconnected",data:Mapper.callInviteToDict(self.activeCallInvite), error: error)
             guard let id = activeCall?.uuid else {
                 return
             }
@@ -798,7 +787,6 @@ extension SwiftTwilioVoice: CallDelegate{
             outgoingCallEventSink(eventData)
         }
     }
-    
     
     func sendEventHandleCall(_ name: String, data: [String: Any]? = nil, error: Error? = nil) {
         let eventData = ["name": name, "data": data, "error": Mapper.errorToDict(error)] as [String: Any?]

@@ -231,11 +231,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 .build()
             activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
             {
-                override fun onConnectFailure(call: Call, callException: CallException)
-                {
-                    sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)), callException)
-                }
-
                 override fun onRinging(call: Call) {
                     sendEventOutGoingCall("onRinging", mapOf("data" to Mapper.callToMap(call)), null)
                 }
@@ -243,6 +238,11 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 override fun onConnected(call: Call) {
                     activeCall = call
                     sendEventOutGoingCall("onConnected", mapOf("data" to Mapper.callToMap(call)), null)
+                }
+
+                override fun onConnectFailure(call: Call, callException: CallException)
+                {
+                    sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)), callException)
                 }
 
                 override fun onReconnecting(call: Call, callException: CallException)
