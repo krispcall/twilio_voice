@@ -24,6 +24,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
     var audioDevice: DefaultAudioDevice = DefaultAudioDevice()
     
     private var activeCallInvite: CallInvite?
+    private var dumpActiveCallInvite: CallInvite?
     private var cancelledCallInvites: CancelledCallInvite?
     var callKitCompletionCallback: ((Bool)->Swift.Void?)? = nil
     var incomingPushCompletionCallback: (()->Swift.Void?)? = nil
@@ -700,6 +701,7 @@ extension SwiftTwilioVoice: NotificationDelegate{
         }
         else{
             activeCallInvite = callInvite
+            self.dumpActiveCallInvite = callInvite
             sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
             let contactNumber:String? = "+\(callInvite.customParameters?["from"]?.trimmingCharacters(in: .whitespaces) ?? "")"
             let contactName:String? = callInvite.customParameters?["contact_name"]
@@ -722,7 +724,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onReconnected",data:Mapper.callToDict(call), error:nil)
         }else {
-            sendEventIncomingCall("onReconnected",data:Mapper.callInviteToDict(self.activeCallInvite), error:nil)
+            sendEventIncomingCall("onReconnected",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error:nil)
         }
     }
     
@@ -730,7 +732,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onRinging",data:Mapper.callToDict(call), error: nil)
         }else {
-            sendEventIncomingCall("onRinging",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
+            sendEventIncomingCall("onRinging",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error: nil)
         }
     }
     
@@ -738,7 +740,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onCallQualityWarningsChanged",data:Mapper.callToDict(call), error: nil)
         }else {
-            sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
+            sendEventIncomingCall("onCallQualityWarningsChanged",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error: nil)
         }
     }
     
@@ -746,7 +748,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onReconnecting",data:Mapper.callToDict(call), error:error)
         }else {
-            sendEventIncomingCall("onReconnecting",data:Mapper.callInviteToDict(self.activeCallInvite), error:error)
+            sendEventIncomingCall("onReconnecting",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error:error)
         }
     }
     
@@ -754,7 +756,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onConnected",data:Mapper.callToDict(call), error: nil)
         }else {
-            sendEventIncomingCall("onConnected",data:Mapper.callInviteToDict(self.activeCallInvite), error: nil)
+            sendEventIncomingCall("onConnected",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error: nil)
         }
     }
     
@@ -762,7 +764,7 @@ extension SwiftTwilioVoice: CallDelegate{
         if(self.callOutgoing){
             sendEventOutGoingCall("onConnectFailure",data:Mapper.callToDict(call), error: error)
         }else {
-            sendEventIncomingCall("onConnectFailure",data:Mapper.callInviteToDict(self.activeCallInvite), error: error)
+            sendEventIncomingCall("onConnectFailure",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error: error)
         }
     }
     
@@ -771,7 +773,7 @@ extension SwiftTwilioVoice: CallDelegate{
             sendEventOutGoingCall("onDisconnected",data:Mapper.callToDict(call), error: error)
             self.callOutgoing = false;
         }else {
-            sendEventIncomingCall("onDisconnected",data:Mapper.callInviteToDict(self.activeCallInvite), error: error)
+            sendEventIncomingCall("onDisconnected",data:Mapper.callInviteToDict(self.dumpActiveCallInvite), error: error)
             guard let id = activeCall?.uuid else {
                 return
             }

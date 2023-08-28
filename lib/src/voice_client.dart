@@ -867,7 +867,7 @@ class VoiceClient {
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
         if (customParameters != null) {
-          tempChannelInfo = customParameters!['channel_info'] == null
+          tempChannelInfo = customParameters['channel_info'] == null
               ? null
               : customParameters['channel_info'] as String;
           tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");

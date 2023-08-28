@@ -34,7 +34,7 @@ public class Mapper {
             "isOnHold" :false,
             "to" :"",
             "from" :"",
-            "isMuted" :false]]
+            "isMuted" :false] as [String : Any]]
         if(message != nil){
             return [
                 "data" :[
@@ -42,7 +42,7 @@ public class Mapper {
                     "from" :checkStringNil(data: message?.from),
                     "to" : checkStringNil(data: message?.to),
                     "isOnHold" : checkBoolNil(data: message?.isOnHold),
-                    "isMuted" :checkBoolNil(data: message?.isMuted)]
+                    "isMuted" :checkBoolNil(data: message?.isMuted)] as [String : Any]
             ]
         }
         return emptyData
@@ -53,8 +53,7 @@ public class Mapper {
             "twi_call_sid" :"",
             "twi_to" :"",
             "twi_from" :"",
-            "customParameters" :["":""],
-            "channelInfo":["":""]]]
+            "customParameters" :["":""]] as [String : Any]]
         if(call != nil){
             return [
                 "data" :[
@@ -62,33 +61,8 @@ public class Mapper {
                     "twi_from" :checkStringNil(data: call?.from),
                     "twi_to" : checkStringNil(data: call?.to),
                     "customParameters" : checkDicNil(data: call?.customParameters)
-                    
-                ]
+                ] as [String : Any]
             ]
-            //            var temp: String = (call?.customParameters?["channel_info"] ?? "") as String
-            //            temp = temp.replacingOccurrences(of: "{'", with: "{\"")
-            //            temp = temp.replacingOccurrences(of: "':", with: "\":");
-            //            temp = temp.replacingOccurrences(of: ": '", with: ": \"");
-            //            temp = temp.replacingOccurrences(of: "',", with: "\",");
-            //            temp = temp.replacingOccurrences(of: ", '", with: ", \"");
-            //            temp = temp.replacingOccurrences(of: "'}", with: "\"}");
-            //            temp = temp.replacingOccurrences(of: "None", with: "null")
-            //            do{
-            //                let data = try JSONSerialization.jsonObject(with: temp.data(using: .utf8)!, options : .allowFragments) as? [Dictionary<String,Any>]
-            //                return [
-            //                    "data" :[
-            //                        "twi_call_sid" : checkStringNil(data: call?.callSid),
-            //                        "twi_from" :checkStringNil(data: call?.from),
-            //                        "twi_to" : checkStringNil(data: call?.to),
-            //                        "customParameters" : checkDicNil(data: call?.customParameters),
-            //                        "channelInfo": checkDicNil(data: )
-            //                    ]
-            //                ]
-            //            }
-            //            catch{
-            //
-            //            }
-            
         }
         return emptyData;
     }
@@ -99,7 +73,7 @@ public class Mapper {
             "twi_to" :"",
             "twi_from" :"",
             "customParameters" :["":""],
-        ]]
+        ] as [String : Any]]
         if(call != nil){
             return [
                 "data" :[
@@ -107,7 +81,7 @@ public class Mapper {
                     "twi_from" :checkStringNil(data: call?.from),
                     "twi_to" : checkStringNil(data: call?.to),
                     "customParameters" : checkDicNil(data: call?.customParameters)
-                ]
+                ] as [String : Any]
             ]
         }
         return emptyData;
