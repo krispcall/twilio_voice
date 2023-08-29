@@ -861,18 +861,17 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-        if (customParameters != null) {
-          tempChannelInfo = customParameters['channel_info'] == null
-              ? null
-              : customParameters['channel_info'] as String;
-          tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
-          tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
-          tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
-          tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
-        }
+        tempChannelInfo = customParameters?['channel_info'] == null
+            ? null
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo = tempChannelInfo == null
             ? null
             : (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
@@ -895,10 +894,10 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-
-        tempChannelInfo = customParameters!['channel_info'] == null
+        tempChannelInfo = customParameters?['channel_info'] == null
             ? null
-            : customParameters['channel_info'] as String;
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -908,7 +907,7 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        customParameters["channel_info"] = channelInfo;
+        customParameters?["channel_info"] = channelInfo;
         _incomingRinging
             .add(CallInvite(callSid, to, from, customParameters, error));
         break;
@@ -927,7 +926,10 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-        tempChannelInfo = customParameters!['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] == null
+            ? null
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -937,7 +939,7 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        customParameters["channel_info"] = channelInfo;
+        customParameters?["channel_info"] = channelInfo;
         _incomingConnected
             .add(CallInvite(callSid, to, from, customParameters, error));
         break;
@@ -955,10 +957,10 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-
-        tempChannelInfo = customParameters!['channel_info'] == null
+        tempChannelInfo = customParameters?['channel_info'] == null
             ? null
-            : customParameters['channel_info'] as String;
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -968,7 +970,7 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        customParameters["channel_info"] = channelInfo;
+        customParameters?["channel_info"] = channelInfo;
         _incomingReconnecting
             .add(CallInvite(callSid, to, from, customParameters, error));
         break;
@@ -986,10 +988,10 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-
-        tempChannelInfo = customParameters!['channel_info'] == null
+        tempChannelInfo = customParameters?['channel_info'] == null
             ? null
-            : customParameters['channel_info'] as String;
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -999,7 +1001,7 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        customParameters["channel_info"] = channelInfo;
+        customParameters?["channel_info"] = channelInfo;
         _incomingReconnected
             .add(CallInvite(callSid, to, from, customParameters, error));
         break;
@@ -1030,9 +1032,10 @@ class VoiceClient {
         var customParameters = data['data']['customParameters'] == null
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
-        tempChannelInfo = customParameters!['channel_info'] == null
+        tempChannelInfo = customParameters?['channel_info'] == null
             ? null
-            : customParameters['channel_info'] as String;
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
         tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
         tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
         tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
@@ -1042,7 +1045,7 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        customParameters["channel_info"] = channelInfo;
+        customParameters?["channel_info"] = channelInfo;
         _incomingDisconnected
             .add(CallInvite(callSid, to, from, customParameters, error));
         tempChannelInfo = "";
@@ -1061,24 +1064,22 @@ class VoiceClient {
             ? null
             : data['data']['customParameters'] as Map<dynamic, dynamic>;
         var error = event['error'] != null ? event["error"] : null;
-        if (customParameters != null) {
-          tempChannelInfo = customParameters['channel_info'] as String;
-          tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
-          tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
-          tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
-          tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
-          tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
-          var channelInfo =
-              (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-          customParameters["channel_info"] = channelInfo;
-          _incomingCallQualityWarningsChanged
-              .add(CallInvite(callSid!, to!, from!, customParameters, error));
-        } else {
-          _incomingCallQualityWarningsChanged
-              .add(CallInvite("", "", "", {}, error));
-        }
+        tempChannelInfo = customParameters?['channel_info'] == null
+            ? null
+            : customParameters?['channel_info'] as String;
+        tempChannelInfo = customParameters?['channel_info'] as String;
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
+        var channelInfo =
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
+        customParameters?["channel_info"] = channelInfo;
+        _incomingCallQualityWarningsChanged
+            .add(CallInvite(callSid!, to!, from!, customParameters, error));
         break;
       default:
         break;
