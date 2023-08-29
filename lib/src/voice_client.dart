@@ -32,12 +32,15 @@ class CallInvite {
 
   final Map<dynamic, dynamic>? customParameters;
 
-  final Map<dynamic, dynamic>? channelInfo;
-
   final Map<dynamic, dynamic>? error;
 
-  CallInvite(this.callSid, this.to, this.from, this.customParameters,
-      this.channelInfo, this.error);
+  CallInvite(
+    this.callSid,
+    this.to,
+    this.from,
+    this.customParameters,
+    this.error,
+  );
 }
 
 class AnswerCall {
@@ -426,6 +429,22 @@ class VoiceClient {
       final args = {'notification': message['data']};
       final data =
           await TwilioVoice._methodChannel.invokeMethod('handleMessage', args);
+      var customParameters = data["result"]['customParameters'] == null
+          ? null
+          : data["result"]['customParameters'] as Map<dynamic, dynamic>;
+      String? tempChannelInfo = customParameters!['channel_info'] == null
+          ? null
+          : customParameters['channel_info'] as String;
+      tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+      tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+      tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+      tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+      tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+      tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+      tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
+      var channelInfo =
+          (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
+      data["result"]["customParameters"]["channel_info"] = channelInfo;
       return data["result"];
     } on PlatformException catch (err) {
       throw TwilioVoice._convertException(err);
@@ -503,14 +522,6 @@ class VoiceClient {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
 
-    ErrorInfo exception;
-    if (event['error'] != null) {
-      final errorMap =
-          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'],
-          errorMap['status'] == null ? 0 : errorMap['status'] as int);
-    }
-
     switch (eventName) {
       case 'onCallInvite':
         _isOnCall = true;
@@ -537,13 +548,13 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
+        customParameters["channel_info"] = channelInfo;
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        assert(channelInfo != null);
-        _onCallInvite.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        _onCallInvite
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
       case 'onCancelledCallInvite':
         _isOnCall = false;
@@ -575,10 +586,9 @@ class VoiceClient {
         assert(callSid != null);
         assert(to != null);
         assert(from != null);
-        assert(customParameters != null);
-        assert(channelInfo != null);
-        _onCancelledCallInvite.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters["channel_info"] = channelInfo;
+        _onCancelledCallInvite
+            .add(CallInvite(callSid, to, from, customParameters, error));
         tempChannelInfo = "";
         break;
       case 'onAnswerCall':
@@ -613,9 +623,9 @@ class VoiceClient {
         assert(to != null);
         assert(from != null);
         assert(customParameters != null);
-        assert(channelInfo != null);
-        _onAnswerCall.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters?["channel_info"] = channelInfo;
+        _onAnswerCall
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
 
       default:
@@ -626,14 +636,6 @@ class VoiceClient {
   void _parseOutGoingCallEvent(dynamic event) {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
-
-    ErrorInfo exception;
-    if (event['error'] != null) {
-      final errorMap =
-          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'] ?? "",
-          errorMap['status'] == null ? 0 : errorMap['status'] as int);
-    }
 
     switch (eventName) {
       case 'onRinging':
@@ -843,13 +845,6 @@ class VoiceClient {
     final String eventName = event['name'];
     final data = Map<String, dynamic>.from(event['data']);
 
-    ErrorInfo exception;
-    if (event['error'] != null) {
-      final errorMap =
-          Map<String, dynamic>.from(event['error'] as Map<dynamic, dynamic>);
-      exception = ErrorInfo(errorMap['code'] as int, errorMap['message'], 0);
-    }
-
     switch (eventName) {
       case 'onConnectFailure':
         _isOnCall = false;
@@ -881,8 +876,9 @@ class VoiceClient {
         var channelInfo = tempChannelInfo == null
             ? null
             : (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingConnectFailure.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters?["channel_info"] = channelInfo;
+        _incomingConnectFailure
+            .add(CallInvite(callSid, to, from, customParameters, error));
         tempChannelInfo = "";
         break;
       case 'onRinging':
@@ -912,8 +908,9 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingRinging.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters["channel_info"] = channelInfo;
+        _incomingRinging
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
       case 'onConnected':
         _isOnCall = true;
@@ -940,8 +937,9 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingConnected.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters["channel_info"] = channelInfo;
+        _incomingConnected
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
       case 'onReconnecting':
         var callSid = data['data']['twi_call_sid'] == null
@@ -970,8 +968,9 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingReconnecting.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters["channel_info"] = channelInfo;
+        _incomingReconnecting
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
       case 'onReconnected':
         var callSid = data['data']['twi_call_sid'] == null
@@ -1000,8 +999,9 @@ class VoiceClient {
         tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
         var channelInfo =
             (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-        _incomingReconnected.add(CallInvite(
-            callSid, to, from, customParameters, channelInfo, error));
+        customParameters["channel_info"] = channelInfo;
+        _incomingReconnected
+            .add(CallInvite(callSid, to, from, customParameters, error));
         break;
       case 'onDisconnected':
         _isOnCall = false;
@@ -1027,7 +1027,21 @@ class VoiceClient {
                 ? null
                 : data['data']['twi_from'] as String;
         var error = event['error'] != null ? event["error"] : null;
-        _incomingDisconnected.add(CallInvite(callSid, to, from, {}, {}, error));
+        tempChannelInfo = customParameters!['channel_info'] == null
+            ? null
+            : customParameters['channel_info'] as String;
+        tempChannelInfo = tempChannelInfo?.replaceAll("{'", "{\"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("':", "\":");
+        tempChannelInfo = tempChannelInfo?.replaceAll(": '", ": \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("',", "\",");
+        tempChannelInfo = tempChannelInfo?.replaceAll(", '", ", \"");
+        tempChannelInfo = tempChannelInfo?.replaceAll("'}", "\"}");
+        tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
+        var channelInfo =
+            (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
+        customParameters["channel_info"] = channelInfo;
+        _incomingDisconnected
+            .add(CallInvite(callSid, to, from, customParameters, error));
         tempChannelInfo = "";
         break;
       case 'onCallQualityWarningsChanged':
@@ -1055,11 +1069,12 @@ class VoiceClient {
           tempChannelInfo = tempChannelInfo?.replaceAll("None", "null");
           var channelInfo =
               (json.decode(tempChannelInfo!)) as Map<dynamic, dynamic>;
-          _incomingCallQualityWarningsChanged.add(CallInvite(
-              callSid!, to!, from!, customParameters, channelInfo, error));
+          customParameters["channel_info"] = channelInfo;
+          _incomingCallQualityWarningsChanged
+              .add(CallInvite(callSid!, to!, from!, customParameters, error));
         } else {
           _incomingCallQualityWarningsChanged
-              .add(CallInvite("", "", "", {}, {}, error));
+              .add(CallInvite("", "", "", {}, error));
         }
         break;
       default:
