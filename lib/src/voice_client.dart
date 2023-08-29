@@ -1027,6 +1027,9 @@ class VoiceClient {
                 ? null
                 : data['data']['twi_from'] as String;
         var error = event['error'] != null ? event["error"] : null;
+        var customParameters = data['data']['customParameters'] == null
+            ? null
+            : data['data']['customParameters'] as Map<dynamic, dynamic>;
         tempChannelInfo = customParameters!['channel_info'] == null
             ? null
             : customParameters['channel_info'] as String;
