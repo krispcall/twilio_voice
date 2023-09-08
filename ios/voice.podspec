@@ -15,9 +15,9 @@ flutter twilio voice
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'TwilioVoice', '~> 6.4.3'
+  s.dependency 'TwilioVoice', '~> 6.9.0'
 
-  s.platform = :ios, '9.0'
+  s.platform = :ios, '12'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

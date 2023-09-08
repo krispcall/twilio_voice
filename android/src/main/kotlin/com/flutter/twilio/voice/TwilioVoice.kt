@@ -129,7 +129,9 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                 callIncomingSink = null
             }
         })
-
+        Voice.setLogLevel(LogLevel.ALL)
+        Voice.getModuleLogLevel(LogModule.CORE)
+        Voice.enableInsights(true)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -453,6 +455,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     accessToken: String,
                     fcmToken: String
                 ) {
+                    Log.d(TAG, "onError: ${registrationException.errorCode} ${registrationException.message}")
                     sendEventRegistration(
                         "registerForNotification",
                         mapOf(
