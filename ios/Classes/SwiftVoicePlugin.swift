@@ -703,9 +703,24 @@ extension SwiftTwilioVoice: NotificationDelegate{
             activeCallInvite = callInvite
             self.dumpActiveCallInvite = callInvite
             sendEventHandleCall("onCallInvite",data:Mapper.callInviteToDict(callInvite),error:nil)
-            let contactNumber:String? = "+\(callInvite.customParameters?["from"]?.trimmingCharacters(in: .whitespaces) ?? "")"
             let contactName:String? = callInvite.customParameters?["contact_name"]
-            reportIncomingCall(from: ((contactName != nil && (contactName?.lowercased() != "null") && (contactName != nil && contactName?.lowercased() != "unknown")) ? contactName:contactNumber) ??  "",  uuid: callInvite.uuid)
+            let contactNumber:String? = "+\(callInvite.customParameters?["from"]?.trimmingCharacters(in: .whitespaces) ?? "")"
+            var channelName:String? = ""
+            do {
+                let dump:String? = callInvite.customParameters?["channel_info"]
+                let cleaned = dump!.replacingOccurrences(of: "\'", with: "\"")
+                
+                let data = Data(cleaned.utf8)
+                if let dictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    channelName = dictionary["name"] as? String
+                }
+            } catch let error as NSError {
+                print("Failed to load: \(error.localizedDescription)")
+            }
+            
+            let result:String? = ((contactName != nil && (contactName?.lowercased() != "null")) && (contactName != nil && contactName?.lowercased() != "unknown")) ? ((contactName ?? "") + "(" + (channelName ?? "")) + ")" : ((contactNumber ?? "") + "(" + (channelName ?? "") + ")" )
+            
+            reportIncomingCall(from: result ?? "", uuid: callInvite.uuid)
             self.activeCallInvite = callInvite
         }
     }

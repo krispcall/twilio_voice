@@ -130,6 +130,8 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
             }
         })
         Voice.setLogLevel(LogLevel.ALL)
+        Voice.setModuleLogLevel(LogModule.SIGNALING, LogLevel.ALL)
+        Voice.setModuleLogLevel(LogModule.WEBRTC, LogLevel.ALL)
         Voice.getModuleLogLevel(LogModule.CORE)
         Voice.enableInsights(true)
     }
@@ -455,7 +457,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                     accessToken: String,
                     fcmToken: String
                 ) {
-                    Log.d(TAG, "onError: ${registrationException.errorCode} ${registrationException.message}")
                     sendEventRegistration(
                         "registerForNotification",
                         mapOf(
