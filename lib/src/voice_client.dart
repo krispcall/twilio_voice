@@ -476,8 +476,8 @@ class VoiceClient {
     }
   }
 
-  Future<String> trackTwilioLog() async {
-    final result = await TwilioVoice._methodChannel.invokeListMethod("tracklog");
+  Future<dynamic> trackTwilioLog() async {
+    final result = await TwilioVoice._methodChannel.invokeMethod("tracklog");
     return result;
   }
 
