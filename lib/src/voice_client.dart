@@ -476,6 +476,12 @@ class VoiceClient {
     }
   }
 
+  Future<String> trackTwilioLog() async {
+    final result = await TwilioVoice._methodChannel.invokeListMethod("tracklog");
+    return result;
+  }
+
+
   Future<dynamic> unregisterForNotification(
       String accessToken, String token) async {
     try {

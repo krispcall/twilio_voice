@@ -12,6 +12,7 @@ class PluginHandler : MethodCallHandler
             "create" -> create(call, result)
             "registerForNotification" -> TwilioVoice.instance.registerForNotification(call, result)
             "unregisterForNotification" -> TwilioVoice.instance.unregisterForNotification(call, result)
+            "tracklog" ->  TwilioVoice.instance.trackLog(call, result)
 
             "makeCallWithSid"->TwilioVoice.instance.makeCallWithSid(call,result)
 

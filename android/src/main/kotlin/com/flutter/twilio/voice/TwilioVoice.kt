@@ -13,6 +13,9 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
 import java.util.*
 import kotlin.concurrent.schedule
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 /** TwilioVoice */
 
@@ -420,6 +423,39 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         val digit: String = call.argument<String>("digit") ?: return result.error("MISSING_PARAMS", "The parameter 'digit' was not given", null)
         activeCall?.sendDigits(digit)
     }
+
+    fun trackLog(call: MethodCall, result: MethodChannel.Result) {
+        val log = StringBuilder()
+        try {
+            val process = Runtime.getRuntime().exec("logcat -d") // -s option filters by tag
+            val bufferedReader = BufferedReader(
+                InputStreamReader(process.inputStream)
+            )
+            var line: String
+            while (bufferedReader.readLine().also { line = it } != null) {
+                if(line.contains("Twilio"))
+                log.append(line).append("\n")
+            }
+            process.destroy()
+            result.success(
+                mapOf(
+                    "result" to log.toString(),
+                    "errorCode" to "000000000",
+                    "errorMsg" to "No error"
+                )
+            )
+        } catch (e: IOException) {
+            result.success(
+                mapOf(
+                    "result" to e.message,
+                    "errorCode" to "000000000",
+                    "errorMsg" to "Error occor"
+                )
+            )
+            e.printStackTrace()
+        }
+    }
+
 
     fun registerForNotification(call: MethodCall, result: MethodChannel.Result) {
         val token: String = call.argument<String>("token") ?: return result.error(
