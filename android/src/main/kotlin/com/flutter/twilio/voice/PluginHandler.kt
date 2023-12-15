@@ -1,5 +1,6 @@
 package com.flutter.twilio.voice
 
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -12,7 +13,10 @@ class PluginHandler : MethodCallHandler
             "create" -> create(call, result)
             "registerForNotification" -> TwilioVoice.instance.registerForNotification(call, result)
             "unregisterForNotification" -> TwilioVoice.instance.unregisterForNotification(call, result)
-            "tracklog" ->  TwilioVoice.instance.trackLog(call, result)
+            "tracklog" ->  {
+                TwilioVoice.instance.trackLog(call, result)
+
+            }
 
             "makeCallWithSid"->TwilioVoice.instance.makeCallWithSid(call,result)
 

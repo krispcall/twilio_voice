@@ -12,10 +12,11 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
 import java.util.*
-import kotlin.concurrent.schedule
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 /** TwilioVoice */
 
@@ -425,35 +426,37 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
     }
 
     fun trackLog(call: MethodCall, result: MethodChannel.Result) {
-        val log = StringBuilder()
-        try {
-            val process = Runtime.getRuntime().exec("logcat -d") // -s option filters by tag
-            val bufferedReader = BufferedReader(
-                InputStreamReader(process.inputStream)
-            )
-            var line: String
-            while (bufferedReader.readLine().also { line = it } != null) {
-                if(line.contains("Twilio"))
-                log.append(line).append("\n")
-            }
-            process.destroy()
-            result.success(
-                mapOf(
-                    "result" to log.toString(),
-                    "errorCode" to "000000000",
-                    "errorMsg" to "No error"
-                )
-            )
-        } catch (e: IOException) {
-            result.success(
-                mapOf(
-                    "result" to e.message,
-                    "errorCode" to "000000000",
-                    "errorMsg" to "Error occor"
-                )
-            )
-            e.printStackTrace()
-        }
+         val executor: Executor = Executors.newSingleThreadExecutor()
+          executor.execute {
+              val log = StringBuilder()
+              try {
+                  val process = Runtime.getRuntime().exec("logcat -d")
+                  val bufferedReader = BufferedReader(
+                      InputStreamReader(process.inputStream)
+                  )
+                  var line: String?
+                  while (bufferedReader.readLine().also { line = it } != null) {
+                      if(line!!.contains("Twilio"))
+                      log.append(line).append("\n")
+                  }
+                  process.destroy()
+                  result.success(
+                      mapOf(
+                          "result" to log.toString(),
+                          "errorCode" to "000000000",
+                          "errorMsg" to "Error occor"
+                      )
+                  )
+              } catch (e: IOException) {
+                  result.success(
+                      mapOf(
+                          "result" to e.printStackTrace(),
+                          "errorCode" to "000000000",
+                          "errorMsg" to "Error occor"
+                      )
+                  )
+              }
+          }
     }
 
 
