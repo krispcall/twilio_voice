@@ -17,6 +17,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 /** TwilioVoice */
 
@@ -429,6 +430,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
          val executor: Executor = Executors.newSingleThreadExecutor()
           executor.execute {
               val log = StringBuilder()
+              var logList:ArrayList<String> = ArrayList();
               try {
                   val process = Runtime.getRuntime().exec("logcat -d")
                   val bufferedReader = BufferedReader(
@@ -436,29 +438,30 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                   )
                   var line: String?
                   while (bufferedReader.readLine().also { line = it } != null) {
-                      if(line!!.contains("Twilio"))
-                      log.append(line).append("\n")
+                      if(line!!.contains("Twilio")) {
+                        logList.add(line.toString());
+                      }
+                    //  log.append(line).append("\n")
                   }
                   process.destroy()
                   result.success(
                       mapOf(
-                          "result" to log.toString(),
-                          "errorCode" to "000000000",
-                          "errorMsg" to "Error occor"
+                          "result" to logList,
+                          "status" to "success",
+                          "errorCode" to "000000000"
                       )
                   )
               } catch (e: IOException) {
                   result.success(
                       mapOf(
                           "result" to e.printStackTrace(),
-                          "errorCode" to "000000000",
-                          "errorMsg" to "Error occor"
+                          "status" to "error",
+                          "errorCode" to "250"
                       )
                   )
               }
           }
     }
-
 
     fun registerForNotification(call: MethodCall, result: MethodChannel.Result) {
         val token: String = call.argument<String>("token") ?: return result.error(
