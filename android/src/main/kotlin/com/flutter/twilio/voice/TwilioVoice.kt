@@ -11,6 +11,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.*
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -147,71 +148,6 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
         handleMessageChannel.setStreamHandler(null)
         callIncomingChannel.setStreamHandler(null)
         callOutGoingChannel.setStreamHandler(null)
-    }
-
-    fun makeCall(call: MethodCall, result: MethodChannel.Result)
-    {
-        val to: String = call.argument<String>("To") ?: return result.error("ERROR", "Missing To", null)
-        val from: String = call.argument<String>("from") ?: return result.error("ERROR", "Missing from", null)
-        val accessToken: String = call.argument<String>("accessToken") ?: return result.error("ERROR", "Missing accessToken", null)
-        val displayName: String = call.argument<String>("displayName") ?: return result.error("ERROR", "Missing display name", null)
-        try
-        {
-            val params = HashMap<String, String>()
-            params["To"] = to
-            params["From"] = from
-            params["accessToken"] = accessToken
-            params["displayName"] = displayName
-            val connectOptions = ConnectOptions.Builder(accessToken)
-                .params(params)
-                .build()
-            activeCall = Voice.connect(applicationContext, connectOptions, object : Listener
-            {
-                override fun onConnectFailure(call: Call, callException: CallException)
-                {
-                    sendEventOutGoingCall("onConnectFailure", mapOf("data" to Mapper.callToMap(call)), callException)
-                }
-
-                override fun onRinging(call: Call) {
-                    sendEventOutGoingCall("onRinging", mapOf("data" to Mapper.callToMap(call)), null)
-                }
-
-                override fun onConnected(call: Call) {
-                    activeCall = call
-                    sendEventOutGoingCall("onConnected", mapOf("data" to Mapper.callToMap(call)), null)
-                }
-
-                override fun onReconnecting(call: Call, callException: CallException)
-                {
-                    sendEventOutGoingCall("onReconnecting", mapOf("data" to Mapper.callToMap(call)), callException)
-                }
-
-                override fun onReconnected(call: Call)
-                {
-                    sendEventOutGoingCall("onReconnected", mapOf("data" to Mapper.callToMap(call)), null)
-                }
-
-                override fun onDisconnected(call: Call, callException: CallException?)
-                {
-                    sendEventOutGoingCall("onDisconnected", mapOf("data" to Mapper.callToMap(call)), callException)
-                }
-
-                override fun onCallQualityWarningsChanged(call: Call, currentWarnings: MutableSet<Call.CallQualityWarning>, previousWarnings: MutableSet<Call.CallQualityWarning>) {
-                    if (previousWarnings.size > 1)
-                    {
-                        val intersection: MutableSet<Call.CallQualityWarning> = HashSet(currentWarnings)
-                        currentWarnings.removeAll(previousWarnings)
-                        intersection.retainAll(previousWarnings)
-                        previousWarnings.removeAll(intersection)
-                    }
-                    sendEventOutGoingCall("onCallQualityWarningsChanged", mapOf("data" to Mapper.callToMap(call)), null)
-                }
-            })
-        }
-        catch (e: Exception)
-        {
-            result.error("ERROR", e.toString(), e)
-        }
     }
 
     fun makeCallWithSid(call: MethodCall, result: MethodChannel.Result)
@@ -429,20 +365,20 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
     fun trackLog(call: MethodCall, result: MethodChannel.Result) {
          val executor: Executor = Executors.newSingleThreadExecutor()
           executor.execute {
-              val log = StringBuilder()
-              var logList:ArrayList<String> = ArrayList();
+              val logList:ArrayList<String> = ArrayList()
+              logList.clear()
               try {
                   val process = Runtime.getRuntime().exec("logcat -d")
                   val bufferedReader = BufferedReader(
-                      InputStreamReader(process.inputStream)
+                      InputStreamReader(process.inputStream,)
                   )
                   var line: String?
                   while (bufferedReader.readLine().also { line = it } != null) {
-                      if(line!!.contains("Twilio")) {
-                        logList.add(line.toString());
+                      if(line!!.lowercase().contains("twilio")) {
+                          logList.add(line.toString())
                       }
-                    //  log.append(line).append("\n")
                   }
+                  process.inputStream.close()
                   process.destroy()
                   result.success(
                       mapOf(
@@ -460,6 +396,7 @@ class TwilioVoice: FlutterPlugin, ActivityAware {
                       )
                   )
               }
+              logList.clear()
           }
     }
 

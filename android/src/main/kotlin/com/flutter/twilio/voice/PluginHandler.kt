@@ -11,12 +11,12 @@ class PluginHandler : MethodCallHandler
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         when (call.method) {
             "create" -> create(call, result)
-            "registerForNotification" -> TwilioVoice.instance.registerForNotification(call, result)
-            "unregisterForNotification" -> TwilioVoice.instance.unregisterForNotification(call, result)
-            "tracklog" ->  {
-                TwilioVoice.instance.trackLog(call, result)
 
-            }
+            "registerForNotification" -> TwilioVoice.instance.registerForNotification(call, result)
+
+            "unregisterForNotification" -> TwilioVoice.instance.unregisterForNotification(call, result)
+
+            "trackLog" ->  TwilioVoice.instance.trackLog(call, result)
 
             "makeCallWithSid"->TwilioVoice.instance.makeCallWithSid(call,result)
 
