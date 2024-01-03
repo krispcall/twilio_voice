@@ -92,8 +92,10 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
         guard let controller = appDelegate?.window??.rootViewController as? FlutterViewController else {
             fatalError("rootViewController is not type FlutterViewController")
         }
-        
-        //        let registrar = controller.registrar(forPlugin: "TwilioVoice")
+        TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.signaling)
+        TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.core)
+        TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.webRTC)
+        TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.platform)
     }
     
     deinit {
@@ -520,6 +522,10 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
             notificationSink = nil
             return nil
         }
+    }
+    
+    public func trackLog(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        
     }
 }
 

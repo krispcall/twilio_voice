@@ -8,8 +8,13 @@ public class PluginHandler {
         switch call.method {
         case "debug":
             debug(call, result: result)
+            
         case "create":
             create(call, result: result)
+            
+        case "trackLog":
+            SwiftTwilioVoice.instance?.trackLog(call, result: result)
+            
         case "registerForNotification":
             SwiftTwilioVoice.instance?.registerForNotification(call, result: result)
             
