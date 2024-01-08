@@ -96,6 +96,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
         TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.core)
         TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.webRTC)
         TwilioVoiceSDK.setLogLevel(TwilioVoiceSDK.LogLevel.all, module: TwilioVoiceSDK.LogModule.platform)
+        TwilioVoiceSDK.isInsightsEnabled = true
     }
     
     deinit {
@@ -525,7 +526,7 @@ public class SwiftTwilioVoice: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
     }
     
     public func trackLog(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        
+        return result (["result": [], "errorCode": "000000000", "errorMsg": ""])
     }
 }
 
